@@ -110,4 +110,30 @@ def vote(request):
             "login": current_user.username
         }
 
+    objs_sport = Nominee_user.objects.filter(community='الرياضية')
+    context["Sports"] = objs_sport
+
+    objs_sci = Nominee_user.objects.filter(community='العلمية')
+    context["Scientific"] = objs_sci
+
+    objs_soc = Nominee_user.objects.filter(community='الاجتماعية')
+    context["Social"] = objs_soc
+
+    objs_scout = Nominee_user.objects.filter(community='أسرةالجوالة')
+    context["Scout"] = objs_scout
+
+    objs_cul = Nominee_user.objects.filter(community='الثقافية')
+    context["Cultural"] = objs_cul
+
+    objs_art = Nominee_user.objects.filter(community='الفنية')
+    context["Art"] = objs_art
+
+    objs_tri = Nominee_user.objects.filter(community='الاسر والرحلات')
+    context["Family"] = objs_tri
+
+    if request.method == "POST":
+        community = request.POST.get("Scientific committee")
+
+        print("this ia comm", community)
+
     return render(request, 'vote1.html', context=context)

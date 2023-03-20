@@ -39,53 +39,68 @@
 
   <main class="container">
 
-    <form class="vote">
+    <form class="vote" method="POST">
+      {%csrf_token%}
       <div class="select">
         <label for="Scientific committee">اللجنة العلمية</label>
-        <select id="Scientific committee" required>
-          <option value="2"></option>
+        <select name="Scientific committee" id="Scientific committee" required>
+          {% for i in Scientific %}
+          <option value={{i}}>{{i}}</option>
+          {% endfor %}
         </select>
       </div>
 
-      <div class="select">
+      <div class=" select">
         <label for="Sports committee">اللجنة الرياضية</label>
-        <select id="Sports committee" required>
-          <option value="2"></option>
+        <select name="Sports committee" id="Sports committee" required>
+          {% for i in Sports %}
+          <option value={{i}}>{{i}}</option>
+          {% endfor %}
         </select>
       </div>
 
       <div class="select">
         <label for="Social committee">اللجنة الاجتماعية</label>
-        <select id="Social committee" required>
-          <option value="2"></option>
+        <select name="Social committee" id="Social committee" required>
+          {% for i in Social %}
+          <option value={{i}}>{{i}}</option>
+          {% endfor %}
         </select>
       </div>
 
       <div class="select">
-        <label for="Scout and services committee">أسرة الجوالة و الرحلات</label>
-        <select id="Scout and services committee" required>
-          <option value="2"></option>
+        <label for="Scout and services committee">أسرة الجوالة والخدمات</label>
+        <select name="Scout and services committee" id="Scout and services committee" required>
+          {% for i in Scout %}
+          <option value={{i}}>{{i}}</option>
+          {% endfor %}
         </select>
       </div>
 
       <div class="select">
         <label for="Cultural committee">اللجنة الثقافية</label>
-        <select id="Cultural committee" required>
-          <option value="2"></option>
+        <select name="Cultural committee" id="Cultural committee" required>
+          {% for i in Cultural %}
+          <option value={{i}}>{{i}}</option>
+          {% endfor %}
         </select>
       </div>
 
       <div class="select">
         <label for="Art committee">اللجنة الفنية</label>
-        <select id="Art committee" required>
-          <option value="2"></option>
+        <select name="Art committee" id="Art committee" required>
+          {% for i in Art %}
+          <option value={{i}}>{{i}}</option>
+          {% endfor %}
         </select>
       </div>
 
       <div class="select">
         <label for="Family and trips committee">لجنة الأسر و الرحلات</label>
-        <select id="Family and trips committee" required>
-          <option value="2"></option>
+        <select name="Family and trips committee" id="Family and trips committee" required>
+          {% for i in Family %}
+          <option value={{i}}>{{i}}</option>
+          {% endfor %}
         </select>
       </div>
 
