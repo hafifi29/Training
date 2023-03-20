@@ -1,7 +1,10 @@
-
- main{
+main {
     background-color: #eee;
+}
+
+form {
     direction: rtl;
+    
 }
 
 .field,
@@ -20,16 +23,8 @@ label {
 select {
     width: 220px;
     height: 30px;
-}   
+}
 
 .ch-po {
     display: flex;
-}
-
-.ch-po input[type="radio"] {
-    display: none;
-}
-
-.ch-po input[type="radio"]:checked+label {
-    text-decoration: line-through;
 }
