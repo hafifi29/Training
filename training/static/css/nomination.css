@@ -1,0 +1,35 @@
+
+ main{
+    background-color: #eee;
+    direction: rtl;
+}
+
+.field,
+.select {
+    display: flex;
+    justify-content: space-between;
+    width: 350px;
+    height: 5vh;
+
+}
+
+label {
+    margin-left: 20px;
+}
+
+select {
+    width: 220px;
+    height: 30px;
+}   
+
+.ch-po {
+    display: flex;
+}
+
+.ch-po input[type="radio"] {
+    display: none;
+}
+
+.ch-po input[type="radio"]:checked+label {
+    text-decoration: line-through;
+}
