@@ -82,6 +82,7 @@ def nomination(request):
 def vote(request):
 
     current_user = request.user
+    context = {}
 
     objs_sport = Nominee_user.objects.filter(community='الرياضية')
     context["Sports"] = objs_sport
