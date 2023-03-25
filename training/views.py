@@ -13,13 +13,13 @@ def home(request):
 
     current_user = request.user
 
-    if current_user is None:
+    if request.user.is_authenticated:
         context = {
-            "login": "Login"
+            "login": current_user.username
         }
     else:
         context = {
-            "login": current_user.username
+            "login": "Login"
         }
 
     return render(request, 'index.html', context=context)
@@ -49,16 +49,15 @@ def sign_in(request):
 def nomination(request):
     current_user = request.user
 
-    if current_user is None:
-        context = {
-            "login": "Login"
-        }
-    else:
+    if request.user.is_authenticated:
         context = {
             "login": current_user.username
         }
+    else:
+        context = {
+            "login": "Login"
+        }
 
-    current_user = request.user
     if request.method == "POST":
         id = request.POST.get("name")
         n_id = User_.objects.get(username=id)
@@ -99,15 +98,16 @@ def nomination(request):
 
 @login_required
 def vote(request):
+
     current_user = request.user
 
-    if current_user is None:
+    if request.user.is_authenticated:
         context = {
-            "login": "Login"
+            "login": current_user.username
         }
     else:
         context = {
-            "login": current_user.username
+            "login": "Login"
         }
 
     objs_sport = Nominee_user.objects.filter(community='الرياضية')
