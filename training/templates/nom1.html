@@ -1,6 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
 
+{% block headcontent %}
 <head>
   {% load static %}
   <meta charset="utf-8" />
@@ -10,87 +10,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="{% static 'css/common.css' %}" />
   <link rel="stylesheet" href="{% static 'css/nomination.css' %}" />
-  <script src="{% static 'js/common.js' %}" defer></script>
-  <script src="{% static 'js/nomination.js' %}" defer></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/x-icon" href="{% static 'img/logo.jpg' %}" />
   <title>Nomination Form</title>
 </head>
 
-<body>
-  <header>
-    <a href="{% url 'home' %}">
-      <img src="{% static 'img/logo.jpg' %}" alt="logo" class="logo" />
-    </a>
-    <a href="{% url 'home' %}">
-      <h1 id="logotext1">FCAI Beni Suef</h1>
-      <h1 id="logotext2">Student's Union Elections</h1>
-    </a>
-  </header>
+{% endblock %}
 
-  <nav>
-    <button id="b1"><a href="{% url 'sign_in' %}">Login</a></button>
-    <button id="b2"><a href="{% url 'vote1' %}">Vote</a></button>
-    <button id="b3">
-      <a href="{% url 'nomination' %}">Apply for nominatinon</a>
-    </button>
-  </nav>
-
+{% block maincontent %}
   <main class="container">
+
     <form id="myForm" class="nomination" action="{% url 'nomination' %}" method="POST">
       {%csrf_token%}
-      <div class="field">
-        <label for="name">الكود :</label>
-        <input type="text" name="name" id="name" required />
-      </div>
-      <div class="field">
-        <label for="phone">رقم الهاتف :</label>
-        <input type="text" name="phone" id="phone" required />
-      </div>
-      <div class="field">
-        <label for="idnum">الرقم القومي : </label>
-        <input type="text" name="idnum" id="idnum" required />
-      </div>
-      <div class="field">
-        <label for="adress">العنوان :</label>
-        <input type="text" name="adress" id="adress" required />
-      </div>
-      <div class="field">
-        <label for="bdate">تاريخ الميلاد :</label>
-        <input type="date" name="bdate" id="bdate" />
-      </div>
-      <div class="select">
-        <label for="acdy">الفرقة :</label>
-        <select name="acdy" id="acdy" required>
-          <option value="2">الفرقة الثانية</option>
-          <option value="3">الفرقة الثالثة</option>
-          <option value="4">الفرقة الرابعة</option>
-        </select>
-      </div>
-      <div class="select">
-        <label for="commission">اللجنة :</label>
-        <select name="acdy" id="commission" required>
-          <option value="1">اللجنة العلمية</option>
-          <option value="2">اللجنة الرياضية</option>
-          <option value="3">اللجنة الاجتماعية</option>
-          <option value="4">أسرةالجوالة والخدمات</option>
-          <option value="5">اللجنة الثقافية</option>
-          <option value="6">اللجنة الفنية</option>
-          <option value="7">اللجنة الاسر والرحلات</option>
-        </select>
-      </div>
-      <div class="field">
-        <label for="upload">اثبات المشاركة فى الأنشطة</label>
-        <input type="file" accept=".pdf" name="comfil" id="upload" />
-      </div>
+      {{form.as_div}}
       <p style="color: red">{{ error }}</p>
       <input type="submit" value="تقديم الاستمارة" />
     </form>
   </main>
-
-  <footer>
-    <div id="foot">FCAI Beni Suef © 2023 - all rights reserved.</div>
-  </footer>
-</body>
-
-</html>
+{% endblock %}

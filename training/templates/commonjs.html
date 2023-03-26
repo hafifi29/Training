@@ -1,0 +1,24 @@
+<script defer>
+  let myButton1 = document.querySelector("#b1");
+  let myButton2 = document.querySelector("#b2");
+  let myButton3 = document.querySelector("#b3");
+  let myButton4 = document.querySelector("#b4");
+
+  let registerpagebutton = document.querySelector("#b4-log");
+  let loginpagebutton = document.querySelector("#b5-log");
+
+  let myHeading = document.querySelector("h1");
+
+  myButton1.onclick = () => {
+    window.open("{% url 'sign_in' %}", "_self");
+  };
+  myButton2.onclick = () => {
+    window.open("{% url 'vote1' %}", "_self");
+  };
+  myButton3.onclick = () => {
+    window.open("{% url 'nomination' %}", "_self");
+  };
+  myButton4.onclick = () => {
+    window.open("{% url 'result' %}", "_self");
+  };
+</script>

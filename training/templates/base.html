@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en-US">
-
+{% block headcontent %}
 <head>
   {% load static %}
   <meta charset="utf-8">
@@ -13,9 +13,8 @@
   <link rel="stylesheet" href="{% static 'css/indexp.css' %}">
   <link rel="icon" type="image/x-icon" href="images/logo.jpg">
 </head>
-
+{% endblock %}
 <body>
-
   <header>
     <a href="{% url 'home' %}">
       <img src="{% static 'img/logo.jpg' %}" alt="logo" class="logo">
@@ -27,13 +26,15 @@
   </header>
 
   <nav>
-    <button id="b1"><a href="{% url 'sign_in' %}">Login</a></button>
-    <button id="b2"><a href="{% url 'vote1' %}">Vote</a></button>
-    <button id="b3"><a href="{% url 'nomination' %}">Apply for nominatinon</a></button>
+    <button id="b1">Login</button>
+    <button><a href="">Logout</a></button>
+    <button id="b2">Vote</button>
+    <button id="b3">Apply for nominatinon</button>
+    <button id="b4">Result</button>
   </nav>
-
+  {% block maincontent %}
   <main class="container">
-    <p>Welcome to the student's union nomination hub {{name}}</p>
+    <p>Welcome to the student's union nomination hub</p>
 
     <div id="image-part">
       <h3 id="image-header">
@@ -45,12 +46,13 @@
       <span id="paratitle"></span>
     </div>
 
-
+    
   </main>
-
+  {% endblock %}
   <footer>
     <div id="foot"> FCAI Beni Suef © 2023 - all rights reserved.</div>
   </footer>
+  {% include 'commonjs.html' %}
 </body>
 
 </html>
