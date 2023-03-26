@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block headcontent %}
+
+<head>
+    {% load static %}
+    <meta charset="utf-8" />
+    <meta property="og:title" content="Nomination page" />
+    <meta property="og:image" content="../images/logo.jpg" />
+    <meta property="og:description" content="Students Union" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'css/common.css' %}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="{% static 'img/logo.jpg' %}" />
+    <title>Result </title>
+</head>
+
+{% endblock %}
+{% block maincontent %}
+<form action="" method="post">
+  {%csrf_token%}
+  <div class="feild">
+    <label for="code">Code:  </label>
+    <input type="text" name="nomin_id" id="code" required/>
+  </div>
+  <input type="submit" value="Result" />
+</form>
+
+{% if votes == 0 %}
+    <h1 class="result">Please Enter Your Code</h1>
+{% else %}
+    <h1 class="result">{{votes}}</h1>
+
+{%endif%}
+{% endblock %}
