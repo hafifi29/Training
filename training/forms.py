@@ -1,51 +1,40 @@
 from django import forms
-from .models import Nominee_user, Vote
-
-
+from .models import Nominee_user, Vote, UserModel
+from django.contrib.auth.models import User
 class NomineeForm(forms.ModelForm):
     class Meta:
         model = Nominee_user
         fields = [
-            'Name',
-            'phone_no',
             'nominee_id',
+            'phone_no',
             'email',
-            'birthdate',
-            'address',
-            'collegeYear',
             'community',
             'rec_letter',
         ]
-
-    nominee_id = forms.CharField(max_length=6)
-    phone_no = forms.CharField(max_length=12)
-    community = forms.ChoiceField(choices=(('1', 'اللجنة العلمية'),
-                                           ('2', 'اللجنة الرياضية'),
-                                           ('3', 'اللجنة الاجتماعية'),
-                                           ('4', 'أسرة الجوالة و الخدمات'),
-                                           ('5', 'اللجنة الثقافية'),
-                                           ('6', 'اللجنة الفنية'),
-                                           ('7', 'لجنة الاسر و الرحلات')
-                                           )
-                                  )
-    rec_letter = forms.FileField()
-    email = forms.EmailField()
-
+    
+    Name = forms.CharField( disabled=True)
+"""     nominee_id = forms.CharField(initial=UserModel.objects.get().Student_id,disabled=True, max_length=6)
+    address = forms.CharField(initial=UserModel.objects.get().address,disabled=True)
+    birthdate = forms.DateField(initial=UserModel.objects.get().birthdate,disabled=True)
+    collegeYear = forms.IntegerField(initial=UserModel.objects.get().collegeYear,disabled=True) """
 
 class VoteForm(forms.Form):
 
     # if Nominee_user.objects.final_list == True:
     Sports = forms.ModelChoiceField(Nominee_user.objects.filter(
-        community='الرياضية', final_list=True))
+        community='2', final_list=True))
     Scientific = forms.ModelChoiceField(
-        Nominee_user.objects.filter(community='العلمية', final_list=True))
+        Nominee_user.objects.filter(community='1', final_list=True))
     Social = forms.ModelChoiceField(Nominee_user.objects.filter(
-        community='الاجتماعية', final_list=True))
+        community='3', final_list=True))
     Scout = forms.ModelChoiceField(Nominee_user.objects.filter(
-        community='أسرةالجوالة', final_list=True))
+        community='4', final_list=True))
     Cultural = forms.ModelChoiceField(
-        Nominee_user.objects.filter(community='الثقافية', final_list=True))
+        Nominee_user.objects.filter(community='5', final_list=True))
     Art = forms.ModelChoiceField(Nominee_user.objects.filter(
-        community='الفنية', final_list=True))
+        community='6', final_list=True))
     Family = forms.ModelChoiceField(Nominee_user.objects.filter(
-        community='الاسر والرحلات', final_list=True))
+        community='7', final_list=True))
+    
+class ResultForm(forms.Form):
+    Nominee_id = forms.CharField()

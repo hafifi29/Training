@@ -1,8 +1,8 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from training.models import Nominee_user
-from .forms import NomineeForm, VoteForm
+from .forms import NomineeForm, VoteForm, ResultForm
 from django.contrib.auth.models import User as User_
 from .models import Vote
 
@@ -30,42 +30,63 @@ def sign_in(request):
 
         login(request, user_logedin)
         return redirect('home')
-
     return render(request, 'login.html')
+
+
+def logout_view(request):
+    logout(request)
+    return render(request, 'index.html')
+
 
 def nomination(request):
     current_user = request.user
-    form = NomineeForm(request.POST or None)
-    if form.is_valid():
-        form.save()
-        form = NomineeForm()
+
+    UserModel = get_object_or_404(UserModel, UserForeignKey=request.user)
+
+    initial_values = {'Name': UserModel.Name}
+    form = NomineeForm(request.POST or None, initial=initial_values)
     context = {
         'form': form
     }
+    if form.is_valid():
+        form.save()
+        form = NomineeForm()
+        context['ConfirmationMessage'] = "Application sent successfuly"
+    else:
+        context['ConfirmationMessage'] = "Error: couldn't save your application"
+        
     return render(request, 'nom1.html', context=context)
 
 def vote(request):
     current_user = request.user
     form = VoteForm(request.POST or None)
-    if form.is_valid():
-        for item in form.cleaned_data:
-            Nominee = Nominee.objects.get(id=item)
-        #    Nominee.numofvotes +=1
-            form = VoteForm()
     context = {
         'form': form
     }
+    if form.is_valid():
+        for Nom in form.cleaned_data:
+            Nominee_id = form.cleaned_data['Nom']
+            if  Nominee_user.objects.filter(nominee_id = Nominee_id).exists():
+                num_of_votes = Nominee_user.objects.get(nominee_id = 'Nominee_id').Numofvotes
+                num_of_votes = num_of_votes + 1
+                form = VoteForm()
+                context['ConfirmationMessage'] = "Vote sent successfuly"
+            else:
+                context['ConfirmationMessage'] = "Nominee not found"
     return render(request, 'vote1.html', context=context)
 
 def result(request):
 
-    
-    key = request.POST.get('nomin_id')
-    # print(key)
-    if key == 0:
-        print('error')
-    else:
-        num_of_votes = Vote.objects.filter(nominee_id=key).count()
-        
-
-    return render(request,'results.html',{'votes':num_of_votes})
+    form = ResultForm(request.POST or None)
+    context = {
+        'form': form     
+    }
+    if form.is_valid():
+            Nominee_id = form.cleaned_data['Nominee_id']
+            if  Nominee_user.objects.filter(nominee_id = Nominee_id).exists():
+                num_of_votes = Nominee_user.objects.get(nominee_id = Nominee_id).Numofvotes
+                form = ResultForm()
+                context['num_of_votes'] = num_of_votes
+            else:
+                context['num_of_votes'] = "Nominee not found"
+    return render(request,'results.html',context)

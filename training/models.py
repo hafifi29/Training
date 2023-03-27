@@ -1,22 +1,34 @@
 from django.db import models
-from django.contrib.auth.models import User as User_
+from django.contrib.auth.models import User
 
 # Create your models here.
 
-
-class Nominee_user(models.Model):
-
+class UserModel(models.Model):
+    UserForeignKey = models.ForeignKey(User.username, on_delete=models.CASCADE),
     Name = models.CharField(max_length=50, default="")
-    phone_no = models.CharField(max_length=12)
-    nominee_id = models.ForeignKey(User_, on_delete=models.CASCADE)
-    email = models.EmailField(max_length=50)
+    Student_id = models.IntegerField(primary_key=True)
     address = models.CharField(max_length=200, null=True)
     birthdate = models.DateField(null=True)
-    community = models.CharField(max_length=20)
     collegeYear = models.IntegerField(max_length=20, null=True)
+
+
+class Nominee_user(models.Model):
+    nominee_id = models.OneToOneField(UserModel, on_delete=models.CASCADE)
+    phone_no = models.IntegerField(max_length=12)
+    email = models.EmailField(max_length=50)
+    community = models.CharField(max_length=20, choices=[('1', 'اللجنة العلمية'),
+                                           ('2', 'اللجنة الرياضية'),
+                                           ('3', 'اللجنة الاجتماعية'),
+                                           ('4', 'أسرة الجوالة و الخدمات'),
+                                           ('5', 'اللجنة الثقافية'),
+                                           ('6', 'اللجنة الفنية'),
+                                           ('7', 'لجنة الاسر و الرحلات')
+                                           
+                                  ])
     rec_letter = models.FileField()
     final_list = models.BooleanField(default=False)
     Numofvotes = models.IntegerField(default=0)
+
 
     def __str__(self):
         return str(self.nominee_id)
@@ -25,7 +37,7 @@ class Nominee_user(models.Model):
 class Vote(models.Model):
     
     voting_id = models.IntegerField()
-    voter_id = models.ForeignKey(User_, on_delete=models.CASCADE)
+    voter_id = models.ForeignKey(User, on_delete=models.CASCADE)
     nominee_id = models.ForeignKey(Nominee_user, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -35,7 +47,7 @@ class Vote(models.Model):
 class Contention(models.Model):
 
     contention_id = models.IntegerField()
-    user_id = models.ForeignKey(User_, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     nominee_id = models.ForeignKey(Nominee_user, on_delete=models.CASCADE)
     reason = models.TextField()
 
