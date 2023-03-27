@@ -15,20 +15,14 @@
 </head>
 
 {% endblock %}
+
 {% block maincontent %}
-<form action="" method="post">
+<main class="container">
+  <form action="" method="post">
   {%csrf_token%}
-  <div class="feild">
-    <label for="code">Code:  </label>
-    <input type="text" name="nomin_id" id="code" required/>
-  </div>
+  {{form.as_div}}
   <input type="submit" value="Result" />
+  {{num_of_votes}}
 </form>
-
-{% if votes == 0 %}
-    <h1 class="result">Please Enter Your Code</h1>
-{% else %}
-    <h1 class="result">{{votes}}</h1>
-
-{%endif%}
+</main>
 {% endblock %}

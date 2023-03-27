@@ -11,7 +11,7 @@
   <title>Students Union </title>
   <link rel="stylesheet" href="{% static 'css/common.css' %}">
   <link rel="stylesheet" href="{% static 'css/indexp.css' %}">
-  <link rel="icon" type="image/x-icon" href="images/logo.jpg">
+  <link rel="icon" type="image/x-icon" href="{% static 'img/logo.jpg' %}" />
 </head>
 {% endblock %}
 <body>
@@ -26,8 +26,12 @@
   </header>
 
   <nav>
+    {% if request.user.is_authenticated %}
+    <h1 id="welcomeMessage">Hello, {{request.user.username}}</h1>
+    <button id="b5">Logout</button>
+    {% else %}
     <button id="b1">Login</button>
-    <button><a href="">Logout</a></button>
+    {% endif %}
     <button id="b2">Vote</button>
     <button id="b3">Apply for nominatinon</button>
     <button id="b4">Result</button>

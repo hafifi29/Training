@@ -22,7 +22,49 @@
 
     <form id="myForm" class="nomination" action="{% url 'nomination' %}" method="POST">
       {%csrf_token%}
-      {{form.as_div}}
+      <div>
+        <label>{{form.Name.label}}</label>
+        {{form.Name}}
+      </div>
+
+      <div>
+        <label>{{form.nominee_id.label}}</label>
+        {{form.nominee_id}}
+      </div>
+
+      <div>
+        <label>{{form.address.label}}</label>
+        {{form.address}}
+      </div>
+
+      <div>
+        <label>{{form.birthdate.label}}</label>
+        {{form.birthdate}}
+      </div>
+
+      <div>
+        <label>{{form.collegeYear.label}}</label>
+        {{form.collegeYear}}
+      </div>
+
+      <div>
+        <label>{{form.phone_no.label}}</label>
+        {{form.phone_no}}
+      </div>
+
+      <div>
+        <label>{{form.email.label}}</label>
+        {{form.email}}
+      </div>
+      <div>
+        <label>{{form.community.label}}</label>
+        {{form.community}}
+      </div>
+
+      <div>
+        <label>{{form.rec_letter.label}}</label>
+        {{form.rec_letter}}
+      </div>
       <p style="color: red">{{ error }}</p>
       <input type="submit" value="تقديم الاستمارة" />
     </form>

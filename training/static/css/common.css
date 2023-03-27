@@ -74,6 +74,9 @@
     cursor: pointer;
   }
 
+  #welcomeMessage {font: 20px sans-serif;
+  color: rgb(38, 12, 89);}
+
   /*main*/
   main {
     grid-column: 1/13;
@@ -220,6 +223,10 @@
     background-color: rgb(38, 12, 89);
     cursor: pointer;
   }
+
+  #welcomeMessage {font: 20px sans-serif;
+    color: rgb(38, 12, 89);}
+
 
   /*main*/
   main {
