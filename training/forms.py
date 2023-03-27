@@ -1,6 +1,8 @@
 from django import forms
 from .models import Nominee_user, Vote, User_Model
 from django.contrib.auth.models import User
+
+
 class NomineeForm(forms.ModelForm):
     class Meta:
         model = Nominee_user
@@ -11,16 +13,21 @@ class NomineeForm(forms.ModelForm):
             'community',
             'rec_letter',
         ]
+        labels = {
+        "phone_no": "رقم الموبايل",
+        'email': 'الايميل',
+        'community': 'اللجنة',
+        'rec_letter': 'اثبات المشاركة فى الأنشطة'
+    }
     
-    Name = forms.CharField(disabled=True)
-"""     nominee_id = forms.CharField(initial=UserModel.objects.get().Student_id,disabled=True, max_length=6)
-    address = forms.CharField(initial=UserModel.objects.get().address,disabled=True)
-    birthdate = forms.DateField(initial=UserModel.objects.get().birthdate,disabled=True)
-    collegeYear = forms.IntegerField(initial=UserModel.objects.get().collegeYear,disabled=True) """
+    Name = forms.CharField(disabled=True, label="الاسم")
+    nominee_id = forms.CharField(initial=User_Model.objects.get().Student_id,disabled=True, max_length=6,label="الكود")
+    address = forms.CharField(initial=User_Model.objects.get().address,disabled=True,label="العنوان")
+    birthdate = forms.DateField(initial=User_Model.objects.get().birthdate,disabled=True,label="تاريخ الميلاد")
+    collegeYear = forms.IntegerField(initial=User_Model.objects.get().collegeYear,disabled=True,label="الفرقة")
 
 class VoteForm(forms.Form):
 
-    # if Nominee_user.objects.final_list == True:
     Sports = forms.ModelChoiceField(Nominee_user.objects.filter(
         community='2', final_list=True))
     Scientific = forms.ModelChoiceField(

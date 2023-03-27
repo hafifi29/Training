@@ -37,13 +37,16 @@ def logout_view(request):
     logout(request)
     return render(request, 'index.html')
 
-
+@login_required
 def nomination(request):
     current_user = request.user
-
-    User_Model = User_Model.objects.get(Name = 'mohamedadel')
-
-    initial_values = {'Name': "UserModel.Name"}
+    User_Mod = User_Model.objects.get(Userkey_id = current_user.id)
+    initial_values = {'Name': User_Mod.Name,
+                      'nominee_id': User_Mod.Student_id,
+                      'address': User_Mod.address,
+                        'birthdate': User_Mod.birthdate,
+                        'collegeYear': User_Mod.collegeYear
+                      }
     form = NomineeForm(request.POST or None, initial=initial_values)
     context = {
         'form': form
@@ -57,6 +60,8 @@ def nomination(request):
         
     return render(request, 'nom1.html', context=context)
 
+
+@login_required
 def vote(request):
     current_user = request.user
     form = VoteForm(request.POST or None)
@@ -75,6 +80,8 @@ def vote(request):
                 context['ConfirmationMessage'] = "Nominee not found"
     return render(request, 'vote1.html', context=context)
 
+
+@login_required
 def result(request):
 
     form = ResultForm(request.POST or None)
