@@ -21,10 +21,10 @@ class NomineeForm(forms.ModelForm):
     }
     
     Name = forms.CharField(disabled=True, label="الاسم")
-    nominee_id = forms.CharField(initial=User_Model.objects.get().Student_id,disabled=True, max_length=6,label="الكود")
-    address = forms.CharField(initial=User_Model.objects.get().address,disabled=True,label="العنوان")
-    birthdate = forms.DateField(initial=User_Model.objects.get().birthdate,disabled=True,label="تاريخ الميلاد")
-    collegeYear = forms.IntegerField(initial=User_Model.objects.get().collegeYear,disabled=True,label="الفرقة")
+    nominee_id = forms.CharField(disabled=True, max_length=6,label="الكود")
+    address = forms.CharField(disabled=True,label="العنوان")
+    birthdate = forms.DateField(disabled=True,label="تاريخ الميلاد")
+    collegeYear = forms.IntegerField(disabled=True,label="الفرقة")
 
 class VoteForm(forms.Form):
 
