@@ -1,5 +1,5 @@
 from django import forms
-from .models import Nominee_user, Vote, UserModel
+from .models import Nominee_user, Vote, User_Model
 from django.contrib.auth.models import User
 class NomineeForm(forms.ModelForm):
     class Meta:
@@ -12,7 +12,7 @@ class NomineeForm(forms.ModelForm):
             'rec_letter',
         ]
     
-    Name = forms.CharField( disabled=True)
+    Name = forms.CharField(disabled=True)
 """     nominee_id = forms.CharField(initial=UserModel.objects.get().Student_id,disabled=True, max_length=6)
     address = forms.CharField(initial=UserModel.objects.get().address,disabled=True)
     birthdate = forms.DateField(initial=UserModel.objects.get().birthdate,disabled=True)

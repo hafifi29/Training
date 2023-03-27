@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from training.models import Nominee_user
 from .forms import NomineeForm, VoteForm, ResultForm
 from django.contrib.auth.models import User as User_
-from .models import Vote
+from .models import Vote, Nominee_user
+from .models import User_Model
 
 # Create your views here.
 # user_object = User.objects.get(user_id = '200130')
@@ -41,9 +41,9 @@ def logout_view(request):
 def nomination(request):
     current_user = request.user
 
-    UserModel = get_object_or_404(UserModel, UserForeignKey=request.user)
+    User_Model = User_Model.objects.get(Name = 'mohamedadel')
 
-    initial_values = {'Name': UserModel.Name}
+    initial_values = {'Name': "UserModel.Name"}
     form = NomineeForm(request.POST or None, initial=initial_values)
     context = {
         'form': form

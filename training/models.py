@@ -3,17 +3,17 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
-class UserModel(models.Model):
-    UserForeignKey = models.ForeignKey(User.username, on_delete=models.CASCADE),
+class User_Model(models.Model):
+    Userkey = models.OneToOneField(User, on_delete=models.CASCADE)
     Name = models.CharField(max_length=50, default="")
-    Student_id = models.IntegerField(primary_key=True)
+    Student_id = models.IntegerField()
     address = models.CharField(max_length=200, null=True)
     birthdate = models.DateField(null=True)
     collegeYear = models.IntegerField(max_length=20, null=True)
 
 
 class Nominee_user(models.Model):
-    nominee_id = models.OneToOneField(UserModel, on_delete=models.CASCADE)
+    nominee_id = models.OneToOneField(User_Model, on_delete=models.CASCADE)
     phone_no = models.IntegerField(max_length=12)
     email = models.EmailField(max_length=50)
     community = models.CharField(max_length=20, choices=[('1', 'اللجنة العلمية'),
