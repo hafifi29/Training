@@ -9,7 +9,7 @@ class User_Model(models.Model):
     Student_id = models.IntegerField(unique=True)
     address = models.CharField(max_length=200, null=True)
     birthdate = models.DateField(null=True)
-    collegeYear = models.IntegerField(max_length=20, null=True)
+    collegeYear = models.IntegerField(null=True)
 
     def __str__(self):
         return str(self.Name)
@@ -17,7 +17,7 @@ class User_Model(models.Model):
 
 class Nominee_user(models.Model):
     UserModelKey = models.OneToOneField(User_Model, on_delete=models.CASCADE)
-    phone_no = models.IntegerField(max_length=12)
+    phone_no = models.IntegerField()
     email = models.EmailField(max_length=50)
     community = models.CharField(max_length=20, choices=[('1', 'اللجنة العلمية'),
                                            ('2', 'اللجنة الرياضية'),
@@ -38,8 +38,8 @@ class Nominee_user(models.Model):
 
 class Vote(models.Model):
     
-    voter_id = models.ForeignKey(User_Model, on_delete=models.CASCADE, null=True)
-    nominee_id = models.ForeignKey(Nominee_user, on_delete=models.CASCADE, null=True)
+    voter_id = models.ForeignKey(User_Model, on_delete=models.CASCADE, null=True, blank=True)
+    nominee_id = models.ForeignKey(Nominee_user, on_delete=models.CASCADE, null=True,  blank=True)
 
     def __str__(self):
         return str(self.id)

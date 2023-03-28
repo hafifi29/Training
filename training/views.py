@@ -83,7 +83,8 @@ def vote(request):
                 for Community in form.cleaned_data:
                     Nominee = form.cleaned_data[Community]
                     Nominee.Numofvotes = Nominee.Numofvotes + 1
-                    print (Nominee, '\n', User_Mod)
+                    Vote.objects.create(voter_id = User_Mod, nominee_id = Nominee)
+                    print (Nominee.Numofvotes, '\n')
                     Nominee.save()
                 context['ConfirmationMessage'] = "Vote sent successfuly"
             else:
