@@ -41,43 +41,57 @@ def logout_view(request):
 def nomination(request):
     current_user = request.user
     User_Mod = User_Model.objects.get(Userkey_id = current_user.id)
-    initial_values = {'Name': User_Mod.Name,
-                      'nominee_id': User_Mod.Student_id,
-                      'address': User_Mod.address,
-                        'birthdate': User_Mod.birthdate,
-                        'collegeYear': User_Mod.collegeYear
-                      }
-    form = NomineeForm(request.POST or None, initial=initial_values)
-    context = {
-        'form': form
-    }
-    if form.is_valid():
-        form.save()
-        form = NomineeForm()
-        context['ConfirmationMessage'] = "Application sent successfuly"
+    if Nominee_user.objects.filter(UserModelKey=User_Mod).exists():
+        context = {"ConfirmationMessage": 'Application already sent'}
+        return render(request, 'nom1.html', context=context)
+    
     else:
-        context['ConfirmationMessage'] = "Error: couldn't save your application"
-        
-    return render(request, 'nom1.html', context=context)
-
+        initial_values = {'Name': User_Mod.Name,
+                        'nominee_id': User_Mod.Student_id,
+                        'address': User_Mod.address,
+                            'birthdate': User_Mod.birthdate,
+                            'collegeYear': User_Mod.collegeYear,
+                        }
+        form = NomineeForm(request.POST or None, request.FILES, initial=initial_values)
+        context = {} 
+        if request.POST:
+            if form.is_valid():
+                NewNominee = form.save(commit=False)
+                NewNominee.UserModelKey = User_Mod
+                NewNominee.save()
+                context['ConfirmationMessage'] = "Application sent successfuly"
+            else:
+                context['ConfirmationMessage'] = "Error: couldn't save application"
+        context['form'] = form
+        return render(request, 'nom1.html', context=context)
 
 @login_required
 def vote(request):
     current_user = request.user
-    form = VoteForm(request.POST or None)
-    context = {
-        'form': form
-    }
-    if form.is_valid():
-        for Nom in form.cleaned_data:
-            Nominee_id = form.cleaned_data['Nom']
-            if  Nominee_user.objects.filter(nominee_id = Nominee_id).exists():
-                num_of_votes = Nominee_user.objects.get(nominee_id = 'Nominee_id').Numofvotes
-                num_of_votes = num_of_votes + 1
-                form = VoteForm()
-                context['ConfirmationMessage'] = "Vote sent successfuly"
-            else:
-                context['ConfirmationMessage'] = "Nominee not found"
+    User_Mod = User_Model.objects.get(Userkey_id = current_user.id)
+    if Vote.objects.filter(voter_id=User_Mod).exists():
+        context = {"ConfirmationMessage": 'Already voted'}
+        return render(request, 'nom1.html', context=context)
+
+    else:
+        form = VoteForm(request.POST or None)
+        context = {
+            'form': form
+        }
+        if request.POST:
+            if form.is_valid():
+                for Community in form.cleaned_data:
+                    Nominee = form.cleaned_data[Community]
+                    if  Nominee_user.objects.filter(UserModelKey = Nominee.UserModelKey).exists():
+                        num_of_votes = Nominee.Numofvotes
+                        print (num_of_votes)
+                        num_of_votes = num_of_votes + 1
+                        print(Nominee)
+                        context['ConfirmationMessage'] = "Vote sent successfuly"
+                        print (num_of_votes, '\n')
+                    else:
+                        context['ConfirmationMessage'] = "Nominee not found"
+                    Nominee.save()
     return render(request, 'vote1.html', context=context)
 
 

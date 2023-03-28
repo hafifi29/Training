@@ -6,14 +6,17 @@ from django.contrib.auth.models import User
 class User_Model(models.Model):
     Userkey = models.OneToOneField(User, on_delete=models.CASCADE)
     Name = models.CharField(max_length=50, default="")
-    Student_id = models.IntegerField()
+    Student_id = models.IntegerField(unique=True)
     address = models.CharField(max_length=200, null=True)
     birthdate = models.DateField(null=True)
     collegeYear = models.IntegerField(max_length=20, null=True)
 
+    def __str__(self):
+        return str(self.Name)
+
 
 class Nominee_user(models.Model):
-    nominee_id = models.OneToOneField(User_Model, on_delete=models.CASCADE)
+    UserModelKey = models.OneToOneField(User_Model, on_delete=models.CASCADE)
     phone_no = models.IntegerField(max_length=12)
     email = models.EmailField(max_length=50)
     community = models.CharField(max_length=20, choices=[('1', 'اللجنة العلمية'),
@@ -29,19 +32,17 @@ class Nominee_user(models.Model):
     final_list = models.BooleanField(default=False)
     Numofvotes = models.IntegerField(default=0)
 
-
     def __str__(self):
-        return str(self.nominee_id)
+        return str(self.UserModelKey.Name)
 
 
 class Vote(models.Model):
     
-    voting_id = models.IntegerField()
-    voter_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    nominee_id = models.ForeignKey(Nominee_user, on_delete=models.CASCADE)
+    voter_id = models.OneToOneField(User_Model, on_delete=models.CASCADE)
+    nominee_id = models.OneToOneField(Nominee_user, on_delete=models.CASCADE)
 
     def __str__(self):
-        return str(self.voting_id)
+        return str(self.id)
 
 
 class Contention(models.Model):

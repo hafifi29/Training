@@ -20,9 +20,13 @@
 {% block maincontent %}
   <main class="container">
 
-    <form id="myForm" class="nomination" action="{% url 'nomination' %}" method="POST">
+    <form enctype="multipart/form-data" id="myForm" class="nomination" action="{% url 'nomination' %}" method="POST">
       {%csrf_token%}
-      <div>
+
+      {% if ConfirmationMessage == 'Application already sent' or ConfirmationMessage == 'Application sent successfuly' %}
+      <div>{{ ConfirmationMessage }}</div>
+
+      {% else %}
         <label>{{form.Name.label}}</label>
         {{form.Name}}
       </div>
@@ -65,8 +69,9 @@
         <label>{{form.rec_letter.label}}</label>
         {{form.rec_letter}}
       </div>
-      <p style="color: red">{{ error }}</p>
+      <div>{{ ConfirmationMessage }}</div>
       <input type="submit" value="تقديم الاستمارة" />
+      {% endif %}
     </form>
   </main>
 {% endblock %}

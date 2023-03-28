@@ -7,7 +7,6 @@ class NomineeForm(forms.ModelForm):
     class Meta:
         model = Nominee_user
         fields = [
-            'nominee_id',
             'phone_no',
             'email',
             'community',
@@ -19,9 +18,8 @@ class NomineeForm(forms.ModelForm):
         'community': 'اللجنة',
         'rec_letter': 'اثبات المشاركة فى الأنشطة'
     }
-    
+    nominee_id = forms.CharField(disabled=True, label="الكود")
     Name = forms.CharField(disabled=True, label="الاسم")
-    nominee_id = forms.CharField(disabled=True, max_length=6,label="الكود")
     address = forms.CharField(disabled=True,label="العنوان")
     birthdate = forms.DateField(disabled=True,label="تاريخ الميلاد")
     collegeYear = forms.IntegerField(disabled=True,label="الفرقة")
