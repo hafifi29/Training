@@ -1,5 +1,5 @@
 from django import forms
-from .models import Nominee_user, Vote, User_Model
+from .models import Nominee_user, Vote, User_Model, Contention
 from django.contrib.auth.models import User
 
 
@@ -13,16 +13,17 @@ class NomineeForm(forms.ModelForm):
             'rec_letter',
         ]
         labels = {
-        "phone_no": "رقم الموبايل",
-        'email': 'الايميل',
-        'community': 'اللجنة',
-        'rec_letter': 'اثبات المشاركة فى الأنشطة'
-    }
+            "phone_no": "رقم الموبايل",
+            'email': 'الايميل',
+            'community': 'اللجنة',
+            'rec_letter': 'اثبات المشاركة فى الأنشطة'
+        }
     nominee_id = forms.CharField(disabled=True, label="الكود")
     Name = forms.CharField(disabled=True, label="الاسم")
-    address = forms.CharField(disabled=True,label="العنوان")
-    birthdate = forms.DateField(disabled=True,label="تاريخ الميلاد")
-    collegeYear = forms.IntegerField(disabled=True,label="الفرقة")
+    address = forms.CharField(disabled=True, label="العنوان")
+    birthdate = forms.DateField(disabled=True, label="تاريخ الميلاد")
+    collegeYear = forms.IntegerField(disabled=True, label="الفرقة")
+
 
 class VoteForm(forms.Form):
 
@@ -40,6 +41,25 @@ class VoteForm(forms.Form):
         community='6', final_list=True))
     Family = forms.ModelChoiceField(Nominee_user.objects.filter(
         community='7', final_list=True))
-    
+
+
 class ResultForm(forms.Form):
     Nominee_id = forms.CharField()
+
+
+class ContentionForm(forms.ModelForm):
+    class Meta:
+        model = Contention
+
+        fields = [
+            'user_id',
+            'nominee_id',
+            'reason',
+        ]
+
+    user_id = forms.CharField(disabled=True, label="الكود")
+
+    nominee_id = forms.ModelChoiceField(
+        Nominee_user.objects.filter(final_list=True), label="المرشح")
+
+    reason = forms.Field(label="السبب")
