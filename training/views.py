@@ -99,12 +99,14 @@ def result(request):
     context = {
         'form': form     
     }
+    context['v'] = "votes"
     if form.is_valid():
             Nominee_id = form.cleaned_data['Nominee_id']
-            if  Nominee_user.objects.filter(nominee_id = Nominee_id).exists():
-                num_of_votes = Nominee_user.objects.get(nominee_id = Nominee_id).Numofvotes
-                form = ResultForm()
-                context['num_of_votes'] = num_of_votes
+            if User_Model.objects.filter(Student_id = Nominee_id).exists():
+                Student = User_Model.objects.get(Student_id = Nominee_id)
+                if  Nominee_user.objects.filter(UserModelKey = Student).exists():
+                    num_of_votes = Nominee_user.objects.get(UserModelKey = Student).Numofvotes
+                    context['num_of_votes'] = num_of_votes
             else:
                 context['num_of_votes'] = "Nominee not found"
     return render(request,'results.html',context)
