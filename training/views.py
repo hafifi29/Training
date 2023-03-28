@@ -71,7 +71,7 @@ def vote(request):
     User_Mod = User_Model.objects.get(Userkey_id = current_user.id)
     if Vote.objects.filter(voter_id=User_Mod).exists():
         context = {"ConfirmationMessage": 'Already voted'}
-        return render(request, 'nom1.html', context=context)
+        return render(request, 'vote1.html', context=context)
 
     else:
         form = VoteForm(request.POST or None)
@@ -82,16 +82,12 @@ def vote(request):
             if form.is_valid():
                 for Community in form.cleaned_data:
                     Nominee = form.cleaned_data[Community]
-                    if  Nominee_user.objects.filter(UserModelKey = Nominee.UserModelKey).exists():
-                        num_of_votes = Nominee.Numofvotes
-                        print (num_of_votes)
-                        num_of_votes = num_of_votes + 1
-                        print(Nominee)
-                        context['ConfirmationMessage'] = "Vote sent successfuly"
-                        print (num_of_votes, '\n')
-                    else:
-                        context['ConfirmationMessage'] = "Nominee not found"
+                    Nominee.Numofvotes = Nominee.Numofvotes + 1
+                    print (Nominee, '\n', User_Mod)
                     Nominee.save()
+                context['ConfirmationMessage'] = "Vote sent successfuly"
+            else:
+                context['ConfirmationMessage'] = "Error: couldn't save application"
     return render(request, 'vote1.html', context=context)
 
 

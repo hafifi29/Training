@@ -38,8 +38,8 @@ class Nominee_user(models.Model):
 
 class Vote(models.Model):
     
-    voter_id = models.OneToOneField(User_Model, on_delete=models.CASCADE)
-    nominee_id = models.OneToOneField(Nominee_user, on_delete=models.CASCADE)
+    voter_id = models.ForeignKey(User_Model, on_delete=models.CASCADE, null=True)
+    nominee_id = models.ForeignKey(Nominee_user, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return str(self.id)

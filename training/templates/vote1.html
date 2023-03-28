@@ -21,8 +21,12 @@
   <main class="container">
     <form class="vote" method="POST">
       {%csrf_token%}
-        {{form.as_div}}
+      {% if ConfirmationMessage == 'Vote sent successfuly' or ConfirmationMessage == 'Already voted'%}
+      <div>{{ConfirmationMessage}}</div>
+      {% else %}
+      {{form.as_div}}
       <input type="submit" value="Vote " />
+      {% endif %}
     </form>
   </main>
 {% endblock %}
