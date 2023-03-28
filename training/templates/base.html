@@ -32,9 +32,15 @@
     {% else %}
     <button id="b1">Login</button>
     {% endif %}
-    <button id="b2">Vote</button>
-    <button id="b3">Apply for nominatinon</button>
-    <button id="b4">Result</button>
+    {% if acess.nomination == True %}
+      <button id="b3">Apply for nominatinon</button>
+    {% endif %}   
+    {% if acess.vote == True %}
+      <button id="b2">Vote</button>
+    {% endif %}
+    {% if acess.result == True %}
+      <button id="b4">Result</button>
+    {% endif %}  
   </nav>
   {% block maincontent %}
   <main class="container">
