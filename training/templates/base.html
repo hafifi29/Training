@@ -1,68 +1,55 @@
 <!DOCTYPE html>
 <html lang="en-US">
-{% block headcontent %}
-<head>
-  {% load static %}
-  <meta charset="utf-8">
-  <meta property="og:title" content="Home Page">
-  <meta property="og:image" content="images/logo.jpg">
-  <meta property="og:description" content="Students Union">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Students Union </title>
-  <link rel="stylesheet" href="{% static 'css/common.css' %}">
-  <link rel="stylesheet" href="{% static 'css/indexp.css' %}">
-  <link rel="icon" type="image/x-icon" href="{% static 'img/logo.jpg' %}" />
-</head>
-{% endblock %}
-<body>
-  <header>
-    <a href="{% url 'home' %}">
-      <img src="{% static 'img/logo.jpg' %}" alt="logo" class="logo">
-    </a>
-    <a href="{% url 'home' %}">
-      <h1 id="logotext1">FCAI Beni Suef</h1>
-      <h1 id="logotext2">Student's Union Elections</h1>
-    </a>
-  </header>
-
-  <nav>
-    {% if request.user.is_authenticated %}
-    <h1 id="welcomeMessage">Hello, {{request.user.username}}</h1>
-    <button id="b5">Logout</button>
-    {% else %}
-    <button id="b1">Login</button>
-    {% endif %}
-    {% if acess.nomination == True %}
-      <button id="b3">Apply for nominatinon</button>
-    {% endif %}   
-    {% if acess.vote == True %}
-      <button id="b2">Vote</button>
-    {% endif %}
-    {% if acess.result == True %}
-      <button id="b4">Result</button>
-    {% endif %}  
-  </nav>
-  {% block maincontent %}
-  <main class="container">
-    <p>Welcome to the student's union nomination hub</p>
-
-    <div id="image-part">
-      <h3 id="image-header">
-        <h3>
-          <img src="" class="im">
-    </div>
-
-    <div id="para">
-      <span id="paratitle"></span>
-    </div>
-
-    
-  </main>
+  {% block headcontent %}
+  <head>
+    {% load static %}
+    <meta charset="utf-8" />
+    <meta property="og:title" content="Home Page" />
+    <meta property="og:image" content="images/logo.jpg" />
+    <meta property="og:description" content="Students Union" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Students Union</title>
+    <link rel="stylesheet" href="{% static 'css/common.css' %}" />
+    <link rel="icon" type="image/x-icon" href="{% static 'img/logo.jpg' %}" />
+  </head>
   {% endblock %}
-  <footer>
-    <div id="foot"> FCAI Beni Suef © 2023 - all rights reserved.</div>
-  </footer>
-  {% include 'commonjs.html' %}
-</body>
+  <body>
+    <div class="container">
+      <header>
+        <a href="{% url 'home' %}">
+          <img src="{% static 'img/logo.jpg' %}" alt="logo" class="logo" />
+        </a>
+        <a href="{% url 'home' %}">
+          <h1 id="logotext1">FCAI Beni Suef Univercity</h1>
+        </a>
+      </header>
+      <aside class="main-side-bar">
+        {% if request.user.is_authenticated %}
+        <div class="user">
+          <img src="../static/img/user.svg" alt="User Icon" >
+          <h2 id="welcomeMessage">{{request.user.username}}</h2>  
+        </div>
+        <button id="b5">تسجيل خروج</button>
+        {% else %}
+        <button id="b1">تسجيل دخول</button>
+        {% endif %} {% if acess.nomination == True %}
+        <button id="b3">تقديم طلب الترشح</button>
+        {% endif %} {% if acess.vote == True %}
+        <button id="b2">انتخاب</button>
+        {% endif %} {% if acess.result == True %}
+        <button id="b4">النتيجه</button>
+        {% endif %}
+      </aside>
+      <section class="main-content">
+        {% block maincontent %}
+        {% endblock %}
 
+      </section>
+
+      <footer>
+        <div id="foot">FCAI Beni Suef © 2023 - all rights reserved.</div>
+      </footer>
+    </div>
+    {% include 'commonjs.html' %}
+  </body>
 </html>

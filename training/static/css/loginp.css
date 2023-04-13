@@ -1,0 +1,39 @@
+form {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    height: 300px;
+    align-items: center;
+    justify-content: space-around;
+    border-radius: 6px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px; 
+}
+
+.feild {
+    direction: rtl;
+    display: flex;
+    justify-content: space-between;
+    width: 300px;
+    align-items: center;
+}
+
+input {
+    mix-blend-mode: darken;
+    background-color: #eee;
+    height: 30px;
+    padding-right: 5px;
+}
+
+input:focus {
+    mix-blend-mode: normal;
+    background-color: white;
+}
+
+h2 {
+    cursor: context-menu;
+}
+
+h2::selection
+{
+    mix-blend-mode: color;
+}

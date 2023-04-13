@@ -8,25 +8,24 @@
   <meta property="og:description" content="Students Union" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="{% static 'css/common.css' %}" />
-  <link rel="stylesheet" href="{% static 'css/nomination.css'%}"" />
-    <link rel=" stylesheet" href="{% static 'css/vote.css' %}" />
+  <link rel=" stylesheet" href="{% static 'css/vote.css' %}" />
   <script src="{% static 'js/common.js' %}" defer></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/x-icon" href="{% static 'img/logo.jpg' %}" />
-    <title>Nomination Form</title>
+  <title>Nomination Form</title>
 </head>
 {% endblock %}
 
 {% block maincontent %}
-  <main class="container">
-    <form class="vote" method="POST">
-      {%csrf_token%}
-      {% if ConfirmationMessage == 'Vote sent successfuly' or ConfirmationMessage == 'Already voted'%}
-      <div>{{ConfirmationMessage}}</div>
-      {% else %}
-      {{form.as_div}}
-      <input type="submit" value="Vote " />
-      {% endif %}
-    </form>
-  </main>
+  
+  <form class="vote" method="POST">
+    {%csrf_token%}
+    {% if ConfirmationMessage == 'Vote sent successfuly' or ConfirmationMessage == 'Already voted'%}
+    <div>{{ConfirmationMessage}}</div>
+    {% else %}
+    {{form.as_div}}
+    <input type="submit" value="Vote " />
+    {% endif %}
+  </form>
+
 {% endblock %}

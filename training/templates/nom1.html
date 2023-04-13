@@ -18,62 +18,62 @@
 {% endblock %}
 
 {% block maincontent %}
-  <main class="container">
+  
 
-    <form enctype="multipart/form-data" id="myForm" class="nomination" action="{% url 'nomination' %}" method="POST">
-      {%csrf_token%}
+  <form enctype="multipart/form-data" id="myForm" class="nomination" action="{% url 'nomination' %}" method="POST">
+    {%csrf_token%}
 
-      {% if ConfirmationMessage == 'Application already sent' or ConfirmationMessage == 'Application sent successfuly' %}
-      <div>{{ ConfirmationMessage }}</div>
+    {% if ConfirmationMessage == 'Application already sent' or ConfirmationMessage == 'Application sent successfuly' %}
+    <div>{{ ConfirmationMessage }}</div>
 
-      {% else %}
-      <div>
-        <label>{{form.Name.label}}</label>
-        {{form.Name}}
-      </div>
+    {% else %}
+    <div class="feild">
+      {{form.Name.label}}
+      {{form.Name}}
+    </div>
 
-      <div>
-        <label>{{form.nominee_id.label}}</label>
-        {{form.nominee_id}}
-      </div>
+    <div class="feild">
+      {{form.nominee_id.label}}
+      {{form.nominee_id}}
+    </div>
 
-      <div>
-        <label>{{form.address.label}}</label>
-        {{form.address}}
-      </div>
+    <div class="feild">
+      {{form.address.label}}
+      {{form.address}}
+    </div>
 
-      <div>
-        <label>{{form.birthdate.label}}</label>
-        {{form.birthdate}}
-      </div>
+    <div class="feild">
+      {{form.birthdate.label}}
+      {{form.birthdate}}
+    </div>
 
-      <div>
-        <label>{{form.collegeYear.label}}</label>
-        {{form.collegeYear}}
-      </div>
+    <div class="feild">
+      {{form.collegeYear.label}}
+      {{form.collegeYear}}
+    </div>
 
-      <div>
-        <label>{{form.phone_no.label}}</label>
-        {{form.phone_no}}
-      </div>
+    <div class="feild">
+      {{form.phone_no.label}}
+      {{form.phone_no}}
+    </div>
 
-      <div>
-        <label>{{form.email.label}}</label>
-        {{form.email}}
-      </div>
+    <div class="feild">
+      {{form.email.label}}
+      {{form.email}}
+    </div>
 
-      <div>
-        <label>{{form.community.label}}</label>
-        {{form.community}}
-      </div>
+    <div class="feild">
+      {{form.community.label}}
+      {{form.community}}
+    </div>
 
-      <div>
-        <label>{{form.rec_letter.label}}</label>
-        {{form.rec_letter}}
-      </div>
-      <div>{{ ConfirmationMessage }}</div>
-      <input type="submit" value="تقديم الاستمارة" />
-      {% endif %}
-    </form>
-  </main>
+    <div class="feild">
+      {{form.rec_letter.label}}
+      {{form.rec_letter}}
+    </div>
+    <div>{{ ConfirmationMessage }}</div>
+    <input type="submit" value="تقديم الاستمارة" />
+    {% endif %}
+  </form>
+
 {% endblock %}
