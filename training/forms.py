@@ -25,21 +25,20 @@ class NomineeForm(forms.ModelForm):
     collegeYear = forms.IntegerField(disabled=True,label="الفرقة")
 
 class VoteForm(forms.Form):
-
+    Scientific = forms.ModelChoiceField(Nominee_user.objects.filter(
+        community='1', final_list=True), label='اللجنة العلمية')
     Sports = forms.ModelChoiceField(Nominee_user.objects.filter(
-        community='2', final_list=True))
-    Scientific = forms.ModelChoiceField(
-        Nominee_user.objects.filter(community='1', final_list=True))
+        community='2', final_list=True),label='اللجنة الرياضية')
     Social = forms.ModelChoiceField(Nominee_user.objects.filter(
-        community='3', final_list=True))
+        community='3', final_list=True), label='اللجنة الاجتماعية')
     Scout = forms.ModelChoiceField(Nominee_user.objects.filter(
-        community='4', final_list=True))
-    Cultural = forms.ModelChoiceField(
-        Nominee_user.objects.filter(community='5', final_list=True))
+        community='4', final_list=True),label='لجنة الجوالة')
+    Cultural = forms.ModelChoiceField(Nominee_user.objects.filter(
+        community='5', final_list=True), label='اللجنة الثقافية')
     Art = forms.ModelChoiceField(Nominee_user.objects.filter(
-        community='6', final_list=True))
+        community='6', final_list=True),label='اللجنة الفنية')
     Family = forms.ModelChoiceField(Nominee_user.objects.filter(
-        community='7', final_list=True))
+        community='7', final_list=True),label='لجنة الأسر')
     
 class ResultForm(forms.Form):
-    Nominee_id = forms.CharField()
+    Nominee_id = forms.CharField(label='الكود')

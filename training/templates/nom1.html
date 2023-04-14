@@ -8,72 +8,74 @@
   <meta property="og:image" content="../images/logo.jpg" />
   <meta property="og:description" content="Students Union" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="{% static 'css/normalize.css' %}" />
   <link rel="stylesheet" href="{% static 'css/common.css' %}" />
   <link rel="stylesheet" href="{% static 'css/nomination.css' %}" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/x-icon" href="{% static 'img/logo.jpg' %}" />
   <title>Nomination Form</title>
 </head>
-
 {% endblock %}
 
 {% block maincontent %}
-  
-
+<div class="form-container">
   <form enctype="multipart/form-data" id="myForm" class="nomination" action="{% url 'nomination' %}" method="POST">
     {%csrf_token%}
 
+    <h2 class="form-name">استمارة ترشح</h2>
     {% if ConfirmationMessage == 'Application already sent' or ConfirmationMessage == 'Application sent successfuly' %}
     <div>{{ ConfirmationMessage }}</div>
 
     {% else %}
-    <div class="feild">
+    <div class="field">
       {{form.Name.label}}
       {{form.Name}}
     </div>
 
-    <div class="feild">
+    <div class="field">
       {{form.nominee_id.label}}
       {{form.nominee_id}}
     </div>
 
-    <div class="feild">
+    <div class="field">
       {{form.address.label}}
       {{form.address}}
     </div>
 
-    <div class="feild">
+    <div class="field">
       {{form.birthdate.label}}
       {{form.birthdate}}
     </div>
 
-    <div class="feild">
+    <div class="field">
       {{form.collegeYear.label}}
       {{form.collegeYear}}
     </div>
 
-    <div class="feild">
+    <div class="field">
       {{form.phone_no.label}}
       {{form.phone_no}}
     </div>
 
-    <div class="feild">
+    <div class="field">
       {{form.email.label}}
       {{form.email}}
     </div>
 
-    <div class="feild">
+    <div class="field">
       {{form.community.label}}
       {{form.community}}
     </div>
 
-    <div class="feild">
+    <div class="field">
       {{form.rec_letter.label}}
       {{form.rec_letter}}
     </div>
+    {% if ConfirmationMessage %}
     <div>{{ ConfirmationMessage }}</div>
+    {% endif %}
     <input type="submit" value="تقديم الاستمارة" />
     {% endif %}
   </form>
-
+</div>
 {% endblock %}

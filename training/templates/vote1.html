@@ -7,9 +7,9 @@
   <meta property="og:image" content="../images/logo.jpg" />
   <meta property="og:description" content="Students Union" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="{% static 'css/normalize.css' %}" />
   <link rel="stylesheet" href="{% static 'css/common.css' %}" />
   <link rel=" stylesheet" href="{% static 'css/vote.css' %}" />
-  <script src="{% static 'js/common.js' %}" defer></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/x-icon" href="{% static 'img/logo.jpg' %}" />
   <title>Nomination Form</title>
@@ -17,15 +17,49 @@
 {% endblock %}
 
 {% block maincontent %}
-  
+  <div class="form-container">
   <form class="vote" method="POST">
     {%csrf_token%}
+  <h2 class="form-name">انتخاب</h2>
     {% if ConfirmationMessage == 'Vote sent successfuly' or ConfirmationMessage == 'Already voted'%}
     <div>{{ConfirmationMessage}}</div>
     {% else %}
-    {{form.as_div}}
-    <input type="submit" value="Vote " />
+    <div class="field">
+      {{form.Scientific.label}}
+      {{form.Scientific}}
+    </div>
+
+    <div class="field">
+      {{form.Sports.label}}
+      {{form.Sports}}
+    </div>
+
+    <div class="field">
+      {{form.Social.label}}
+      {{form.Social}}
+    </div>
+
+    <div class="field">
+      {{form.Scout.label}}
+      {{form.Scout}}
+    </div>
+
+    <div class="field">
+      {{form.Cultural.label}}
+      {{form.Cultural}}
+    </div>
+
+    <div class="field">
+      {{form.Art.label}}
+      {{form.Art}}
+    </div>
+
+    <div class="field">
+      {{form.Family.label}}
+      {{form.Family}}
+    </div>
+    <input type="submit" value="ارسال" />
     {% endif %}
   </form>
-
+</div>
 {% endblock %}

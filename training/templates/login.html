@@ -1,5 +1,6 @@
-{% extends 'base.html' %} {% block headcontent %}
+{% extends 'base.html' %}
 
+{% block headcontent %}
 <head>
   {% load static %}
   <meta charset="utf-8" />
@@ -7,22 +8,24 @@
   <meta property="og:image" content="images/logo.jpg" />
   <meta property="og:description" content="Students Union" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="{% static 'css/normalize.css' %}" />
   <link rel="stylesheet" href="{% static 'css/common.css' %}" />
   <link rel="stylesheet" href="{% static 'css/loginp.css' %}" />
   <link rel="icon" type="image/x-icon" href="{% static 'img/logo.jpg' %}" />
   <title>Login</title>
-
 </head>
-{% endblock %} {% block maincontent %}
+{% endblock %}
 
+{% block maincontent %}
+<div class="form-container">
 <form id="login" action="{% url 'sign_in' %}" method="POST">
   {%csrf_token%}
-  <h2>تسجيل الدخول</h2>
-  <div class="feild">
+  <h2 class="form-name">تسجيل الدخول</h2>
+  <div class="field">
     <label for="username">الاسم</label>
-    <input type=" text" name="username" id="username" placeholder="Username" />
+    <input type="text" name="username" id="username" placeholder="Username" />
   </div>
-  <div class="feild">
+  <div class="field">
     <label for="password">كلمة المرور</label>
     <input
       type="password"
@@ -36,5 +39,5 @@
   {% endif %}
   <input type="submit" name="submit" value="تسجيل" />
 </form>
-
+</div>
 {% endblock %}
