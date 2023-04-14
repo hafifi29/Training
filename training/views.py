@@ -13,10 +13,10 @@ def admincheck(request):
     current_user = request.user
     if current_user.is_authenticated:
         if Admin_user.objects.filter(Userkey=current_user).exists():
-                print("frfrf")
                 return {'admin': True}
-    else:
-        return {'admin': False}
+        else:
+            return {'admin': False}
+    return {'admin': False}
 
 
 def home(request):
@@ -35,7 +35,7 @@ def sign_in(request):
             request, username=username, password=password)
 
         if user_logedin is None:
-            context += {"error": "Invalid Username or Password."}
+            context.update({"error": "Invalid Username or Password."})
             print("error")
             return render(request, 'login.html', context)
 
@@ -62,7 +62,7 @@ def nomination(request):
         current_user = request.user
         User_Mod = User_Model.objects.get(Userkey_id = current_user.id)
         if Nominee_user.objects.filter(UserModelKey=User_Mod).exists():
-            context += {"ConfirmationMessage": 'Application already sent'}
+            context.update({"ConfirmationMessage": 'Application already sent'})
             return render(request, 'nom1.html', context=context)
         
         else:
@@ -96,14 +96,14 @@ def vote(request):
         current_user = request.user
         User_Mod = User_Model.objects.get(Userkey_id = current_user.id)
         if Vote.objects.filter(voter_id=User_Mod).exists():
-            context += {"ConfirmationMessage": 'Already voted'}
+            context.update({"ConfirmationMessage": 'Already voted'})
             return render(request, 'vote1.html', context=context)
 
         else:
             form = VoteForm(request.POST or None)
-            context += {
+            context.update({
                 'form': form
-            }
+            })
             if request.POST:
                 if form.is_valid():
                     for Community in form.cleaned_data:
@@ -126,9 +126,9 @@ def result(request):
     context = admincheck(request)
     if Control_content.objects.first().result == True:
         form = ResultForm(request.POST or None)
-        context += {
+        context.update({
             'form': form
-        }
+        })
         context['v'] = "votes"
         if form.is_valid():
                 Nominee_id = form.cleaned_data['Nominee_id']
