@@ -52,14 +52,12 @@ class ContentionForm(forms.ModelForm):
         model = Contention
 
         fields = [
-            'user_id',
             'nominee_id',
             'reason',
         ]
 
-    user_id = forms.CharField(disabled=True, label="الكود")
-
+    Name = forms.CharField(disabled=True, label="الاسم")
+    User_id = forms.CharField(disabled=True, label="الكود")
     nominee_id = forms.ModelChoiceField(
         Nominee_user.objects.filter(final_list=True), label="المرشح")
-
     reason = forms.Field(label="السبب")

@@ -122,9 +122,9 @@ def result(request):
 def contention(request):
     current_user = request.user
     user_mod = User_Model.objects.get(Userkey_id=current_user.id)
-
-    initial_values = {'user_id': user_mod}
-
+    initial_values = {'Name': user_mod.Name,
+                    'User_id': user_mod.Student_id
+}
     form = ContentionForm(request.POST or None, initial=initial_values)
     context = {}
     if request.POST:
