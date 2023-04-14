@@ -1,5 +1,5 @@
 from django import forms
-from .models import Nominee_user, Vote, User_Model
+from .models import Nominee_user, Vote, User_Model, Contention
 from django.contrib.auth.models import User
 
 
@@ -42,3 +42,18 @@ class VoteForm(forms.Form):
     
 class ResultForm(forms.Form):
     Nominee_id = forms.CharField(label='الكود')
+
+class ContentionForm(forms.ModelForm):
+    class Meta:
+        model = Contention
+
+        fields = [
+            'nominee_id',
+            'reason',
+        ]
+
+    Name = forms.CharField(disabled=True, label="الاسم")
+    User_id = forms.CharField(disabled=True, label="الكود")
+    nominee_id = forms.ModelChoiceField(
+        Nominee_user.objects.filter(final_list=True), label="المرشح")
+    reason = forms.Field(label="السبب")

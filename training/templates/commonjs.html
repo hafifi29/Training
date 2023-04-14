@@ -5,6 +5,9 @@
   let myButton3 = document.querySelector("#b3");
   let myButton4 = document.querySelector("#b4");
   let myButton5 = document.querySelector("#b5");
+  let myButton6 = document.querySelector("#b6");
+
+
 
   let registerpagebutton = document.querySelector("#b4-log");
   let loginpagebutton = document.querySelector("#b5-log");
@@ -16,12 +19,11 @@
 
   menu_icon.onclick = () => {
     if (main_side_bar.className == 'main-side-bar main-side-bar-collapsed')
-      {main_side_bar.classList.remove("main-side-bar-collapsed")
-      
+      {
+        main_side_bar.classList.remove("main-side-bar-collapsed")
     }
     else
     main_side_bar.classList.add("main-side-bar-collapsed") 
-
    };
 
   if (myButton1 != null) {
@@ -29,19 +31,34 @@
     window.open("{% url 'sign_in' %}", "_self");
   };
 };
+
+if (myButton2 != null) {
   myButton2.onclick = () => {
     window.open("{% url 'vote1' %}", "_self");
   };
+};
+
+if (myButton3 != null) {
   myButton3.onclick = () => {
     window.open("{% url 'nomination' %}", "_self");
   };
+};
+
+if (myButton4 != null){
   myButton4.onclick = () => {
     window.open("{% url 'result' %}", "_self");
   };
+};
+
 if (myButton5 != null) {
   myButton5.onclick = () => {
     window.open("{% url 'log_out' %}", "_self");
   };
 };
 
+if (myButton6 != null){
+myButton6.onclick = () => {
+    window.open("{% url 'contention' %}", "_self");
+  };
+};
 </script>

@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404,HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from .forms import NomineeForm, VoteForm, ResultForm
+from .forms import NomineeForm, VoteForm, ResultForm, ContentionForm
 from django.contrib.auth.models import User as User_
-from .models import Vote, Nominee_user
+from .models import Vote, Nominee_user, Contention
 from .models import User_Model
 from .models import Control_content
 
@@ -123,3 +123,25 @@ def result(request):
         return render(request,'results.html',context)
     else:
         return HttpResponse('Erorr 404 Not found')
+    
+
+@login_required
+def contention(request):
+    current_user = request.user
+    user_mod = User_Model.objects.get(Userkey_id=current_user.id)
+    initial_values = {'Name': user_mod.Name,
+                    'User_id': user_mod.Student_id
+}
+    form = ContentionForm(request.POST or None, initial=initial_values)
+    context = {}
+    if request.POST:
+        if form.is_valid():
+            Newcon = form.save(commit=False)
+            Newcon.user_id = user_mod
+            Newcon.save()
+            context['ConfirmationMessage'] = "Application sent successfuly"
+        else:
+            context['ConfirmationMessage'] = "Error: couldn't save application"
+
+    context['form'] = form
+    return render(request, 'contention.html', context=context)

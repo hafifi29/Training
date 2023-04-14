@@ -45,16 +45,10 @@ class Vote(models.Model):
     def __str__(self):
         return str(self.id)
 
-
 class Contention(models.Model):
-
-    contention_id = models.IntegerField()
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(User_Model, on_delete=models.CASCADE)
     nominee_id = models.ForeignKey(Nominee_user, on_delete=models.CASCADE)
     reason = models.TextField()
-
-    def __str__(self):
-        return str(self.contention_id)
     
 
 # control what apper to students 

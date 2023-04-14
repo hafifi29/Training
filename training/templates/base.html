@@ -44,12 +44,14 @@
         </div>
 
         <div class="sidebar-options">
-        {% if acess.nomination == True %}
+        {% if access.nomination == True %}
         <button id="b3">تقديم طلب الترشح</button>
-        {% endif %} {% if acess.vote == True %}
+        {% endif %} {% if access.vote == True %}
         <button id="b2">انتخاب</button>
-        {% endif %} {% if acess.result == True %}
+        {% endif %} {% if access.result == True %}
         <button id="b4">النتيجه</button>
+        {% endif %} {% if access.contention == True %}
+        <button id="b6">تقديم طعن</button>
         {% endif %}
         </div>
       </aside>

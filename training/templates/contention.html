@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block headcontent %}
+
+<head>
+    {% load static %}
+    <meta charset="utf-8" />
+    <meta property="og:title" content="Nomination page" />
+    <meta property="og:image" content="../images/logo.jpg" />
+    <meta property="og:description" content="Students Union" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'css/normalize.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/common.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/contention.css' %}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="{% static 'img/logo.jpg' %}" />
+    <title>contention Form</title>
+</head>
+
+{% endblock %}
+
+{% block maincontent %}
+<div class="form-container">
+    <form enctype="multipart/form-data" id="myForm" class="contention" action="{% url 'contention' %}" method="POST">
+        {%csrf_token%}
+
+        <h2 class="form-name">استمارة طعن</h2>
+
+        {% if ConfirmationMessage == 'Application sent successfuly' %}
+        <div>{{ ConfirmationMessage }}</div>
+
+        {% else %}
+
+        <div class="field">
+            <label>{{form.Name.label}}</label>
+            {{form.Name}}
+        </div>
+        
+        <div class="field">
+            <label>{{form.User_id.label}}</label>
+            {{form.User_id}}
+        </div>
+
+        <div class="field">
+            <label>{{form.nominee_id.label}}</label>
+            {{form.nominee_id}}
+        </div>
+
+        <div class="field">
+            <label>{{form.reason.label}}</label>
+            {{form.reason}}
+        </div>
+
+        <div class="field">{{ ConfirmationMessage }}</div>
+        <input type="submit" value="تقديم الاستمارة" />
+        {% endif %}
+    </form>
+    </div>
+{% endblock %}
