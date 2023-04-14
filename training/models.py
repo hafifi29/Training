@@ -37,6 +37,12 @@ class Nominee_user(models.Model):
         return str(self.UserModelKey.Name)
 
 
+class Admin_user(models.Model):
+    Userkey = models.OneToOneField(User, on_delete=models.CASCADE)
+    Name = models.CharField(max_length=50, default="")
+
+
+
 class Vote(models.Model):
     
     voter_id = models.ForeignKey(User_Model, on_delete=models.CASCADE, null=True, blank=True)
