@@ -1,5 +1,8 @@
 <script defer>
-  
+$(document).ready(function() {
+    $('select').select2({  maximumSelectionLength: 2
+
+});
   let myButton1 = document.querySelector("#b1");
   let myButton2 = document.querySelector("#b2");
   let myButton3 = document.querySelector("#b3");
@@ -12,10 +15,11 @@
   let registerpagebutton = document.querySelector("#b4-log");
   let loginpagebutton = document.querySelector("#b5-log");
 
-  let myHeading = document.querySelector("h1");
+  let header = document.querySelector("header");
 
   let menu_icon = document.querySelector(".menu-icon")
   let main_side_bar = document.querySelector(".main-side-bar")
+
 
   menu_icon.onclick = () => {
     if (main_side_bar.className == 'main-side-bar main-side-bar-collapsed')
@@ -61,4 +65,30 @@ myButton6.onclick = () => {
     window.open("{% url 'contention' %}", "_self");
   };
 };
+
+/*
+let vote_fields = document.querySelectorAll(".vote-field")
+
+vote_fields.forEach(function(vote_field){
+
+  function modifyOptions(event){
+    
+    let selectedOptions = vote_field.selectedOptions;
+
+        if (selectedOptions.length == 2)
+          for (var i = 0; i < vote_field.options.length; i++) {
+            console.log(Array.from(selectedOptions))
+            if (!Array.from(selectedOptions).includes(vote_field.options[i]))
+              vote_field.options[i].disabled = true;
+          }
+
+        if(selectedOptions.length != 2){
+        for (var i = 0; i < vote_field.options.length; i++) {
+          vote_field.options[i].disabled = false;
+        }}
+  }
+  vote_field.addEventListener("change", modifyOptions);
+ 
+})*/
+});
 </script>

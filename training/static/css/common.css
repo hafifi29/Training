@@ -5,9 +5,7 @@
 .container {
   display: grid;
   grid-template-columns: repeat(13, 1fr) auto;
-  grid-template-rows: 100px 1fr 50px;
-  height: 100vh;
-  overflow: hidden;
+  grid-template-rows: 100px minmax(calc(100vh - 150px),1fr) 50px;
   font-family: muli;
 }
 
@@ -20,6 +18,10 @@ header {
   background-color: #333;
   justify-content: left;
   padding: 10px;
+  position: sticky;
+  top:0px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 3px 5px, rgba(0, 0, 0, 0.22) 0px 1px 10px;
+
 }
 
 header a {
@@ -45,6 +47,11 @@ header a:last-of-type {
   align-items: start;
   z-index: 2;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+  position: sticky;
+  top:0px;
+  position: sticky;
+  height: 100vh;
+  top:0px;
 }
 
 .main-side-bar-collapsed{
@@ -128,8 +135,50 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap;
+  gap: 50px;
   z-index: 1;
   font: 1.2em muli;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  margin-right: 100px;
+  margin-left: 100px;
+}
+
+.card-large{
+  padding: 20px 0px 20px;
+  border-radius: 58px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+  min-width: 800px;
+  min-width: 100%;
+  min-height: 500px;
+}
+
+.card-medium{
+  padding: 20px 0px 20px;
+  border-radius: 58px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+  min-width: 70%;
+  min-height: 300px;
+  flex: 1;
+}
+
+.card-small{
+  padding: 20px 0px 20px;
+  border-radius: 58px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+  min-width: 35%;
+  min-height: 300px;
+  flex: 1;
+}
+
+.card-tiny{
+  padding: 20px 0px 20px;
+  border-radius: 58px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+  min-width: 5%;
+  min-height: 300px;
+  flex: 1;
 }
 
 /*forms*/

@@ -107,11 +107,12 @@ def vote(request):
             if request.POST:
                 if form.is_valid():
                     for Community in form.cleaned_data:
-                        Nominee = form.cleaned_data[Community]
-                        Nominee.Numofvotes = Nominee.Numofvotes + 1
-                        Vote.objects.create(voter_id = User_Mod, nominee_id = Nominee)
-                        print (Nominee.Numofvotes, '\n')
-                        Nominee.save()
+                        Nominees = form.cleaned_data[Community]
+                        for Nominee in Nominees:
+                            Nominee.Numofvotes = Nominee.Numofvotes + 1
+                            Vote.objects.create(voter_id = User_Mod, nominee_id = Nominee)
+                            print (Nominee)
+                            Nominee.save()
                     context['ConfirmationMessage'] = "Vote sent successfuly"
                 else:
                     context['ConfirmationMessage'] = "Error: couldn't save application"
@@ -172,6 +173,10 @@ def contention(request):
 def admin(request):
     context = admincheck(request)
     if context['admin'] == True:
+        for c in Nominee_user.community.field.choices:
+            NumofNom = Nominee_user.objects.filter(community = c[0]).count()
+            context.update({c[0]: NumofNom})
+        print(context)
         return render(request, 'adminp1.html', context)
     else:
         return HttpResponse('Erorr 404 Not found')
