@@ -9,11 +9,12 @@ from .models import Control_content
 
 # Create your views here.
 
+
 def admincheck(request):
     current_user = request.user
     if current_user.is_authenticated:
         if Admin_user.objects.filter(Userkey=current_user).exists():
-                return {'admin': True}
+            return {'admin': True}
         else:
             return {'admin': False}
     return {'admin': False}
