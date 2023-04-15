@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block headcontent %}
+
 <head>
   {% load static %}
 
@@ -21,10 +22,10 @@
 {% endblock %}
 
 {% block maincontent %}
-  <div class="form-container">
+<div class="form-container">
   <form class="vote" method="POST">
     {%csrf_token%}
-  <h2 class="form-name">انتخاب</h2>
+    <h2 class="form-name">انتخاب</h2>
     {% if ConfirmationMessage == 'Vote sent successfuly' or ConfirmationMessage == 'Already voted'%}
     <div>{{ConfirmationMessage}}</div>
     {% else %}
@@ -34,8 +35,18 @@
     </div>
 
     <div class="field">
+      {{form.Scientific2.label}}
+      {{form.Scientific2}}
+    </div>
+
+    <div class="field">
       {{form.Sports.label}}
       {{form.Sports}}
+    </div>
+
+    <div class="field">
+      {{form.Sports2.label}}
+      {{form.Sports2}}
     </div>
 
     <div class="field">
@@ -44,8 +55,18 @@
     </div>
 
     <div class="field">
+      {{form.Social2.label}}
+      {{form.Social2}}
+    </div>
+
+    <div class="field">
       {{form.Scout.label}}
       {{form.Scout}}
+    </div>
+
+    <div class="field">
+      {{form.Scout2.label}}
+      {{form.Scout2}}
     </div>
 
     <div class="field">
@@ -54,14 +75,30 @@
     </div>
 
     <div class="field">
+      {{form.Cultural2.label}}
+      {{form.Cultural2}}
+    </div>
+
+    <div class="field">
       {{form.Art.label}}
       {{form.Art}}
+    </div>
+
+    <div class="field">
+      {{form.Art2.label}}
+      {{form.Art2}}
     </div>
 
     <div class="field">
       {{form.Family.label}}
       {{form.Family}}
     </div>
+
+    <div class="field">
+      {{form.Family2.label}}
+      {{form.Family2}}
+    </div>
+
     <input type="submit" value="ارسال" />
     {% endif %}
   </form>
