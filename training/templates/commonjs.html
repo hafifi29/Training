@@ -1,25 +1,13 @@
 <script defer>
 $(document).ready(function() {
+
+/*select2 package*/
     $('select').select2({  maximumSelectionLength: 2
-
 });
-  let myButton1 = document.querySelector("#b1");
-  let myButton2 = document.querySelector("#b2");
-  let myButton3 = document.querySelector("#b3");
-  let myButton4 = document.querySelector("#b4");
-  let myButton5 = document.querySelector("#b5");
-  let myButton6 = document.querySelector("#b6");
 
-
-
-  let registerpagebutton = document.querySelector("#b4-log");
-  let loginpagebutton = document.querySelector("#b5-log");
-
-  let header = document.querySelector("header");
-
-  let menu_icon = document.querySelector(".menu-icon")
-  let main_side_bar = document.querySelector(".main-side-bar")
-
+/*Menu icon functionality*/
+let main_side_bar = document.querySelector(".main-side-bar")
+let menu_icon = document.querySelector(".menu-icon")
 
   menu_icon.onclick = () => {
     if (main_side_bar.className == 'main-side-bar main-side-bar-collapsed')
@@ -29,6 +17,17 @@ $(document).ready(function() {
     else
     main_side_bar.classList.add("main-side-bar-collapsed") 
    };
+
+
+let header = document.querySelector("header");
+
+/*Buttons*/
+  let myButton1 = document.querySelector("#b1");
+  let myButton2 = document.querySelector("#b2");
+  let myButton3 = document.querySelector("#b3");
+  let myButton4 = document.querySelector("#b4");
+  let myButton5 = document.querySelector("#b5");
+  let myButton6 = document.querySelector("#b6");
 
   if (myButton1 != null) {
   myButton1.onclick = () => {
@@ -65,6 +64,17 @@ myButton6.onclick = () => {
     window.open("{% url 'contention' %}", "_self");
   };
 };
+
+
+
+
+
+
+
+
+
+
+
 
 /*
 let vote_fields = document.querySelectorAll(".vote-field")
