@@ -1,0 +1,36 @@
+<head>
+    {% load static %}
+    <meta charset="utf-8" />
+    <title>update nominee</title>
+</head>
+
+<div>
+    <center>
+        <h1>nominees</h1>
+        </br>
+        <table class="table table-striped
+    table-hover">
+
+            {%for i in nominee%}
+            <tr>
+                <td>
+                    {{i}}
+                </td>
+                <td>
+                    {{i.UserModelKey.Student_id}}
+                </td>
+                <td>
+                    <!-- put link to recommendation letter -->
+                </td>
+                <td>
+                    {{i.final_list}}
+                </td>
+                <td align="right">
+                    <a href="{%url 'update_nominee' i.UserModelKey.Student_id%}">Update</a>
+                </td>
+
+            </tr>
+            {%endfor%}
+        </table>
+    </center>
+</div

@@ -74,3 +74,27 @@ class ContentionForm(forms.ModelForm):
     nominee_id = forms.ModelChoiceField(
         Nominee_user.objects.filter(final_list=True), label="المرشح")
     reason = forms.Field(label="السبب")
+
+
+class NomineeForm_update(forms.ModelForm):
+    class Meta:
+        model = Nominee_user
+        fields = [
+            'phone_no',
+            'email',
+            'community',
+            'rec_letter',
+            'final_list'
+        ]
+        labels = {
+            "phone_no": "رقم الموبايل",
+            'email': 'الايميل',
+            'community': 'اللجنة',
+            'rec_letter': 'اثبات المشاركة فى الأنشطة',
+            'final_list': 'اللائحة النهائية'
+        }
+    nominee_id = forms.CharField(disabled=True, label="الكود")
+    Name = forms.CharField(disabled=True, label="الاسم")
+    address = forms.CharField(disabled=True, label="العنوان")
+    birthdate = forms.DateField(disabled=True, label="تاريخ الميلاد")
+    collegeYear = forms.IntegerField(disabled=True, label="الفرقة")
