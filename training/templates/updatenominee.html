@@ -1,16 +1,15 @@
+{% extends 'base.html' %}
+
 {% block headcontent %}
-
-<head>
-    {% load static %}
-    <meta charset="utf-8" />
-
-    <title>update nominee</title>
-</head>
+{% load static %}
+  <meta property="og:title" content="Nominee Update Page" />
+  <link rel="stylesheet" href="{% static 'css/nomination.css' %}" />
+  <title>Nominee Update Form</title>
 {% endblock %}
 
 {% block maincontent %}
 <div>
-    <form enctype="multipart/form-data" id="myForm" class="nomination" action="{% url 'nomination' %}" method="POST">
+    <form enctype="multipart/form-data" id="myForm" class="form-container" method="POST">
         {%csrf_token%}
         <h1>update nominee...</h1>
         <div class="field">

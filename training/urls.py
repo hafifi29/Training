@@ -12,7 +12,7 @@ urlpatterns = [
     path('results/', views.result, name='result'),
     path('contention/', views.contention, name='contention'),
     path('adminp/', views.admin, name='adminp'),
-    path('list_nominee',
+    path('list_nominee/',
          views.list_nominee, name='list_nominee'),
     path('update_nominee/<nominee_id>',
          views.update_nominee, name='update_nominee')
