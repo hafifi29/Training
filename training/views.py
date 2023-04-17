@@ -53,6 +53,8 @@ def admincheck(request):
 
 def home(request):
     context = admincheck(request)
+    if context['admin'] == True:
+        return redirect('adminp')
     return render(request, 'index.html', context)
 
 
@@ -74,8 +76,7 @@ def sign_in(request):
 
         login(request, user_logedin)
 
-        if context['admin'] == True:
-            return render(request, 'adminp1.html', context)
+        context = admincheck(request)
 
         return redirect('home')
 
@@ -85,7 +86,7 @@ def sign_in(request):
 def logout_view(request):
     logout(request)
     context = admincheck(request)
-    return render(request, 'index.html', context)
+    return redirect('home')
 
 
 @login_required
@@ -142,12 +143,24 @@ def vote(request):
             if request.POST:
                 if form.is_valid():
                     for Community in form.cleaned_data:
+
+
+<< << << < HEAD
                         Nominee = form.cleaned_data[Community]
                         Nominee.Numofvotes = Nominee.Numofvotes + 1
                         Vote.objects.create(
                             voter_id=User_Mod, nominee_id=Nominee)
                         print(Nominee.Numofvotes, '\n')
                         Nominee.save()
+== == == =
+                        Nominees = form.cleaned_data[Community]
+                        for Nominee in Nominees:
+                            Nominee.Numofvotes = Nominee.Numofvotes + 1
+                            Vote.objects.create(
+                                voter_id=User_Mod, nominee_id=Nominee)
+                            print(Nominee)
+                            Nominee.save()
+>>>>>> > 5df43107c8bf509ba5859e7093278852c8aa099e
                     context['ConfirmationMessage'] = "Vote sent successfuly"
                 else:
                     context['ConfirmationMessage'] = "Error: couldn't save application"
@@ -209,6 +222,20 @@ def contention(request):
 def admin(request):
     context = admincheck(request)
     if context['admin'] == True:
+        committee = {}
+        nominees = {}
+
+        for c in Nominee_user.community.field.choices:
+            NumofNominees = Nominee_user.objects.filter(community = c[0]).count()
+            committee.update({'c'+ c[0]: {'numofNom': NumofNominees}})
+
+        i=1
+        for Nominee in Nominee_user.objects.all():
+            nominees.update({'n'+str(i):{'الاسم': Nominee.UserModelKey.Name, 'عدد الأصوات': Nominee.Numofvotes, "اللجنة": Nominee.get_community_display()}})
+            i += 1 
+
+        context.update({'committee': committee, 'nominees' : nominees})
+        print(context)
         return render(request, 'adminp1.html', context)
     else:
         return HttpResponse('Erorr 404 Not found')

@@ -1,0 +1,77 @@
+
+
+<script>
+/*Plots*/
+
+/*number of nominees plot*/
+let numofnomplot = document.querySelector("#cdp2")
+
+let datacdp2 = [{
+    x: ['اللجنة العلمية','اللجنة الرياضية','اللجنة الاجتماعية','أسرة الجوالة و الخدمات','اللجنة الثقافية','لجنة الاسر و الرحلات'],
+    y:["{{committee.c1.numofNom}}","{{committee.c2.numofNom}}",'{{committee.c3.numofNom}}','{{committee.c4.numofNom}}','{{committee.c5.numofNom}}','{{committee.c6.numofNom}}','{{committee.c7.numofNom}}'],
+    type: "bar",
+    marker: {
+        color: 'rgba(0, 0, 0, 0.25)',
+        line: {
+            width: .4
+        }
+    }
+}];
+
+let layoutcdp2 = {title: {text: "أعداد المرشحين",
+                font: {family: 'muli', size: 30,}
+                },
+                paper_bgcolor:"#FFF0",
+                font: {family: 'muli', size: 15}
+}
+
+configcdp2 = {displaylogo: false,
+        responsive: true,
+        displayModeBar: false,
+        modeBarButtonsToRemove:['zoom2d','pan2d','select2d','lasso2d','zoomIn2d','zoomOut2d','autoScale2d', 'resetScale2d'],
+
+}
+
+Plotly.newPlot(numofnomplot,datacdp2,layoutcdp2,configcdp2)
+
+/*other plots*/
+
+/*plot download*/
+let pdb2 = document.querySelector("#pdb2")
+
+pdb2.addEventListener("click",() => plotdownload(datacdp2,layoutcdp2,configcdp2))
+
+function plotdownload(data,layout,config){
+    let plot_download = document.querySelector(".hidden-plot-area-for-download")
+    layout.paper_bgcolor = "#FFFF"
+    Plotly.newPlot(plot_download,data,layout,config)
+    Plotly.downloadImage(plot_download,{format: 'png', width: 800, height: 600, filename: 'newplot',paper_bgcolor:"#FFFF"
+    })
+};
+
+/*Grids*/
+const gridOptions = {
+
+    columnDefs: [
+    { field: "الاسم" },
+    { field: "عدد الأصوات" },
+    { field: "اللجنة" }],
+
+    rowData : [{% for nom in nominees.values%}
+                { {% for key,value in nom.items %}
+                '{{key}}' : '{{value}}',
+                {% endfor %}},
+                {% endfor %} ]
+
+};
+ 
+    const gridDiv = document.querySelector('#cdt3');
+    new agGrid.Grid(gridDiv, gridOptions);
+
+/*Grid download*/
+let gdb3 = document.querySelector('#gdb3')
+gdb3.addEventListener('click',() => {
+    print(gdb3.parentNode);
+
+});
+</script>
