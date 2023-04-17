@@ -144,15 +144,13 @@ def vote(request):
                 if form.is_valid():
                     for Community in form.cleaned_data:
 
-
-<< << << < HEAD
                         Nominee = form.cleaned_data[Community]
                         Nominee.Numofvotes = Nominee.Numofvotes + 1
                         Vote.objects.create(
                             voter_id=User_Mod, nominee_id=Nominee)
                         print(Nominee.Numofvotes, '\n')
                         Nominee.save()
-== == == =
+
                         Nominees = form.cleaned_data[Community]
                         for Nominee in Nominees:
                             Nominee.Numofvotes = Nominee.Numofvotes + 1
@@ -160,7 +158,6 @@ def vote(request):
                                 voter_id=User_Mod, nominee_id=Nominee)
                             print(Nominee)
                             Nominee.save()
->>>>>> > 5df43107c8bf509ba5859e7093278852c8aa099e
                     context['ConfirmationMessage'] = "Vote sent successfuly"
                 else:
                     context['ConfirmationMessage'] = "Error: couldn't save application"
@@ -226,15 +223,16 @@ def admin(request):
         nominees = {}
 
         for c in Nominee_user.community.field.choices:
-            NumofNominees = Nominee_user.objects.filter(community = c[0]).count()
-            committee.update({'c'+ c[0]: {'numofNom': NumofNominees}})
+            NumofNominees = Nominee_user.objects.filter(community=c[0]).count()
+            committee.update({'c' + c[0]: {'numofNom': NumofNominees}})
 
-        i=1
+        i = 1
         for Nominee in Nominee_user.objects.all():
-            nominees.update({'n'+str(i):{'الاسم': Nominee.UserModelKey.Name, 'عدد الأصوات': Nominee.Numofvotes, "اللجنة": Nominee.get_community_display()}})
-            i += 1 
+            nominees.update({'n'+str(i): {'الاسم': Nominee.UserModelKey.Name,
+                            'عدد الأصوات': Nominee.Numofvotes, "اللجنة": Nominee.get_community_display()}})
+            i += 1
 
-        context.update({'committee': committee, 'nominees' : nominees})
+        context.update({'committee': committee, 'nominees': nominees})
         print(context)
         return render(request, 'adminp1.html', context)
     else:
