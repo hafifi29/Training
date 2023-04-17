@@ -1,25 +1,27 @@
 <!DOCTYPE html>
 <html lang="en-US">
-  {% block headcontent %}
   <head>
-    {% load static %}
+    <script src="https://cdn.jsdelivr.net/npm/ag-grid-community/dist/ag-grid-community.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="https://cdn.plot.ly/plotly-2.20.0.min.js" charset="utf-8"></script>
-
+    {% load static %}
 
     <meta charset="utf-8" />
-    <meta property="og:title" content="Home Page" />
     <meta property="og:image" content="images/logo.jpg" />
-    <meta property="og:description" content="Students Union" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Students Union</title>
+    <meta property="og:description" content="Students Union" />
+    <link rel="icon" type="image/x-icon" href="{% static 'img/logo.jpg' %}" />
     <link rel="stylesheet" href="{% static 'css/normalize.css' %}" />
     <link rel="stylesheet" href="{% static 'css/common.css' %}" />
-    <link rel="icon" type="image/x-icon" href="{% static 'img/logo.jpg' %}" />
-  </head>
+
+  {% block headcontent %}
+    <meta property="og:title" content="Home Page" />
+    <title>Students Union</title>
   {% endblock %}
+</head>
+
   <body>
     <div class="container">
 
@@ -69,6 +71,7 @@
 
       <section class="main-content">
         {% block maincontent %}
+        
         {% endblock %}
       </section>
 
@@ -76,6 +79,9 @@
         <div id="foot">FCAI Beni Suef © 2023 - all rights reserved.</div>
       </footer>
     </div>
+    
     {% include 'commonjs.html' %}
   </body>
 </html>
+
+

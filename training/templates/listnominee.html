@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block headcontent %}
+{% load static %}
+  <meta property="og:title" content="Nominee List page" />
+  <title>Nominee List</title>
+{% endblock %}
+
+{% block maincontent %}
+<div class ="sharp-card-medium">
+        <h1>المرشحين</h1>
+        </br>
+        <table class="table">
+            <tr>
+
+            <th>
+            الاسم
+            </th>
+
+            <th>
+            الكود
+            </th>
+
+            <th>
+                اثبات المشاركة فى الأنشطة
+            </th>
+
+            <th>
+            النهائيات
+            </th>
+
+            </tr>
+
+            {%for i in nominee%}
+            <tr>
+                <td>
+                    {{i}}
+                </td>
+                <td>
+                    {{i.UserModelKey.Student_id}}
+                </td>
+                <td>
+                    <a href="{{i.rec_letter.url}}" download>rec letter</a>
+                </td>
+                <td>
+                    {{i.final_list}}
+                </td>
+                <td align="right">
+                    <a href="{%url 'update_nominee' i.UserModelKey.Student_id%}">Update</a>
+                </td>
+
+            </tr>
+            {%endfor%}
+        </table>
+    </div>
+{% endblock %}

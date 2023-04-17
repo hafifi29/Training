@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block headcontent %}
+{% load static %}
+  <meta property="og:title" content="Nominee Update Page" />
+  <link rel="stylesheet" href="{% static 'css/nomination.css' %}" />
+  <title>Nominee Update Form</title>
+{% endblock %}
+
+{% block maincontent %}
+<div>
+    <form enctype="multipart/form-data" id="myForm" class="form-container" method="POST">
+        {%csrf_token%}
+        <h1>update nominee...</h1>
+        <div class="field">
+            {{form.Name.label}}
+            {{form.Name}}
+        </div>
+
+        <div class="field">
+            {{form.nominee_id.label}}
+            {{form.nominee_id}}
+        </div>
+
+        <div class="field">
+            {{form.address.label}}
+            {{form.address}}
+        </div>
+
+        <div class="field">
+            {{form.birthdate.label}}
+            {{form.birthdate}}
+        </div>
+
+        <div class="field">
+            {{form.collegeYear.label}}
+            {{form.collegeYear}}
+        </div>
+
+        <div class="field">
+            {{form.phone_no.label}}
+            {{form.phone_no}}
+        </div>
+
+        <div class="field">
+            {{form.email.label}}
+            {{form.email}}
+        </div>
+
+        <div class="field">
+            {{form.community.label}}
+            {{form.community}}
+        </div>
+
+        <div class="field">
+            {{form.rec_letter.label}}
+            {{form.rec_letter}}
+        </div>
+
+        <div class="field">
+            {{form.final_list.label}}
+            {{form.final_list}}
+        </div>
+
+        {% if ConfirmationMessage %}
+        <div>{{ ConfirmationMessage }}</div>
+        {% endif %}
+
+        <input type="submit" value=" تحديث البيانات" />
+
+    </form>
+</div>
+{% endblock %}
