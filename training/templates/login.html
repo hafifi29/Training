@@ -13,11 +13,11 @@
 <form id="login" action="{% url 'sign_in' %}" method="POST">
   {%csrf_token%}
   <h2 class="form-name">تسجيل الدخول</h2>
-  <div class="field">
+  <div class="feild">
     <label for="username">الاسم</label>
     <input type="text" name="username" id="username" placeholder="Username" />
   </div>
-  <div class="field">
+  <div class="feild">
     <label for="password">كلمة المرور</label>
     <input
       type="password"

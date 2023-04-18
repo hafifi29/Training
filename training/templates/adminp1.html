@@ -12,6 +12,51 @@
 
 
 {% block maincontent %}
+
+<div class="form-container">
+
+    <form method="post">
+        {%csrf_token%}
+        <div class="feild">
+        <label for=""> {{df.nomin_start_date.label}} </label>
+            {{df.nomin_start_date}}
+        </div>
+        <div class="feild">
+            {{df.nomin_end_date.label}}
+            {{df.nomin_end_date}}
+        </div>
+    
+        <div class="feild">
+            {{df.vote_start_date.label}}
+            {{df.vote_start_date}}
+        </div>
+        <div class="feild">
+            {{df.vote_end_date.label}}
+            {{df.vote_end_date}}
+        </div>
+        <div class="feild">
+            {{df.con_start_date.label}}
+            {{df.con_start_date}}
+        </div>
+        <div class="feild">
+            <label for="id_con_end_date">{{df.con_end_date.label}}</label>    
+            {{df.con_end_date}}
+        </div>
+        <div class="feild">
+            <label for="id_result">{{df.result.label}}</label>
+            <label for="id_result">
+                {{df.result}}
+                <div class="toggel-switch"></div>
+            </label>
+        </div>
+        <input type="submit" value="Save Changes">
+    </form>
+</div>
+
+
+
+
+
 <section class="adminp round-card-large" id="cd1">
 </section>
 

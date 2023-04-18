@@ -1,11 +1,21 @@
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from .forms import NomineeForm, VoteForm, ResultForm, ContentionForm, NomineeForm_update
+from .forms import *
 from django.contrib.auth.models import User as User_
-from .models import Vote, Nominee_user, Contention, Admin_user
-from .models import User_Model
-from .models import Control_content
+from .models import *
+
+# glopal varables
+std_acess = Control_content.objects.first()
+dates = Dates.objects.first()
+start_nomination = datetime.strptime(str(dates.nomin_sd),'%Y-%m-%dT%H:%M')  
+end_nomination = datetime.strptime(str(dates.nomin_ed),'%Y-%m-%dT%H:%M')    
+start_vote = datetime.strptime(str(dates.vote_sd),'%Y-%m-%dT%H:%M')  
+end_vote = datetime.strptime(str(dates.vote_ed),'%Y-%m-%dT%H:%M')    
+start_con = datetime.strptime(str(dates.con_sd),'%Y-%m-%dT%H:%M')  
+end_con = datetime.strptime(str(dates.con_ed),'%Y-%m-%dT%H:%M')    
+# end glopal varables
+
 
 # Create your views here.
 
@@ -51,8 +61,51 @@ def admincheck(request):
     return {'admin': False}
 
 
+def get_data(request):
+    if request.method == 'POST':
+        dates.nomin_sd = request.POST.get('nomin_start_date')
+        dates.nomin_ed = request.POST.get('nomin_end_date')
+
+        dates.vote_sd = request.POST.get('vote_start_date')
+        dates.vote_ed = request.POST.get('vote_end_date')
+
+        dates.con_sd = request.POST.get('con_start_date')
+        dates.con_ed = request.POST.get('con_end_date')
+
+        dates.save()
+    
+        std_acess.result = request.POST.get('result')
+        std_acess.save()
+
+
+def dureation():
+    print('function colled sucssesfly')
+    if start_nomination <= datetime.now() and end_nomination >= datetime.now():
+        std_acess.nomination = True
+        std_acess.save()
+    else:   
+        std_acess.nomination = False
+        std_acess.save()
+    
+    # if start_vote <= datetime.now() and end_vote >= datetime.now():
+    #     std_acess.vote = True
+    #     std_acess.save()
+    # else:
+    #     std_acess.vote = False
+    #     std_acess.save()
+        
+    # if start_con <= datetime.now() and end_con >= datetime.now():
+    #     std_acess.contention = True
+    #     std_acess.save()
+    # else:
+    #     std_acess.contention = False
+    #     std_acess.save()
+
+
+
 def home(request):
     context = admincheck(request)
+    dureation()
     if context['admin'] == True:
         return redirect('adminp')
     return render(request, 'index.html', context)
@@ -92,8 +145,10 @@ def logout_view(request):
 @login_required
 def nomination(request):
     context = admincheck(request)
-    if Control_content.objects.first().nomination == True:
-
+    if start_nomination <= datetime.now() and end_nomination >= datetime.now():
+        std_acess.nomination = True
+        std_acess.save()
+        #End acessabelity code start nomination logic 
         current_user = request.user
         User_Mod = User_Model.objects.get(Userkey_id=current_user.id)
         if Nominee_user.objects.filter(UserModelKey=User_Mod).exists():
@@ -121,14 +176,19 @@ def nomination(request):
             context['form'] = form
             return render(request, 'nom1.html', context=context)
     else:
+        std_acess.nomination = False
+        std_acess.save()
         return HttpResponse('Erorr 404 Not found')
 
 
 @login_required
 def vote(request):
     context = admincheck(request)
-    if Control_content.objects.first().vote == True:
-
+    #this code for student acessabelity
+    if start_vote <= datetime.now() and end_vote >= datetime.now():
+        std_acess.vote = True
+        std_acess.save()
+        #End acessabelity code start nomination logic 
         current_user = request.user
         User_Mod = User_Model.objects.get(Userkey_id=current_user.id)
         if Vote.objects.filter(voter_id=User_Mod).exists():
@@ -163,13 +223,17 @@ def vote(request):
                     context['ConfirmationMessage'] = "Error: couldn't save application"
         return render(request, 'vote1.html', context=context)
     else:
+        if std_acess.vote == True:
+            std_acess.vote = False
+            std_acess.save()
+
         return HttpResponse('Erorr 404 Not found')
 
 
 @login_required
 def result(request):
     context = admincheck(request)
-    if Control_content.objects.first().result == True:
+    if std_acess.result == True:
         form = ResultForm(request.POST or None)
         context.update({
             'form': form
@@ -193,7 +257,10 @@ def result(request):
 @login_required
 def contention(request):
     context = admincheck(request)
-    if Control_content.objects.first().result == True:
+    if start_con <= datetime.now() and end_con >= datetime.now():
+        std_acess.contention = True
+        std_acess.save()
+        #End acessabelity code start nomination logic 
         current_user = request.user
         user_mod = User_Model.objects.get(Userkey_id=current_user.id)
         initial_values = {'Name': user_mod.Name,
@@ -212,6 +279,9 @@ def contention(request):
         context['form'] = form
         return render(request, 'contention.html', context=context)
     else:
+        if std_acess.contention == True:
+            std_acess.contention = False
+            std_acess.save()
         return HttpResponse('Erorr 404 Not found')
 
 
@@ -219,6 +289,8 @@ def contention(request):
 def admin(request):
     context = admincheck(request)
     if context['admin'] == True:
+        get_data()
+
         committee = {}
         nominees = {}
 
@@ -234,6 +306,6 @@ def admin(request):
 
         context.update({'committee': committee, 'nominees': nominees})
         print(context)
-        return render(request, 'adminp1.html', context)
+        return render(request, 'adminp1.html', context,{'df':Dates_form})
     else:
         return HttpResponse('Erorr 404 Not found')

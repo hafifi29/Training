@@ -19,27 +19,27 @@
 
         {% else %}
 
-        <div class="field">
+        <div class="feild">
             <label>{{form.Name.label}}</label>
             {{form.Name}}
         </div>
         
-        <div class="field">
+        <div class="feild">
             <label>{{form.User_id.label}}</label>
             {{form.User_id}}
         </div>
 
-        <div class="field">
+        <div class="feild">
             <label>{{form.nominee_id.label}}</label>
             {{form.nominee_id}}
         </div>
 
-        <div class="field">
+        <div class="feild">
             <label>{{form.reason.label}}</label>
             {{form.reason}}
         </div>
 
-        <div class="field">{{ ConfirmationMessage }}</div>
+        <div class="feild">{{ ConfirmationMessage }}</div>
         <input type="submit" value="تقديم الاستمارة" />
         {% endif %}
     </form>

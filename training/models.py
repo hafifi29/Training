@@ -89,3 +89,14 @@ class Control_content(SingletonModel):
 
     class Meta:
         verbose_name_plural = "Control Content"
+
+
+class Dates(SingletonModel):
+    nomin_sd = models.CharField(max_length=30)
+    nomin_ed = models.CharField(max_length=30)
+    
+    vote_sd = models.CharField(max_length=30)
+    vote_ed = models.CharField(max_length=30)
+
+    con_sd = models.CharField(max_length=30)
+    con_ed = models.CharField(max_length=30)
