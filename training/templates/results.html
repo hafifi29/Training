@@ -8,6 +8,7 @@
 
 {% block maincontent %}
 <div class="form-container">
+  {% if std_access.result %}
     <form action="" method="post">
   {%csrf_token%}
   <h2 class="form-name">النتيجة</h2>
@@ -25,5 +26,9 @@
   {{num_of_votes}}
   {% endif %}
 </form>
+{% else %}
+<div class="unavailable-field field">
+  النتيجة غير متاحة حاليا
+{% endif %}
 </div>
 {% endblock %}

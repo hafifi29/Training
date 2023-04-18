@@ -1,3 +1,36 @@
+#id_result{
+    --webkit-appearance: none;
+    appearance: none;
+    display: none;
+}
+
+.toggel-switch{
+    background-color:#333;
+    width: 70px;
+    height: 26px;
+    border-radius: 16px;
+    cursor: pointer;
+    position: relative;
+
+}
+.toggel-switch::before{
+    content: '';
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    position: absolute;
+    right: 5px;
+    top: 4px;
+    background-color: white;
+    transition: 0.3s ease-in;
+}
+#id_result:checked + .toggel-switch::before {
+    right: calc(100% - 23px);
+}
+
+#id_result:checked + .toggel-switch{
+    background-color: lightgreen;
+}
 
 
 

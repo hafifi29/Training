@@ -303,6 +303,11 @@ form {
   flex-wrap: wrap;
 }
 
+.unavailable-field{
+  justify-content: center;
+
+}
+
 select {
   width: 235px;
   border-radius: 2px;

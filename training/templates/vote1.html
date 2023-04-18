@@ -9,6 +9,7 @@
 
 {% block maincontent %}
 <div class="form-container">
+  {% if std_access.vote %}
   <form class="vote" method="POST">
     {%csrf_token%}
     <h2 class="form-name">انتخاب</h2>
@@ -88,5 +89,10 @@
     <input type="submit" value="ارسال" />
     {% endif %}
   </form>
+  {% else %}
+  <div class="unavailable-field field">
+    التصويت غير متاح حاليا
+  </div>
+  {% endif %}
 </div>
 {% endblock %}

@@ -1,7 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
-
-from .models import Nominee_user, Vote, User_Model, Contention
+from datetime import datetime
+from .models import *
 from django.contrib.auth.models import User
 
 
@@ -96,3 +96,50 @@ class NomineeForm_update(forms.ModelForm):
     address = forms.CharField(disabled=True, label="العنوان")
     birthdate = forms.DateField(disabled=True, label="تاريخ الميلاد")
     collegeYear = forms.IntegerField(disabled=True, label="الفرقة")
+
+
+
+# Admin Panel Forms
+class Dates_form (forms.Form):
+    
+    nomin_start_date = forms.DurationField(label='بداية مرحلة التقديم',widget=forms.widgets.DateTimeInput(
+            attrs={
+                'type': 'datetime-local',
+                'min':datetime.now().strftime('%Y-%m-%dT%H:%M')
+            }
+        ))
+
+    nomin_end_date = forms.DateField(label='نهاية مرحلة التقديم', widget=forms.widgets.DateTimeInput(
+            attrs={
+                'type': 'datetime-local',
+                'min':datetime.now().strftime('%Y-%m-%dT%H:%M')
+            }
+        ))
+    vote_start_date = forms.DurationField(label='بداية مرحلة الانتخاب',widget=forms.widgets.DateTimeInput(
+            attrs={
+                'type': 'datetime-local',
+                'min':datetime.now().strftime('%Y-%m-%dT%H:%M')
+            }
+        ))
+
+    vote_end_date = forms.DateField(label='نهاية مرحلة الانتخاب', widget=forms.widgets.DateTimeInput(
+            attrs={
+                'type': 'datetime-local',
+                'min':datetime.now().strftime('%Y-%m-%dT%H:%M')
+            }
+        ))
+    con_start_date = forms.DurationField(label='بداية مرحلة الطعن',widget=forms.widgets.DateTimeInput(
+            attrs={
+                'type': 'datetime-local',
+                'min':datetime.now().strftime('%Y-%m-%dT%H:%M')
+            }
+        ))
+
+    con_end_date = forms.DateField(label='نهاية مرحلة الطعن', widget=forms.widgets.DateTimeInput(
+            attrs={
+                'type': 'datetime-local',
+                'min':datetime.now().strftime('%Y-%m-%dT%H:%M')
+            }
+        ))
+    
+    result = forms.BooleanField(label='اظهار النتيجة للمرشحين')

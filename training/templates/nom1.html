@@ -9,6 +9,7 @@
 
 {% block maincontent %}
 <div class="form-container">
+  {% if std_access.nomination %}
   <form enctype="multipart/form-data" id="myForm" class="nomination" action="{% url 'nomination' %}" method="POST">
     {%csrf_token%}
 
@@ -67,5 +68,10 @@
     <input type="submit" value="تقديم الاستمارة" />
     {% endif %}
   </form>
+  {% else %}
+  <div class="unavailable-field field">
+      الترشح غير متاح حاليا
+  </div>
+  {% endif %}
 </div>
 {% endblock %}

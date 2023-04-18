@@ -9,6 +9,7 @@
 
 {% block maincontent %}
 <div class="form-container">
+    {% if std_access.contention %}
     <form enctype="multipart/form-data" id="myForm" class="contention" action="{% url 'contention' %}" method="POST">
         {%csrf_token%}
 
@@ -43,5 +44,10 @@
         <input type="submit" value="تقديم الاستمارة" />
         {% endif %}
     </form>
+    {% else %}
+    <div class="unavailable-field field">
+        الطعن غير متاح حاليا
+    </div>
+    {% endif %}
     </div>
 {% endblock %}
