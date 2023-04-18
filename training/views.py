@@ -5,6 +5,8 @@ from .forms import *
 from django.contrib.auth.models import User as User_
 from .models import *
 from datetime import datetime
+from django.utils import timezone
+
 
 
 # global varables
@@ -16,6 +18,7 @@ start_vote = dates.vote_sd
 end_vote = dates.vote_ed
 start_con = dates.con_sd
 end_con = dates.con_ed
+now = timezone.now()
 # end global varables
 
 # Create your views here.
@@ -31,21 +34,21 @@ def admincheck(request):
     return {'admin': False}
 
 def durationcheck():
-    if start_nomination <= datetime.now() and end_nomination >= datetime.now():
+    if start_nomination <= now and end_nomination >= datetime.now():
         std_access.nomination = True
         std_access.save()
     else:   
         std_access.nomination = False
         std_access.save()
     
-    if start_vote <= datetime.now() and end_vote >= datetime.now():
+    if start_vote <= now and end_vote >= datetime.now():
         std_access.vote = True
         std_access.save()
     else:
         std_access.vote = False
         std_access.save()
     
-    if start_con <= datetime.now() and end_con >= datetime.now():
+    if start_con <= now and end_con >= datetime.now():
         std_access.contention = True
         std_access.save()
     else:
