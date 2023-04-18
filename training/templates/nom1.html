@@ -9,6 +9,7 @@
 
 {% block maincontent %}
 <div class="form-container">
+  {% if std_access.nomination %}
   <form enctype="multipart/form-data" id="myForm" class="nomination" action="{% url 'nomination' %}" method="POST">
     {%csrf_token%}
 
@@ -17,47 +18,47 @@
     <div>{{ ConfirmationMessage }}</div>
 
     {% else %}
-    <div class="feild">
+    <div class="field">
       {{form.Name.label}}
       {{form.Name}}
     </div>
 
-    <div class="feild">
+    <div class="field">
       {{form.nominee_id.label}}
       {{form.nominee_id}}
     </div>
 
-    <div class="feild">
+    <div class="field">
       {{form.address.label}}
       {{form.address}}
     </div>
 
-    <div class="feild">
+    <div class="field">
       {{form.birthdate.label}}
       {{form.birthdate}}
     </div>
 
-    <div class="feild">
+    <div class="field">
       {{form.collegeYear.label}}
       {{form.collegeYear}}
     </div>
 
-    <div class="feild">
+    <div class="field">
       {{form.phone_no.label}}
       {{form.phone_no}}
     </div>
 
-    <div class="feild">
+    <div class="field">
       {{form.email.label}}
       {{form.email}}
     </div>
 
-    <div class="feild">
+    <div class="field">
       {{form.community.label}}
       {{form.community}}
     </div>
 
-    <div class="feild">
+    <div class="field">
       {{form.rec_letter.label}}
       {{form.rec_letter}}
     </div>
@@ -67,5 +68,10 @@
     <input type="submit" value="تقديم الاستمارة" />
     {% endif %}
   </form>
+  {% else %}
+  <div class="unavailable-field field">
+      الترشح غير متاح حاليا
+  </div>
+  {% endif %}
 </div>
 {% endblock %}

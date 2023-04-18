@@ -9,6 +9,7 @@
 
 {% block maincontent %}
 <div class="form-container">
+    {% if std_access.contention %}
     <form enctype="multipart/form-data" id="myForm" class="contention" action="{% url 'contention' %}" method="POST">
         {%csrf_token%}
 
@@ -19,29 +20,34 @@
 
         {% else %}
 
-        <div class="feild">
+        <div class="field">
             <label>{{form.Name.label}}</label>
             {{form.Name}}
         </div>
         
-        <div class="feild">
+        <div class="field">
             <label>{{form.User_id.label}}</label>
             {{form.User_id}}
         </div>
 
-        <div class="feild">
+        <div class="field">
             <label>{{form.nominee_id.label}}</label>
             {{form.nominee_id}}
         </div>
 
-        <div class="feild">
+        <div class="field">
             <label>{{form.reason.label}}</label>
             {{form.reason}}
         </div>
 
-        <div class="feild">{{ ConfirmationMessage }}</div>
+        <div class="field">{{ ConfirmationMessage }}</div>
         <input type="submit" value="تقديم الاستمارة" />
         {% endif %}
     </form>
+    {% else %}
+    <div class="unavailable-field field">
+        الطعن غير متاح حاليا
+    </div>
+    {% endif %}
     </div>
 {% endblock %}

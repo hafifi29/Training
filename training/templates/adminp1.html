@@ -17,32 +17,32 @@
 
     <form method="post">
         {%csrf_token%}
-        <div class="feild">
+        <div class="field">
         <label for=""> {{df.nomin_start_date.label}} </label>
             {{df.nomin_start_date}}
         </div>
-        <div class="feild">
+        <div class="field">
             {{df.nomin_end_date.label}}
             {{df.nomin_end_date}}
         </div>
     
-        <div class="feild">
+        <div class="field">
             {{df.vote_start_date.label}}
             {{df.vote_start_date}}
         </div>
-        <div class="feild">
+        <div class="field">
             {{df.vote_end_date.label}}
             {{df.vote_end_date}}
         </div>
-        <div class="feild">
+        <div class="field">
             {{df.con_start_date.label}}
             {{df.con_start_date}}
         </div>
-        <div class="feild">
+        <div class="field">
             <label for="id_con_end_date">{{df.con_end_date.label}}</label>    
             {{df.con_end_date}}
         </div>
-        <div class="feild">
+        <div class="field">
             <label for="id_result">{{df.result.label}}</label>
             <label for="id_result">
                 {{df.result}}

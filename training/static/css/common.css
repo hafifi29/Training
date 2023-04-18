@@ -294,13 +294,18 @@ form {
   margin: 0px;
 }
 
-.feild {
+.field {
   direction: rtl;
   display: flex;
   justify-content: space-between;
   width: 400px;
   align-items: center;
   flex-wrap: wrap;
+}
+
+.unavailable-field{
+  justify-content: center;
+
 }
 
 select {
