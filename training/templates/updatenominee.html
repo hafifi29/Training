@@ -11,56 +11,67 @@
 <div>
     <form enctype="multipart/form-data" id="myForm" class="form-container" method="POST">
         {%csrf_token%}
-        <h1>update nominee...</h1>
-        <div class="feild">
+        <h2>تعديل البيانات</h2>
+        <div class="field">
             {{form.Name.label}}
             {{form.Name}}
         </div>
 
-        <div class="feild">
+        <div class="field">
             {{form.nominee_id.label}}
             {{form.nominee_id}}
         </div>
 
-        <div class="feild">
+        <div class="field">
             {{form.address.label}}
             {{form.address}}
         </div>
 
-        <div class="feild">
+        <div class="field">
             {{form.birthdate.label}}
             {{form.birthdate}}
         </div>
 
-        <div class="feild">
+        <div class="field">
             {{form.collegeYear.label}}
             {{form.collegeYear}}
         </div>
 
-        <div class="feild">
+        <div class="field">
             {{form.phone_no.label}}
             {{form.phone_no}}
         </div>
 
-        <div class="feild">
+        <div class="field">
             {{form.email.label}}
             {{form.email}}
         </div>
 
-        <div class="feild">
+        <div class="field">
             {{form.community.label}}
             {{form.community}}
         </div>
 
-        <div class="feild">
+        <div class="field">
             {{form.rec_letter.label}}
+            <div class="field" style="flex-flow: column; align-items: left;">
             {{form.rec_letter}}
+            </div>
         </div>
 
-        <div class="feild">
+        <div class="field">
+
+        <label for="id_final_list">
             {{form.final_list.label}}
+        </label>
+
+        <label for="id_final_list">
             {{form.final_list}}
-        </div>
+            <div class="toggel-switch">
+            </div>
+        </label>
+
+    </div>
 
         {% if ConfirmationMessage %}
         <div>{{ ConfirmationMessage }}</div>

@@ -1,4 +1,4 @@
-#id_result{
+input[type='checkbox']{
     --webkit-appearance: none;
     appearance: none;
     display: none;

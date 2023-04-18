@@ -255,12 +255,32 @@ header a:last-of-type {
   flex: 1;
 }
 
+.card-name{
+  font: 30px muli ;
+  color:rgb(35, 35, 35);
+}
+
 .plot-area{
   width: 100%;
   margin-bottom: 20px;
 }
 
-.table{
+.normal-table{
+  min-width:600px;
+  min-height: 100px;
+  z-index: 1;
+  margin-bottom: 20px;
+
+}
+
+th{
+  text-align: left;
+}
+tr{
+  border: #333 solid;
+}
+
+.ag-table{
   width:500px;
   height: 500px;
   z-index: 1;
@@ -285,13 +305,6 @@ header a:last-of-type {
   transition: .2s;
 }
 
-th{
-  text-align: left;
-}
-tr{
-  border: #333 solid;
-}
-
 
 /*forms*/
 .form-container {
@@ -311,7 +324,7 @@ form {
 
 .form-name{
   font-weight: normal;
-
+  rgb(35, 35, 35);
   margin: 0px;
 }
 
@@ -344,6 +357,41 @@ input[type='submit']{
   border: 1px solid rgb(135, 135, 135);
 
 }
+
+input[type='checkbox']{
+  --webkit-appearance: none;
+  appearance: none;
+  display: none;
+}
+
+.toggel-switch{
+  background-color:#333;
+  width: 70px;
+  height: 26px;
+  border-radius: 16px;
+  cursor: pointer;
+  position: relative;
+
+}
+.toggel-switch::before{
+  content: '';
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  position: absolute;
+  right: 5px;
+  top: 4px;
+  background-color: white;
+  transition: 0.3s ease-in;
+}
+input[type='checkbox']:checked + .toggel-switch::before {
+  right: calc(100% - 23px);
+}
+
+input[type='checkbox']:checked + .toggel-switch{
+  background-color: lightgreen;
+}
+
 /*footer*/
 footer {
   grid-area: 3/1/4/15;
