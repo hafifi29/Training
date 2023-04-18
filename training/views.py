@@ -10,12 +10,12 @@ from datetime import datetime
 # global varables
 std_access = Control_content.objects.first()
 dates = Dates.objects.first()
-start_nomination = datetime.strptime(str(dates.nomin_sd),'%Y-%m-%dT%H:%M')  
-end_nomination = datetime.strptime(str(dates.nomin_ed),'%Y-%m-%dT%H:%M')    
-start_vote = datetime.strptime(str(dates.vote_sd),'%Y-%m-%dT%H:%M')  
-end_vote = datetime.strptime(str(dates.vote_ed),'%Y-%m-%dT%H:%M')    
-start_con = datetime.strptime(str(dates.con_sd),'%Y-%m-%dT%H:%M')  
-end_con = datetime.strptime(str(dates.con_ed),'%Y-%m-%dT%H:%M')    
+start_nomination = dates.nomin_sd
+end_nomination = dates.nomin_ed    
+start_vote = dates.vote_sd
+end_vote = dates.vote_ed
+start_con = dates.con_sd
+end_con = dates.con_ed
 # end global varables
 
 # Create your views here.
@@ -219,9 +219,15 @@ def admin(request):
     context = admincheck(request)
     if context['admin'] == True:
 
+        form = Dates_form(request.POST or None)
+        context['df'] = form
+
         if request.POST:
-            save_data(request)
-            context['ConfirmationMessage'] = "تم التعديل بنجاح"
+            if form.is_valid():
+                save_data(request, form)
+                context['ConfirmationMessage'] = "تم التعديل بنجاح"
+            else:
+                print(form.errors)
 
 
         committee = {}
@@ -238,8 +244,6 @@ def admin(request):
             i += 1
 
         context.update({'committee': committee, 'nominees': nominees})
-        print(context)
-        context['df'] = Dates_form(request.POST or None)
         return render(request, 'adminp1.html', context)
     else:
         return HttpResponse('Erorr 404 Not found')
@@ -277,7 +281,6 @@ def update_nominee(request, nominee_id):
 
 
 def save_data(request, form):
-    if request.method == 'POST':
         if form.is_valid():
             dates.nomin_sd = form.cleaned_data['nomin_start_date']
             dates.nomin_ed = form.cleaned_data['nomin_end_date']

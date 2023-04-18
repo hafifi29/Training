@@ -102,44 +102,44 @@ class NomineeForm_update(forms.ModelForm):
 # Admin Panel Forms
 class Dates_form (forms.Form):
     
-    nomin_start_date = forms.DurationField(label='بداية مرحلة التقديم',widget=forms.widgets.DateTimeInput(
+    nomin_start_date = forms.DateTimeField(label='بداية مرحلة التقديم',widget=forms.widgets.DateTimeInput(
             attrs={
                 'type': 'datetime-local',
                 'min':datetime.now().strftime('%Y-%m-%dT%H:%M')
             }
         ))
 
-    nomin_end_date = forms.DateField(label='نهاية مرحلة التقديم', widget=forms.widgets.DateTimeInput(
+    nomin_end_date = forms.DateTimeField(label='نهاية مرحلة التقديم', widget=forms.widgets.DateTimeInput(
             attrs={
                 'type': 'datetime-local',
                 'min':datetime.now().strftime('%Y-%m-%dT%H:%M')
             }
         ))
-    vote_start_date = forms.DurationField(label='بداية مرحلة الانتخاب',widget=forms.widgets.DateTimeInput(
-            attrs={
-                'type': 'datetime-local',
-                'min':datetime.now().strftime('%Y-%m-%dT%H:%M')
-            }
-        ))
-
-    vote_end_date = forms.DateField(label='نهاية مرحلة الانتخاب', widget=forms.widgets.DateTimeInput(
-            attrs={
-                'type': 'datetime-local',
-                'min':datetime.now().strftime('%Y-%m-%dT%H:%M')
-            }
-        ))
-    con_start_date = forms.DurationField(label='بداية مرحلة الطعن',widget=forms.widgets.DateTimeInput(
+    vote_start_date = forms.DateTimeField(label='بداية مرحلة الانتخاب',widget=forms.widgets.DateTimeInput(
             attrs={
                 'type': 'datetime-local',
                 'min':datetime.now().strftime('%Y-%m-%dT%H:%M')
             }
         ))
 
-    con_end_date = forms.DateField(label='نهاية مرحلة الطعن', widget=forms.widgets.DateTimeInput(
+    vote_end_date = forms.DateTimeField(label='نهاية مرحلة الانتخاب', widget=forms.widgets.DateTimeInput(
+            attrs={
+                'type': 'datetime-local',
+                'min':datetime.now().strftime('%Y-%m-%dT%H:%M')
+            }
+        ))
+    con_start_date = forms.DateTimeField(label='بداية مرحلة الطعن',widget=forms.widgets.DateTimeInput(
+            attrs={
+                'type': 'datetime-local',
+                'min':datetime.now().strftime('%Y-%m-%dT%H:%M')
+            }
+        ))
+
+    con_end_date = forms.DateTimeField(label='نهاية مرحلة الطعن', widget=forms.widgets.DateTimeInput(
             attrs={
                 'type': 'datetime-local',
                 'min':datetime.now().strftime('%Y-%m-%dT%H:%M')
             }
         ))
     
-    result = forms.BooleanField(label='اظهار النتيجة للمرشحين')
+    result = forms.BooleanField(label='اظهار النتيجة للمرشحين', required=False)
