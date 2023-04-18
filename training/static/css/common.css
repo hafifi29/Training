@@ -18,8 +18,7 @@ header {
   background-color: #333;
   justify-content: left;
   padding: 10px;
-  position: sticky;
-  top:0px;
+
   z-index: 2;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 3px 5px, rgba(0, 0, 0, 0.22) 0px 1px 10px;
 
@@ -69,16 +68,21 @@ header a:last-of-type {
     overflow: hidden;
 }
 
-button {
-  height: 50px;
-  width: 150px;
+.side-bar-button {
+  width: 100%;
+  height: 60px;
+  background-color: transparent;
+  color: white;
   cursor: pointer;
-  border:  2px solid #1e1a1a;
-  border-radius: 4px;
+  font: 1.5em muli;
+  border:  2px solid #1e1a1a00;
+  transition: .1s;
 }
 
 .main-side-bar button:hover {
-  background-color: #ffffff;
+  background-color: rgb(61, 58, 58);
+  border-left: #ffffff 2px solid;
+  transition: .2s;
 }
 
 .menu-icon{
@@ -129,7 +133,6 @@ button {
   display: flex;
   flex-flow: column;
   align-items: center;
-  gap: 35px;
 }
 
 /*main*/
@@ -262,6 +265,24 @@ button {
   height: 500px;
   z-index: 1;
   margin-bottom: 20px;
+}
+
+.main-button {
+  width: 25%;
+  height: 60px;
+  background-color: transparent;
+  color: rgb(0, 0, 0);
+  cursor: pointer;
+  font: 1.2em muli;
+  border:  2px solid #09080800;
+  border-radius: 500px;
+  transition: .1s;
+}
+
+.main-button:hover {
+  background-color: rgb(135, 135, 135);
+  color:rgb(241, 241, 241);
+  transition: .2s;
 }
 
 th{

@@ -45,24 +45,19 @@
           <img src="../static/img/user.png" alt="User Icon" >
           <h2 id="welcomeMessage">{{request.user.username}}</h2>  
         </div>
-        <button id="b5">تسجيل خروج</button>
+        <button class="side-bar-button" id="b5">تسجيل خروج</button>
         {% else %}
-        <button id="b1">تسجيل دخول</button>
+        <button class="side-bar-button" id="b1">تسجيل دخول</button>
         {% endif %}
         </div>
         
         <div class="sidebar-options">
 
         {% if admin == False %}
-        {% if access.nomination == True %}
-        <button id="b3">تقديم طلب الترشح</button>
-        {% endif %} {% if access.vote == True %}
-        <button id="b2">انتخاب</button>
-        {% endif %} {% if access.result == True %}
-        <button id="b4">النتيجه</button>
-        {% endif %} {% if access.contention == True %}
-        <button id="b6">تقديم طعن</button>
-        {% endif %}
+        <button class="side-bar-button" id="b3">تقديم طلب الترشح</button>
+        <button class="side-bar-button" id="b2">انتخاب</button>
+        <button class="side-bar-button" id="b4">النتيجه</button>
+        <button class="side-bar-button" id="b6">تقديم طعن</button>
         {% endif %}
 
 
