@@ -24,10 +24,13 @@ let header = document.querySelector("header");
 /*Buttons*/
   let myButton1 = document.querySelector("#b1");
   let myButton2 = document.querySelector("#b2");
+  let myButton5 = document.querySelector("#b5");
   let myButton3 = document.querySelector("#b3");
   let myButton4 = document.querySelector("#b4");
-  let myButton5 = document.querySelector("#b5");
   let myButton6 = document.querySelector("#b6");
+
+  let myButton7 = document.querySelector("#b7");
+  let myButton8 = document.querySelector("#b8");
 
   if (myButton1 != null) {
   myButton1.onclick = () => {
@@ -37,7 +40,7 @@ let header = document.querySelector("header");
 
 if (myButton2 != null) {
   myButton2.onclick = () => {
-    window.open("{% url 'vote1' %}", "_self");
+    window.open("{% url 'log_out' %}", "_self");
   };
 };
 
@@ -55,7 +58,7 @@ if (myButton4 != null){
 
 if (myButton5 != null) {
   myButton5.onclick = () => {
-    window.open("{% url 'log_out' %}", "_self");
+    window.open("{% url 'vote1' %}", "_self");
   };
 };
 
@@ -65,6 +68,17 @@ myButton6.onclick = () => {
   };
 };
 
+if (myButton7 != null) {
+  myButton7.onclick = () => {
+    window.open("{% url 'list_nominee' %}", "_self");
+  };
+};
+
+if (myButton8 != null) {
+  myButton8.onclick = () => {
+    window.open("{% url 'duration' %}", "_self");
+  };
+};
 
 
 

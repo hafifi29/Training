@@ -222,17 +222,6 @@ def admin(request):
     context = admincheck(request)
     if context['admin'] == True:
 
-        form = Dates_form(request.POST or None)
-        context['df'] = form
-
-        if request.POST:
-            if form.is_valid():
-                save_data(request, form)
-                context['ConfirmationMessage'] = "تم التعديل بنجاح"
-            else:
-                print(form.errors)
-
-
         committee = {}
         nominees = {}
 
@@ -248,6 +237,23 @@ def admin(request):
 
         context.update({'committee': committee, 'nominees': nominees})
         return render(request, 'adminp1.html', context)
+    else:
+        return HttpResponse('Erorr 404 Not found')
+
+@login_required
+def duration(request):
+    context = admincheck(request)
+    if context['admin'] == True:
+        form = Dates_form(request.POST or None)
+        context['df'] = form
+
+        if request.POST:
+            if form.is_valid():
+                save_data(request, form)
+                context['ConfirmationMessage'] = "تم التعديل بنجاح"
+            else:
+                print(form.errors)
+        return render(request, 'duration.html', context)
     else:
         return HttpResponse('Erorr 404 Not found')
 

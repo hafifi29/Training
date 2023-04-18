@@ -15,6 +15,8 @@ urlpatterns = [
     path('list_nominee/',
          views.list_nominee, name='list_nominee'),
     path('update_nominee/<nominee_id>',
-         views.update_nominee, name='update_nominee')
+         views.update_nominee, name='update_nominee'),
+    path('duration/',
+         views.duration, name='duration'),
 
 ]

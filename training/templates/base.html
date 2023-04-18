@@ -45,7 +45,7 @@
           <img src="../static/img/user.png" alt="User Icon" >
           <h2 id="welcomeMessage">{{request.user.username}}</h2>  
         </div>
-        <button class="side-bar-button" id="b5">تسجيل خروج</button>
+        <button class="side-bar-button" id="b2">تسجيل خروج</button>
         {% else %}
         <button class="side-bar-button" id="b1">تسجيل دخول</button>
         {% endif %}
@@ -55,9 +55,14 @@
 
         {% if admin == False %}
         <button class="side-bar-button" id="b3">تقديم طلب الترشح</button>
-        <button class="side-bar-button" id="b2">انتخاب</button>
+        <button class="side-bar-button" id="b5">انتخاب</button>
         <button class="side-bar-button" id="b4">النتيجه</button>
         <button class="side-bar-button" id="b6">تقديم طعن</button>
+
+        {% else %}
+
+        <button class="side-bar-button" id="b7">بيانات المرشحين</button>
+        <button class="side-bar-button" id="b8">تحديد المواعيد</button>
         {% endif %}
 
 
