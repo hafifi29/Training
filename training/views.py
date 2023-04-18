@@ -34,21 +34,21 @@ def admincheck(request):
     return {'admin': False}
 
 def durationcheck():
-    if start_nomination <= now and end_nomination >= datetime.now():
+    if start_nomination <= now and end_nomination >= now:
         std_access.nomination = True
         std_access.save()
     else:   
         std_access.nomination = False
         std_access.save()
     
-    if start_vote <= now and end_vote >= datetime.now():
+    if start_vote <= now and end_vote >= now:
         std_access.vote = True
         std_access.save()
     else:
         std_access.vote = False
         std_access.save()
     
-    if start_con <= now and end_con >= datetime.now():
+    if start_con <= now and end_con >= now:
         std_access.contention = True
         std_access.save()
     else:
