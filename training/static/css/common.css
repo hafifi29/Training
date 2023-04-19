@@ -421,7 +421,7 @@ footer {
 
 
 /*Responsive design*/
-@media (max-width: 400px){
+@media (max-width: 650px){
 
   .container {
     display: grid;
