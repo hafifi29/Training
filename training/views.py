@@ -149,21 +149,13 @@ def vote(request):
         if request.POST:
             if form.is_valid():
                 for Community in form.cleaned_data:
-
-                    Nominee = form.cleaned_data[Community]
-                    Nominee.Numofvotes = Nominee.Numofvotes + 1
-                    Vote.objects.create(
-                        voter_id=User_Mod, nominee_id=Nominee)
-                    print(Nominee.Numofvotes, '\n')
-                    Nominee.save()
-
                     Nominees = form.cleaned_data[Community]
-                    for Nominee in Nominees:
-                        Nominee.Numofvotes = Nominee.Numofvotes + 1
-                        Vote.objects.create(
-                            voter_id=User_Mod, nominee_id=Nominee)
-                        print(Nominee)
-                        Nominee.save()
+                    for nom in Nominees:
+                        print(nom.Numofvotes, '\n')
+                        nom.Numofvotes = nom.Numofvotes + 1
+                        Vote.objects.create(voter_id=User_Mod, nominee_id=nom)
+                        print(nom.Numofvotes, '\n')
+                        nom.save()
                 context['ConfirmationMessage'] = "Vote sent successfuly"
             else:
                 context['ConfirmationMessage'] = "Error: couldn't save application"
