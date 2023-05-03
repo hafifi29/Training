@@ -8,12 +8,11 @@ from datetime import datetime
 from django.utils import timezone
 
 
-
 # global varables
 std_access = Control_content.objects.first()
 dates = Dates.objects.first()
 start_nomination = dates.nomin_sd
-end_nomination = dates.nomin_ed    
+end_nomination = dates.nomin_ed
 start_vote = dates.vote_sd
 end_vote = dates.vote_ed
 start_con = dates.con_sd
@@ -23,7 +22,9 @@ now = timezone.now()
 
 # Create your views here.
 
-#helper functions
+# helper functions
+
+
 def admincheck(request):
     current_user = request.user
     if current_user.is_authenticated:
@@ -33,21 +34,22 @@ def admincheck(request):
             return {'admin': False}
     return {'admin': False}
 
+
 def durationcheck():
     if start_nomination <= now <= end_nomination:
         std_access.nomination = True
         std_access.save()
-    else:   
+    else:
         std_access.nomination = False
         std_access.save()
-    
+
     if start_vote <= now <= end_vote:
         std_access.vote = True
         std_access.save()
     else:
         std_access.vote = False
         std_access.save()
-    
+
     if start_con <= now <= end_con:
         std_access.contention = True
         std_access.save()
@@ -55,7 +57,6 @@ def durationcheck():
         std_access.contention = False
         std_access.save()
     return {'std_access': std_access}
-
 
 
 def home(request):
@@ -102,7 +103,7 @@ def logout_view(request):
 @login_required
 def nomination(request):
     context = admincheck(request)
-    context.update(durationcheck()) 
+    context.update(durationcheck())
     current_user = request.user
     User_Mod = User_Model.objects.get(Userkey_id=current_user.id)
     if Nominee_user.objects.filter(UserModelKey=User_Mod).exists():
@@ -111,13 +112,13 @@ def nomination(request):
 
     else:
         initial_values = {'Name': User_Mod.Name,
-                            'nominee_id': User_Mod.Student_id,
-                            'address': User_Mod.address,
-                            'birthdate': User_Mod.birthdate,
-                            'collegeYear': User_Mod.collegeYear,
-                            }
+                          'nominee_id': User_Mod.Student_id,
+                          'address': User_Mod.address,
+                          'birthdate': User_Mod.birthdate,
+                          'collegeYear': User_Mod.collegeYear,
+                          }
         form = NomineeForm(request.POST or None,
-                            request.FILES, initial=initial_values)
+                           request.FILES, initial=initial_values)
 
         if request.POST:
             if form.is_valid():
@@ -134,7 +135,7 @@ def nomination(request):
 @login_required
 def vote(request):
     context = admincheck(request)
-    context.update(durationcheck()) 
+    context.update(durationcheck())
     current_user = request.user
     User_Mod = User_Model.objects.get(Userkey_id=current_user.id)
     if Vote.objects.filter(voter_id=User_Mod).exists():
@@ -165,7 +166,7 @@ def vote(request):
 @login_required
 def result(request):
     context = admincheck(request)
-    context.update(durationcheck()) 
+    context.update(durationcheck())
     form = ResultForm(request.POST or None)
     context.update({
         'form': form
@@ -187,12 +188,12 @@ def result(request):
 @login_required
 def contention(request):
     context = admincheck(request)
-    context.update(durationcheck()) 
+    context.update(durationcheck())
     current_user = request.user
     user_mod = User_Model.objects.get(Userkey_id=current_user.id)
     initial_values = {'Name': user_mod.Name,
-                        'User_id': user_mod.Student_id
-                        }
+                      'User_id': user_mod.Student_id
+                      }
     form = ContentionForm(request.POST or None, initial=initial_values)
     if request.POST:
         if form.is_valid():
@@ -207,7 +208,7 @@ def contention(request):
     return render(request, 'contention.html', context=context)
 
 
-#Admin related views
+# Admin related views
 
 @login_required
 def admin(request):
@@ -232,6 +233,7 @@ def admin(request):
     else:
         return HttpResponse('Erorr 404 Not found')
 
+
 @login_required
 def duration(request):
     context = admincheck(request)
@@ -254,6 +256,12 @@ def duration(request):
 def list_nominee(request):
     nominee_list = Nominee_user.objects.all()
     return render(request, 'listnominee.html', {'nominee': nominee_list})
+
+
+@login_required
+def list_contention(request):
+    contention_list = Contention.objects.all()
+    return render(request, 'contentioncontrol.html', {'nominee': contention_list})
 
 
 @login_required
@@ -282,17 +290,17 @@ def update_nominee(request, nominee_id):
 
 
 def save_data(request, form):
-        if form.is_valid():
-            dates.nomin_sd = form.cleaned_data['nomin_start_date']
-            dates.nomin_ed = form.cleaned_data['nomin_end_date']
+    if form.is_valid():
+        dates.nomin_sd = form.cleaned_data['nomin_start_date']
+        dates.nomin_ed = form.cleaned_data['nomin_end_date']
 
-            dates.vote_sd = form.cleaned_data['vote_start_date']
-            dates.vote_ed = form.cleaned_data['vote_end_date']
+        dates.vote_sd = form.cleaned_data['vote_start_date']
+        dates.vote_ed = form.cleaned_data['vote_end_date']
 
-            dates.con_sd = form.cleaned_data['con_start_date']
-            dates.con_ed = form.cleaned_data['con_end_date']
+        dates.con_sd = form.cleaned_data['con_start_date']
+        dates.con_ed = form.cleaned_data['con_end_date']
 
-            dates.save()
-        
-            std_access.result = form.cleaned_data['result']
-            std_access.save()
+        dates.save()
+
+        std_access.result = form.cleaned_data['result']
+        std_access.save()

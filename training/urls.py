@@ -18,5 +18,7 @@ urlpatterns = [
          views.update_nominee, name='update_nominee'),
     path('duration/',
          views.duration, name='duration'),
+    path('list_contention/',
+         views.list_contention, name='list_contention'),
 
 ]

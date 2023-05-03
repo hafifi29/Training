@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block headcontent %}
+{% load static %}
+<meta property="og:title" content="contention List page" />
+<title>contention list</title>
+{% endblock %}
+
+{% block maincontent %}
+<div class="sharp-card-medium">
+    <h1 class="card-name">الطعن</h1>
+    <table class="normal-table">
+        <tr>
+
+            <th>
+                اسم الطالب
+            </th>
+
+            <th>
+                اسم المرشح
+            </th>
+
+            <th>
+                سبب الطعن
+            </th>
+
+        </tr>
+
+        {%for i in nominee%}
+        <tr>
+            <td>
+                {{i.user_id}}
+            </td>
+            <td>
+                {{i.nominee_id}}
+            </td>
+            <td>
+                {{i.reason}}
+            </td>
+            <td align="right">
+                <a href="{%url 'update_nominee' i.nominee_id.UserModelKey.Student_id%}">Update</a>
+            </td>
+
+        </tr>
+        {%endfor%}
+    </table>
+</div>
+{% endblock %}
