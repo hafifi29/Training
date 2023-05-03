@@ -1,4 +1,4 @@
-input[type='checkbox']{
+#id_result{
     --webkit-appearance: none;
     appearance: none;
     display: none;
@@ -30,39 +30,4 @@ input[type='checkbox']{
 
 #id_result:checked + .toggel-switch{
     background-color: lightgreen;
-}
-
-
-.new-elc{
-    display: flex;
-    justify-content: center;
-}
-button{
-    cursor: pointer;
-}
-.conferm {
-    display: none;
-  
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 999;
-    background-color: white;
-    padding: 20px;
-    border: 1px solid black;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-}
-.conferm .con{
-    width: 150px;
-    display: flex;
-    justify-content: space-between;
-}
-.conferm p{
-    text-align: center;
-}
-.conferm  button{
-    width: 70px;
-    height: 35px;
-    cursor: pointer;
 }

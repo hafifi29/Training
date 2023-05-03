@@ -233,7 +233,12 @@ def admin(request):
     else:
         return HttpResponse('Erorr 404 Not found')
 
-
+def new_elctions(request):
+    if request.method == 'GET': # <-- check if the request method is GET
+        Nominee_user.objects.all().delete()
+        return HttpResponse("Nominees have been cleared.")
+    else:
+        return HttpResponse("Invalid request method.")
 @login_required
 def duration(request):
     context = admincheck(request)
