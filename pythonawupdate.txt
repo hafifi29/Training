@@ -1,2 +1,6 @@
+cd
+rm -rf Training
 git clone git@github.com:hafifi29/Training.git
+cd Training
 python manage.py collectstatic
+cd
