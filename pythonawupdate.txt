@@ -1,0 +1,2 @@
+git clone git@github.com:hafifi29/Training.git
+python manage.py collectstatic
