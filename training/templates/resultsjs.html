@@ -1,0 +1,33 @@
+<script>
+/*Grids*/
+
+{% for c in committee.values %}
+    
+    const gridOptions{{forloop.counter}} = {
+
+        columnDefs: [
+        { field: "الاسم" },
+        { field: "عدد الأصوات" }],
+
+        rowData : [{% for nom in c.nominees.values%}
+                    { {% for key,value in nom.items %}
+                    '{{key}}' : '{{value}}',
+                    {% endfor %}},
+                    {% endfor %} ]
+
+    };
+    
+    const gridDiv{{forloop.counter}} = document.querySelector('#cdt{{forloop.counter}}');
+    new agGrid.Grid(gridDiv{{forloop.counter}}, gridOptions{{forloop.counter}});
+
+
+{% endfor %}
+
+
+/*Grid download*/
+let gdb1 = document.querySelector('#gdb1')
+gdb1.addEventListener('click',() => {
+    print(gdb1.parentNode);
+
+});
+</script>

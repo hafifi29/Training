@@ -54,10 +54,6 @@ class VoteForm(forms.Form):
             raise forms.ValidationError("Select at least two options.")
 
 
-class ResultForm(forms.Form):
-    Nominee_id = forms.CharField(label='الكود')
-
-
 class ContentionForm(forms.ModelForm):
     class Meta:
         model = Contention

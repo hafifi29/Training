@@ -138,7 +138,7 @@ def vote(request):
     context.update(durationcheck())
     current_user = request.user
     User_Mod = User_Model.objects.get(Userkey_id=current_user.id)
-    if Vote.objects.filter(voter_id=User_Mod).exists():
+    if User_Mod.Voting_status:
         context.update({"ConfirmationMessage": 'Already voted'})
         return render(request, 'vote1.html', context=context)
 
@@ -149,15 +149,19 @@ def vote(request):
         })
         if request.POST:
             if form.is_valid():
+                User_Mod.Voting_status = 1
+                User_Mod.save()
                 for Community in form.cleaned_data:
                     Nominees = form.cleaned_data[Community]
                     for nom in Nominees:
                         print(nom.Numofvotes, '\n')
                         nom.Numofvotes = nom.Numofvotes + 1
-                        Vote.objects.create(voter_id=User_Mod, nominee_id=nom)
+                        Vote.objects.create(nominations_period_id = dates.nominations_period_id,
+                                             voter_id=User_Mod, nominee_id=nom.UserModelKey, community = nom.community)
+                        
                         print(nom.Numofvotes, '\n')
                         nom.save()
-                context['ConfirmationMessage'] = "Vote sent successfuly"
+                context['ConfirmationMessage'] = "Vote sent successfully"
             else:
                 context['ConfirmationMessage'] = "Error: couldn't save application"
     return render(request, 'vote1.html', context=context)
@@ -167,21 +171,21 @@ def vote(request):
 def result(request):
     context = admincheck(request)
     context.update(durationcheck())
-    form = ResultForm(request.POST or None)
-    context.update({
-        'form': form
-    })
-    context['v'] = "votes"
-    if form.is_valid():
-        Nominee_id = form.cleaned_data['Nominee_id']
-        if User_Model.objects.filter(Student_id=Nominee_id).exists():
-            Student = User_Model.objects.get(Student_id=Nominee_id)
-            if Nominee_user.objects.filter(UserModelKey=Student).exists():
-                num_of_votes = Nominee_user.objects.get(
-                    UserModelKey=Student).Numofvotes
-                context['num_of_votes'] = num_of_votes
-        else:
-            context['num_of_votes'] = "Nominee not found"
+
+    committee = {}
+
+    for c in Nominee_user.community.field.choices:
+        nominees = {}
+        i = 1
+        for Nominee in Nominee_user.objects.filter(community = c[0]):
+            nominees.update({'n'+str(i): {'الاسم': Nominee.UserModelKey.Name,
+                            'عدد الأصوات': Nominee.Numofvotes}})
+            i += 1
+
+        committee.update({'c' + c[0] : {'name': c[1],'nominees': nominees}})
+
+    context.update({'committee': committee})
+    print (context)
     return render(request, 'results.html', context)
 
 
@@ -233,12 +237,24 @@ def admin(request):
     else:
         return HttpResponse('Erorr 404 Not found')
 
-def new_elctions(request):
-    if request.method == 'GET': # <-- check if the request method is GET
-        Nominee_user.objects.all().delete()
-        return HttpResponse("Nominees have been cleared.")
-    else:
-        return HttpResponse("Invalid request method.")
+@login_required
+def new_elections(request):
+    context = admincheck(request)
+    if context['admin'] == True:
+        form = Dates_form(request.POST or None)
+        context['df'] = form
+        if request.method == 'GET':
+            Nominee_user.objects.all().delete()
+            Contention.objects.all().delete()
+            User_Model.objects.update(Voting_status = 0)
+            dates.nominations_period_id = dates.nominations_period_id + 1
+            dates.save()
+            
+            context['ConfirmationMessage'] = "تم بداية مرحلة ترشح جديدة"
+            return render(request, 'duration.html', context)
+        else:
+            return HttpResponse("Invalid request method.")
+        
 @login_required
 def duration(request):
     context = admincheck(request)

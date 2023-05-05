@@ -1,0 +1,28 @@
+<script>
+const newElec = document.getElementById("start-election-btn");
+const comfirmMenu = document.getElementById("confirm");
+
+newElec.addEventListener("click", (event) => {
+  event.preventDefault();
+  comfirmMenu.style.display = "block";
+
+});
+
+const savechangesBtn = document.getElementById("yes-btn");
+confirmYesBtn.addEventListener("click", () => {
+  window.open("{% url 'new_elections' %}", "_self");
+});
+
+const confirmYesBtn = document.getElementById("yes-btn");
+confirmYesBtn.addEventListener("click", () => {
+  window.open("{% url 'new_elections' %}", "_self");
+});
+
+const confirmNoBtn = document.getElementById('no-btn')
+confirmNoBtn.addEventListener("click", () => {
+
+    comfirmMenu.style.display = "none";
+
+});
+</script>
+  

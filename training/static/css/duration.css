@@ -1,11 +1,11 @@
-.new-elc{
+.new-elec{
     display: flex;
     justify-content: center;
 }
 button{
     cursor: pointer;
 }
-.conferm {
+.confirm {
     display: none;
   
     position: fixed;
@@ -18,15 +18,15 @@ button{
     border: 1px solid black;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
-.conferm .con{
+.confirm .con{
     width: 150px;
     display: flex;
     justify-content: space-between;
 }
-.conferm p{
+.confirm p{
     text-align: center;
 }
-.conferm  button{
+.confirm  button{
     width: 70px;
     height: 35px;
     cursor: pointer;

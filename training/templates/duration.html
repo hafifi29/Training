@@ -6,7 +6,7 @@
 <meta property="og:title" content="Home Page">
 <meta property="og:description" content="Students Union">
 <title>Students Union </title>
-<link rel="stylesheet" href="{% static 'css/adminp1.css' %}">
+<link rel="stylesheet" href="{% static 'css/duration.css' %}">
 {% endblock %}
 
 
@@ -14,11 +14,7 @@
 {% block maincontent %}
 
 <div class="form-container">
-    <div class="overlay">
-
-    </div>
-
-    <form method="post">
+    <form method="post" action="{% url 'duration' %}">
         <h2 class="form-name">تحديد المواعيد</h2>
 
         {%csrf_token%}
@@ -54,22 +50,31 @@
                 <div class="toggel-switch"></div>
             </label>
         </div>
-        {{ConfirmationMessage}}
         <input type="submit" value="Save Changes">
     </form>
+
 <hr>
-    <div class="new-elc">
-        <button onclick="startElection()" id="start-election-btn" >بداية انتخابات جديدة</button>
-        <div class="conferm" id="conferm">
-            <p>هل انت متاكد من انهاء العملية الانتخابيه ,هذا سيؤدي لمسح بيانات جميع المرشحين</p>
+
+    <div class="new-elec">
+
+        <button id="start-election-btn" >بداية انتخابات جديدة</button>
+
+        <div class="confirm" id="confirm">
+            <p>هل انت متاكد من انهاء العملية الانتخابيه؟ هذا سيؤدي لمسح بيانات جميع المرشحين</p>
             <div class="con">
-                <button id="yes-btn"">نعم</button><button id="no-btn">لا</button>
+                <button id="yes-btn">نعم</button>
+                <button id="no-btn">لا</button>
             </div>
         </div>
     </div>
+
+    <div>
+        {{ConfirmationMessage}}
+    </div>
+    
 </div>
-<script defer src="../static/js/duration.js" ></script>
-{% include 'commonjs.html' %}
+
+{% include 'durationjs.html' %}
 
 {% endblock %}
 

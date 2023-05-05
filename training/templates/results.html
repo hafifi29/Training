@@ -7,28 +7,34 @@
 {% endblock %}
 
 {% block maincontent %}
-<div class="form-container">
-  {% if std_access.result %}
-    <form action="" method="post">
-  {%csrf_token%}
-  <h2 class="form-name">النتيجة</h2>
+  
+{% if std_access.result %}
+  <section class="sharp card medium" id="cd1">
+  <p class="card-name">النتيجة</p>
 
-  <div class="field">
-    {{form.Nominee_id.label}}
-    {{form.Nominee_id}}
+<div class="large flexhoriz">
+
+{% for c in committee.values %}
+<div class="flexvert">
+  {{c.name}}
+  <div class="ag-table-medium ag-theme-alpine" id="cdt{{forloop.counter}}">
   </div>
 
-
-  <input type="submit" value="النتيجة" />
-  {% if request.POST and not num_of_votes == 'Nominee not found'  %}
-    {{'Votes:'}} {{num_of_votes}}
-  {% else %}
-  {{num_of_votes}}
-  {% endif %}
-</form>
-{% else %}
-<div class="unavailable-field field">
-  النتيجة غير متاحة حاليا
-{% endif %}
 </div>
+{% endfor %}
+
+</div>
+
+  <button class="main-button grid-print-button" id="gdb1">طباعة</button>
+
+  {% else %}
+  <div class="unavailable-field field">
+    النتيجة غير متاحة حاليا
+  </div>
+  {% endif %}
+</section>
+
+{% include 'resultsjs.html' %}
+
+
 {% endblock %}

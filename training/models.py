@@ -11,6 +11,7 @@ class User_Model(models.Model):
     address = models.CharField(max_length=200, null=True)
     birthdate = models.DateField(null=True)
     collegeYear = models.IntegerField(null=True)
+    Voting_status = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.Name)
@@ -44,10 +45,18 @@ class Admin_user(models.Model):
 
 
 class Vote(models.Model):
-    
-    voter_id = models.ForeignKey(User_Model, on_delete=models.CASCADE, null=True, blank=True)
-    nominee_id = models.ForeignKey(Nominee_user, on_delete=models.CASCADE, null=True,  blank=True)
-
+    nominations_period_id = models.IntegerField(default=0)
+    voter_id = models.ForeignKey(User_Model, on_delete=models.CASCADE, null=True, blank=True, related_name='related_to_foreign_key_1')
+    nominee_id = models.ForeignKey(User_Model, on_delete=models.CASCADE, null=True,  blank=True, related_name='related_to_foreign_key_2')
+    community = models.CharField(max_length=20, choices=[('1', 'اللجنة العلمية'),
+                                           ('2', 'اللجنة الرياضية'),
+                                           ('3', 'اللجنة الاجتماعية'),
+                                           ('4', 'أسرة الجوالة و الخدمات'),
+                                           ('5', 'اللجنة الثقافية'),
+                                           ('6', 'اللجنة الفنية'),
+                                           ('7', 'لجنة الاسر و الرحلات')
+                                           
+                                  ])
     def __str__(self):
         return str(self.id)
 
@@ -92,11 +101,14 @@ class Control_content(SingletonModel):
 
 
 class Dates(SingletonModel):
-    nomin_sd = models.DateTimeField(max_length=30)
-    nomin_ed = models.DateTimeField(max_length=30)
+    nomin_sd = models.DateTimeField(max_length=30, null=True)
+    nomin_ed = models.DateTimeField(max_length=30, null=True)
     
-    vote_sd = models.DateTimeField(max_length=30)
-    vote_ed = models.DateTimeField(max_length=30)
+    vote_sd = models.DateTimeField(max_length=30, null=True)
+    vote_ed = models.DateTimeField(max_length=30, null=True)
 
-    con_sd = models.DateTimeField(max_length=30)
-    con_ed = models.DateTimeField(max_length=30)
+    con_sd = models.DateTimeField(max_length=30, null=True)
+    con_ed = models.DateTimeField(max_length=30, null=True)
+
+    nominations_period_id = models.IntegerField(default=0)
+
