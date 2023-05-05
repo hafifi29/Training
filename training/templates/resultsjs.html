@@ -6,8 +6,8 @@
     const gridOptions{{forloop.counter}} = {
 
         columnDefs: [
-        { field: "الاسم" },
-        { field: "عدد الأصوات" }],
+        { field: "الاسم", sortable: true },
+        { field: "عدد الأصوات", sortable: true}],
 
         rowData : [{% for nom in c.nominees.values%}
                     { {% for key,value in nom.items %}

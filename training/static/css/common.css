@@ -174,17 +174,18 @@ header a:last-of-type {
 }
 
 .large{
-  min-width: 100%;
+  min-width: 500px;
+  width: 100%;
   max-width: 100%;
   min-height: 500px;  
 }
 
 .medium{
-  min-width: 45%;
+  min-width: 500px;
+  width: 45%;
   max-width: 100%;
   min-height: 300px;
 }
-
 
 .small{
   min-width: 35%;
@@ -222,18 +223,34 @@ header a:last-of-type {
 }
 
 .normal-table{
-  min-width:600px;
+  min-width: 400px;
+  width:70%;
   min-height: 100px;
   z-index: 1;
   margin-bottom: 20px;
+  font: 80% muli;
+  border-collapse: collapse;
+  border: 2px solid rgb(134, 134, 134);
+
+}
+
+table td + td {
+  border-left:2px solid rgb(134, 134, 134);
 
 }
 
 th{
-  text-align: left;
+  text-align: center;
+  border:2px solid rgb(134, 134, 134);
+
+
 }
-tr{
-  border: #333 solid;
+
+td{
+  text-align: left;
+  border:2px solid rgb(134, 134, 134);
+
+
 }
 
 .ag-table-big{
@@ -457,20 +474,21 @@ footer {
   gap: 50px;
   z-index: 1;
   font: 100% muli;
-  margin-top: 60px;
+  margin-top: 80px;
   margin-bottom: 2%;
   margin-right: 2%;
   margin-left: 2%;
 }
 
+
 .large{
-  min-width: 70%;
+  min-width: 100%;
   max-width: 100%;
   min-height: 500px;  
 }
 
 .medium{
-  min-width: 45%;
+  min-width: 100%;
   max-width: 100%;
   min-height: 300px;
 }
@@ -491,13 +509,6 @@ footer {
 .plot-area{
   width: 100%;
   margin-bottom: 20px;
-}
-
-.normal-table{
-  min-width: 97%;
-  z-index: 1;
-  margin: 2% 8% 2%;
-
 }
 
 /*forms*/

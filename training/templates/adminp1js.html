@@ -53,9 +53,9 @@ function plotdownload(data,layout,config){
 const gridOptions = {
 
     columnDefs: [
-    { field: "الاسم" },
-    { field: "عدد الأصوات" },
-    { field: "اللجنة" }],
+    { field: "الاسم", sortable: true},
+    { field: "عدد الأصوات", sortable: true},
+    { field: "اللجنة", sortable: true}],
 
     rowData : [{% for nom in nominees.values%}
                 { {% for key,value in nom.items %}
@@ -69,7 +69,7 @@ const gridOptions = {
     new agGrid.Grid(gridDiv, gridOptions);
 
 /*Grid download*/
-let gdb3 = document.querySelector('#tb3')
+let gdb3 = document.querySelector('#gdb3')
 gdb3.addEventListener('click',() => {
     print(gdb3.parentNode);
 
