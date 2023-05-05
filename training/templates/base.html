@@ -9,10 +9,10 @@
     {% load static %}
 
     <meta charset="utf-8" />
-    <meta property="og:image" content="images/logo.jpg" />
+    <meta property="og:image" content="images/logo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta property="og:description" content="Students Union" />
-    <link rel="icon" type="image/x-icon" href="{% static 'img/logo.jpg' %}" />
+    <link rel="icon" type="image/x-icon" href="{% static 'img/logo.png' %}" />
     <link rel="stylesheet" href="{% static 'css/normalize.css' %}" />
     <link rel="stylesheet" href="{% static 'css/common.css' %}" />
 
@@ -27,7 +27,7 @@
 
       <header>
         <a href="{% url 'home' %}">
-          <img src="{% static 'img/logo.jpg' %}" alt="logo" class="logo" />
+          <img src="{% static 'img/logo.png' %}" alt="logo" class="logo" />
         </a>
         <a href="{% url 'home' %}">
           <h1 id="logotext1">FCAI Beni Suef University</h1>
@@ -63,6 +63,8 @@
 
         <button class="side-bar-button" id="b7">بيانات المرشحين</button>
         <button class="side-bar-button" id="b8">تحديد المواعيد</button>
+        <button class="side-bar-button" id="b9">الطعن</button>
+
         {% endif %}
 
 

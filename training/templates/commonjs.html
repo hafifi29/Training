@@ -31,6 +31,8 @@ let header = document.querySelector("header");
 
   let myButton7 = document.querySelector("#b7");
   let myButton8 = document.querySelector("#b8");
+  let myButton9 = document.querySelector("#b9");
+
 
   if (myButton1 != null) {
   myButton1.onclick = () => {
@@ -79,40 +81,11 @@ if (myButton8 != null) {
     window.open("{% url 'duration' %}", "_self");
   };
 };
+  if (myButton9 != null) {
+  myButton9.onclick = () => {
+    window.open("{% url 'list_contention' %}", "_self");
+  };
+};
 
-
-
-
-
-
-
-
-
-
-
-/*
-let vote_fields = document.querySelectorAll(".vote-field")
-
-vote_fields.forEach(function(vote_field){
-
-  function modifyOptions(event){
-    
-    let selectedOptions = vote_field.selectedOptions;
-
-        if (selectedOptions.length == 2)
-          for (var i = 0; i < vote_field.options.length; i++) {
-            console.log(Array.from(selectedOptions))
-            if (!Array.from(selectedOptions).includes(vote_field.options[i]))
-              vote_field.options[i].disabled = true;
-          }
-
-        if(selectedOptions.length != 2){
-        for (var i = 0; i < vote_field.options.length; i++) {
-          vote_field.options[i].disabled = false;
-        }}
-  }
-  vote_field.addEventListener("change", modifyOptions);
- 
-})*/
 });
 </script>

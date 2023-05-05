@@ -282,6 +282,7 @@ def list_nominee(request):
 @login_required
 def list_contention(request):
     contention_list = Contention.objects.all()
+    print(contention_list)
     return render(request, 'contentioncontrol.html', {'nominee': contention_list})
 
 
