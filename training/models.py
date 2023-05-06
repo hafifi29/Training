@@ -30,7 +30,7 @@ class Nominee_user(models.Model):
                                            ('7', 'لجنة الاسر و الرحلات')
                                            
                                   ])
-    rec_letter = models.FileField()
+    rec_letter = models.FileField(upload_to='../rec_letters/')
     final_list = models.BooleanField(default=False)
     Numofvotes = models.IntegerField(default=0)
 

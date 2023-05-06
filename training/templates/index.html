@@ -1,28 +1,100 @@
-{% extends 'base.html' %}
-
-{% block headcontent %}
-{% load static %}
-<meta property="og:title" content="Home Page">
-<meta property="og:image" content="images/logo.png">
-<title>Students Union </title>
-<link rel="stylesheet" href="{% static 'css/indexp.css' %}">
+{% extends 'base.html' %} {% block headcontent %} {% load static %}
+<meta property="og:title" content="Home Page" />
+<meta property="og:image" content="images/logo.png" />
+<title>Students Union</title>
+<link rel="stylesheet" href="{% static 'css/indexp.css' %}" />
 {% endblock %}
-
-
-
 {% block maincontent %}
-<section class="card large">
 
-</section>
+<div class="faq">
+  <div class="question">
+    <h4>ما هي المهام التي يقوم بها اعضاء اتحاد الطلاب ؟</h4>
+    <svg width="16" height="12" viewBox="0 0 42 25">
+      <path
+        d="M3 3L21 21L39 3"
+        stroke="white"
+        stroke-width="7"
+        stroke-linecap="round"
+      />
+    </svg>
+  </div>
+  <div class="answer">
+    <p>
+      هناك العدد من المهام التي يؤديها اعضاء اتحاد الطلاب يمكنك مشاهدت امثله علي
+      هذه المهام من خلال صفحة الاتحاد علي فيسبوك من
+      <a href="https://www.facebook.com/fcaiBns2021" target="_blank">هنا</a>
+    </p>
+  </div>
+</div>
+<style>
 
-<section class="card small">
-    
-</section>
+  .faq {
+    color: #1c1c1c;
+    background-color: #fff;
 
-<section class="card small">
-    
-</section>
+    width: 580px;
 
+    display: flex;
+    flex-direction: column;
+
+    border-bottom: 2px solid #1c1c1c;
+  }
+  .faq .question {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    direction: rtl;
+  }
+  .question h4::selection,
+  .question svg::selection {
+    background-color: transparent;
+  }
+  .question h4 {
+    line-height: 1.5;
+    caret-color: transparent;
+  }
+  .question svg {
+    margin-right: 10px;
+    transition: transform 0.5s ease-in;
+  }
+
+  .answer p {
+    line-height: 1.4;
+    font-size: 1.5rem;
+  }
+
+  .answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 1.2s ease;
+    direction: rtl;
+  }
+
+  .faq.active .answer {
+    max-height: 400px;
+    animation: show 1s ease-in-out;
+  }
+  .faq.active svg {
+    transform: rotate(180deg);
+  }
+  @keyframes show {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0px);
+    }
+  }
+</style>
+
+<script>
+  const faqs = document.querySelectorAll(".faq");
+  faqs.forEach((faq) => {
+    faq.addEventListener("click", () => {
+      faq.classList.toggle("active");
+    });
+  });
+</script>
 {% endblock %}
-
-    
