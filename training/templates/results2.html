@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block headcontent %}
+{% load static %}
+    <meta property="og:title" content="Nomination page" />
+    <title>Result </title>
+{% endblock %}
+
+{% block maincontent %}
+  
+{% if std_access.universityresult %}
+  <section class="sharp card large" id="cd1">
+  <p class="card-name">النتيجة</p>
+
+<div class="large flexhoriz">
+
+{% for c in committee.values %}
+<div class="flexvert">
+  {{c.name}}
+  <div class="ag-table-medium ag-theme-alpine" id="cdt{{forloop.counter}}">
+  </div>
+
+</div>
+{% endfor %}
+
+</div>
+
+  <button class="main-button grid-print-button" id="gdb1">طباعة</button>
+
+  {% else %}
+  <div class="unavailable-field field">
+    النتيجة غير متاحة حاليا
+  </div>
+  {% endif %}
+</section>
+
+{% include 'resultsjs.html' %}
+
+
+{% endblock %}

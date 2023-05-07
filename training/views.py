@@ -13,8 +13,10 @@ std_access = Control_content.objects.first()
 dates = Dates.objects.first()
 start_nomination = dates.nomin_sd
 end_nomination = dates.nomin_ed
-start_vote = dates.vote_sd
-end_vote = dates.vote_ed
+start_collegevote = dates.collegevote_sd
+end_collegevote = dates.collegevote_ed
+start_universityvote = dates.universityvote_sd
+end_universityvote = dates.universityvote_ed
 start_con = dates.con_sd
 end_con = dates.con_ed
 now = timezone.now()
@@ -43,11 +45,18 @@ def durationcheck():
         std_access.nomination = False
         std_access.save()
 
-    if start_vote <= now <= end_vote:
-        std_access.vote = True
+    if start_collegevote <= now <= end_collegevote:
+        std_access.collegevote = True
         std_access.save()
     else:
-        std_access.vote = False
+        std_access.collegevote = False
+        std_access.save()
+
+    if start_universityvote <= now <= end_universityvote:
+        std_access.universityvote = True
+        std_access.save()
+    else:
+        std_access.universityvote = False
         std_access.save()
 
     if start_con <= now <= end_con:
@@ -115,6 +124,7 @@ def nomination(request):
                           'nominee_id': User_Mod.Student_id,
                           'address': User_Mod.address,
                           'birthdate': User_Mod.birthdate,
+                          'college' : User_Mod.get_college_display,
                           'collegeYear': User_Mod.collegeYear,
                           }
         form = NomineeForm(request.POST or None,
@@ -133,60 +143,119 @@ def nomination(request):
 
 
 @login_required
-def vote(request):
-    context = admincheck(request)
-    context.update(durationcheck())
-    current_user = request.user
-    User_Mod = User_Model.objects.get(Userkey_id=current_user.id)
-    if User_Mod.Voting_status:
-        context.update({"ConfirmationMessage": 'Already voted'})
+def vote(request, type):
+    if type == 'college':
+        context = admincheck(request)
+        context.update(durationcheck())
+        current_user = request.user
+        User_Mod = User_Model.objects.get(Userkey_id=current_user.id)
+        if User_Mod.Voting_status:
+            context.update({"ConfirmationMessage": 'Already voted'})
+            return render(request, 'vote1.html', context=context)
+
+        else:
+            form = CollegeVoteForm(request.POST or None, Userr = User_Mod, typee = type)
+            context.update({
+                'form': form
+            })
+            if request.POST:
+                if form.is_valid():
+                    User_Mod.Voting_status = 1
+                    User_Mod.save()
+                    for Community in form.cleaned_data:
+                        Nominees = form.cleaned_data[Community]
+                        for nom in Nominees:
+                            print(nom.collegeNumofvotes, '\n')
+                            nom.collegeNumofvotes = nom.collegeNumofvotes + 1
+                            Vote.objects.create(nominations_period_id = dates.nominations_period_id,
+                                                voter_id=User_Mod, nominee_id=nom.UserModelKey, community = nom.community)
+                            
+                            print(nom.collegeNumofvotes, '\n')
+                            nom.save()
+                    context['ConfirmationMessage'] = "Vote sent successfully"
+                else:
+                    context['ConfirmationMessage'] = "Error: couldn't save application"
         return render(request, 'vote1.html', context=context)
 
-    else:
-        form = VoteForm(request.POST or None)
-        context.update({
-            'form': form
-        })
-        if request.POST:
-            if form.is_valid():
-                User_Mod.Voting_status = 1
-                User_Mod.save()
-                for Community in form.cleaned_data:
-                    Nominees = form.cleaned_data[Community]
-                    for nom in Nominees:
-                        print(nom.Numofvotes, '\n')
-                        nom.Numofvotes = nom.Numofvotes + 1
-                        Vote.objects.create(nominations_period_id = dates.nominations_period_id,
-                                             voter_id=User_Mod, nominee_id=nom.UserModelKey, community = nom.community)
-                        
-                        print(nom.Numofvotes, '\n')
-                        nom.save()
-                context['ConfirmationMessage'] = "Vote sent successfully"
-            else:
-                context['ConfirmationMessage'] = "Error: couldn't save application"
-    return render(request, 'vote1.html', context=context)
+    if type == 'university':
+        context = admincheck(request)
+        context.update(durationcheck())
+        current_user = request.user
+        User_Mod = User_Model.objects.get(Userkey_id=current_user.id)
+        if User_Mod.Voting_status:
+            context.update({"ConfirmationMessage": 'Already voted'})
+            return render(request, 'vote2.html', context=context)
+
+        else:
+            form = CollegeVoteForm(request.POST or None, Userr = User_Mod, typee = type)
+            context.update({
+                'form': form
+            })
+            if request.POST:
+                if form.is_valid():
+                    User_Mod.Voting_status = 1
+                    User_Mod.save()
+                    for Community in form.cleaned_data:
+                        Nominees = form.cleaned_data[Community]
+                        for nom in Nominees:
+                            print(nom.universityNumofvotes, '\n')
+                            nom.universityNumofvotes = nom.universityNumofvotes + 1
+                            Vote.objects.create(nominations_period_id = dates.nominations_period_id,
+                                                voter_id=User_Mod, nominee_id=nom.UserModelKey, community = nom.community)
+                            
+                            print(nom.universityNumofvotes, '\n')
+                            nom.save()
+                    context['ConfirmationMessage'] = "Vote sent successfully"
+                else:
+                    context['ConfirmationMessage'] = "Error: couldn't save application"
+        return render(request, 'vote2.html', context=context)
 
 
 @login_required
-def result(request):
-    context = admincheck(request)
-    context.update(durationcheck())
+def result(request, type):
+    if type == 'college':
+        context = admincheck(request)
+        context.update(durationcheck())
 
-    committee = {}
+        committee = {}
 
-    for c in Nominee_user.community.field.choices:
-        nominees = {}
-        i = 1
-        for Nominee in Nominee_user.objects.filter(community = c[0]):
-            nominees.update({'n'+str(i): {'الاسم': Nominee.UserModelKey.Name,
-                            'عدد الأصوات': Nominee.Numofvotes}})
-            i += 1
+        for c in Nominee_user.community.field.choices:
+            nominees = {}
+            i = 1
+            for Nominee in Nominee_user.objects.filter(community = c[0]):
+                nominees.update({'n'+str(i): {'الاسم': Nominee.UserModelKey.Name,
+                                'عدد الأصوات': Nominee.collegeNumofvotes}})
+                i += 1
 
-        committee.update({'c' + c[0] : {'name': c[1],'nominees': nominees}})
+            committee.update({'c' + c[0] : {'name': c[1],'nominees': nominees}})
 
-    context.update({'committee': committee})
-    print (context)
-    return render(request, 'results.html', context)
+        context.update({'committee': committee})
+        print (context)
+        return render(request, 'results1.html', context)
+    
+    else:
+        context = admincheck(request)
+        context.update(durationcheck())
+
+        committee = {}
+
+        for c in Nominee_user.community.field.choices:
+            nominees = {}
+            i = 1
+            for eachcollege in User_Model.college.field.choices:
+                
+                for Nominee in Nominee_user.objects.filter(
+                community=c[0], UserModelKey__in = User_Model.objects.filter(college = eachcollege[0]),
+                                                final_list=True):
+                    nominees.update({'n'+str(i): {'الاسم': Nominee.UserModelKey.Name,
+                                    'عدد الأصوات': Nominee.universityNumofvotes}})
+                    i += 1
+
+            committee.update({'c' + c[0] : {'name': c[1],'nominees': nominees}})
+
+        context.update({'committee': committee})
+        print (context)
+        return render(request, 'results2.html', context)
 
 
 @login_required
@@ -316,8 +385,11 @@ def save_data(request, form):
         dates.nomin_sd = form.cleaned_data['nomin_start_date']
         dates.nomin_ed = form.cleaned_data['nomin_end_date']
 
-        dates.vote_sd = form.cleaned_data['vote_start_date']
-        dates.vote_ed = form.cleaned_data['vote_end_date']
+        dates.collegevote_sd = form.cleaned_data['vote_start_date']
+        dates.collegevote_ed = form.cleaned_data['vote_end_date']
+
+        dates.universityvote_sd = form.cleaned_data['vote_start_date']
+        dates.universityvote_ed = form.cleaned_data['vote_end_date']
 
         dates.con_sd = form.cleaned_data['con_start_date']
         dates.con_ed = form.cleaned_data['con_end_date']

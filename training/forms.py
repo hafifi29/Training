@@ -24,29 +24,47 @@ class NomineeForm(forms.ModelForm):
     Name = forms.CharField(disabled=True, label="الاسم")
     address = forms.CharField(disabled=True, label="العنوان")
     birthdate = forms.DateField(disabled=True, label="تاريخ الميلاد")
+    college = forms.CharField(disabled=True, label="الكلية")
     collegeYear = forms.IntegerField(disabled=True, label="الفرقة")
 
 
-class VoteForm(forms.Form):
-    Scientific = forms.ModelMultipleChoiceField(Nominee_user.objects.filter(
-        community='1', final_list=True), label='اللجنة العلمية')
-    Sports = forms.ModelMultipleChoiceField(Nominee_user.objects.filter(
-        community='2', final_list=True), label='اللجنة الرياضية')
-    Social = forms.ModelMultipleChoiceField(Nominee_user.objects.filter(
-        community='3', final_list=True), label='اللجنة الاجتماعية')
-    Scout = forms.ModelMultipleChoiceField(Nominee_user.objects.filter(
-        community='4', final_list=True), label='لجنة الجوالة')
-    Cultural = forms.ModelMultipleChoiceField(Nominee_user.objects.filter(
-        community='5', final_list=True), label='اللجنة الثقافية')
-    Art = forms.ModelMultipleChoiceField(Nominee_user.objects.filter(
-        community='6', final_list=True), label='اللجنة الفنية')
-    Family = forms.ModelMultipleChoiceField(Nominee_user.objects.filter(
-        community='7', final_list=True), label='لجنة الأسر')
+class CollegeVoteForm(forms.Form):
+    Scientific = forms.ModelMultipleChoiceField(Nominee_user.objects.none(),label='اللجنة العلمية')
+    Sports = forms.ModelMultipleChoiceField(Nominee_user.objects.none(),label='اللجنة الرياضية')
+    Social = forms.ModelMultipleChoiceField(Nominee_user.objects.none(),label='اللجنة الاجتماعية')
+    Scout = forms.ModelMultipleChoiceField(Nominee_user.objects.none(), label='لجنة الجوالة')
+    Cultural = forms.ModelMultipleChoiceField(Nominee_user.objects.none(), label='اللجنة الثقافية')
+    Art = forms.ModelMultipleChoiceField(Nominee_user.objects.none(), label='اللجنة الفنية')
+    Family = forms.ModelMultipleChoiceField(Nominee_user.objects.none(), label='لجنة الأسر')
 
     def __init__(self, *args, **kwargs):
-        super(VoteForm, self).__init__(*args, **kwargs)
-        for visible in self.visible_fields():
-            visible.field.widget.attrs['class'] = 'vote-field'
+        Userr = kwargs.pop('Userr', None)
+        type = kwargs.pop('typee', None)
+        if type == 'college':
+            super().__init__(*args, **kwargs)
+            UserModelKeyy = User_Model.objects.filter(college = Userr.college)
+            i=1
+            for visible in self.visible_fields():
+                visible.field.widget.attrs['class'] = 'vote-field'
+                visible.field.queryset = Nominee_user.objects.filter(
+            community=i, UserModelKey__in = UserModelKeyy  , final_list=True)
+                i += 1
+
+        if type == 'university':
+            super().__init__(*args, **kwargs)
+            UserModelKeyy = User_Model.objects.filter(college = Userr.college)
+            i=1
+
+            for visible in self.visible_fields():
+                visible.field.widget.attrs['class'] = 'vote-field'
+
+                for eachcollege in User_Model._meta.get_field('college').choices:
+
+                    visible.field.queryset = visible.field.queryset | Nominee_user.objects.filter(
+                    community=i, UserModelKey__in = User_Model.objects.filter(college = eachcollege[0]),
+                                                 final_list=True)
+                i += 1
+
 
     def validate_multiple_choices(value):
         # Check if the selected options count is less than two
@@ -91,6 +109,7 @@ class NomineeForm_update(forms.ModelForm):
     Name = forms.CharField(disabled=True, label="الاسم")
     address = forms.CharField(disabled=True, label="العنوان")
     birthdate = forms.DateField(disabled=True, label="تاريخ الميلاد")
+    college = forms.CharField(disabled=True, label="الكلية")
     collegeYear = forms.IntegerField(disabled=True, label="الفرقة")
 
 
@@ -111,19 +130,34 @@ class Dates_form (forms.Form):
                 'min':datetime.now().strftime('%Y-%m-%dT%H:%M')
             }
         ))
-    vote_start_date = forms.DateTimeField(label='بداية مرحلة الانتخاب',widget=forms.widgets.DateTimeInput(
+    collegevote_start_date = forms.DateTimeField(label='بداية مرحلة انتخاب الكليات',widget=forms.widgets.DateTimeInput(
             attrs={
                 'type': 'datetime-local',
                 'min':datetime.now().strftime('%Y-%m-%dT%H:%M')
             }
         ))
 
-    vote_end_date = forms.DateTimeField(label='نهاية مرحلة الانتخاب', widget=forms.widgets.DateTimeInput(
+    collegevote_end_date = forms.DateTimeField(label='نهاية مرحلة انتخاب الكليات', widget=forms.widgets.DateTimeInput(
             attrs={
                 'type': 'datetime-local',
                 'min':datetime.now().strftime('%Y-%m-%dT%H:%M')
             }
         ))
+    
+    universityvote_start_date = forms.DateTimeField(label='بداية مرحلة انتخاب الجامعة',widget=forms.widgets.DateTimeInput(
+            attrs={
+                'type': 'datetime-local',
+                'min':datetime.now().strftime('%Y-%m-%dT%H:%M')
+            }
+        ))
+
+    universityvote_end_date = forms.DateTimeField(label='نهاية مرحلة انتخاب الجامعة', widget=forms.widgets.DateTimeInput(
+            attrs={
+                'type': 'datetime-local',
+                'min':datetime.now().strftime('%Y-%m-%dT%H:%M')
+            }
+        ))
+    
     con_start_date = forms.DateTimeField(label='بداية مرحلة الطعن',widget=forms.widgets.DateTimeInput(
             attrs={
                 'type': 'datetime-local',

@@ -10,6 +10,35 @@ class User_Model(models.Model):
     Student_id = models.IntegerField(unique=True)
     address = models.CharField(max_length=200, null=True)
     birthdate = models.DateField(null=True)
+    college = models.CharField(max_length=20, choices=[('1', 'كلية الحاسبات و الذكاء الاصطناعى'),
+                                           ('2', 'كلية الهندسة'),
+                                            ('3', 'كلية الطب'),
+                                            ('4', 'كلية طب الأسنان'),
+                                            ('5', 'كلية الطب البيطرى'),
+                                           ('6', 'كلية العلوم'),
+                                           ('7', 'كلية الصيدلة'),
+                                           ('8', 'كلية التمريض'),
+                                           ('9', 'كلية التكنولوجيا و التعليم'),
+                                           ('10', 'كلية الدراسات العليا للعلوم المتقدمة'),
+                                           ('11', 'كلية علوم الملاحة و تكنولوجيا الفضاء'),
+                                           ('12', 'كلية علوم ذوى الاحتياجات الخاصة'),
+                                           ('13', 'كلية علوم الأرض'),
+                                           ('14', 'كلية الفنون التطبيقية'),
+                                           ('15', 'كلية تكنولوجيا العلوم الصحية التطبيقية'),
+                                           ('16', 'كلية الزراعة'),
+                                           ('17', 'كلية العلاج الطبيعى'),
+                                           ('18', 'كلية الإعلام'),
+                                           ('19', 'كلية التجارة'),
+                                           ('20', 'كلية الآداب'),
+                                           ('21', 'كلية التربية'),
+                                            ('22', 'كلية الحقوق'),
+                                           ('23', 'كلية التربية الرياضية'),
+                                           ('24', 'كلية السياسة و الاقتصاد'),
+                                           ('25', 'كلية التربية للطفولة المبكرة'),
+                                           ('26', 'كلية الألسن'),
+                                           ('27', 'كلية الخدمة الاجتماعية التنموية'),
+                                           ('28', 'كلية السياحة و الفنادق'),             
+                                  ])
     collegeYear = models.IntegerField(null=True)
     Voting_status = models.BooleanField(default=False)
 
@@ -30,9 +59,12 @@ class Nominee_user(models.Model):
                                            ('7', 'لجنة الاسر و الرحلات')
                                            
                                   ])
-    rec_letter = models.FileField(upload_to='../rec_letters/')
+    rec_letter = models.FileField()
     final_list = models.BooleanField(default=False)
-    Numofvotes = models.IntegerField(default=0)
+    collegeNumofvotes = models.IntegerField(default=0)
+    universityNumofvotes = models.IntegerField(default=0)
+
+
 
     def __str__(self):
         return str(self.UserModelKey.Name)
@@ -56,6 +88,9 @@ class Vote(models.Model):
                                            ('6', 'اللجنة الفنية'),
                                            ('7', 'لجنة الاسر و الرحلات')
                                            
+                                  ])
+    vote_type = models.CharField(max_length=20, choices=[('1', 'collegevote'),
+                                           ('2', 'universityvote'),
                                   ])
     def __str__(self):
         return str(self.id)
@@ -89,7 +124,8 @@ class SingletonModel(models.Model):
 
 class Control_content(SingletonModel):
     nomination = models.BooleanField(default=False)
-    vote = models.BooleanField(default=False)
+    collegevote = models.BooleanField(default=False)
+    universityvote = models.BooleanField(default=False)
     contention = models.BooleanField(default=False)
     result = models.BooleanField(default=False)
 
@@ -104,8 +140,11 @@ class Dates(SingletonModel):
     nomin_sd = models.DateTimeField(max_length=30, null=True)
     nomin_ed = models.DateTimeField(max_length=30, null=True)
     
-    vote_sd = models.DateTimeField(max_length=30, null=True)
-    vote_ed = models.DateTimeField(max_length=30, null=True)
+    collegevote_sd = models.DateTimeField(max_length=30, null=True)
+    collegevote_ed = models.DateTimeField(max_length=30, null=True)
+
+    universityvote_sd = models.DateTimeField(max_length=30, null=True)
+    universityvote_ed = models.DateTimeField(max_length=30, null=True)
 
     con_sd = models.DateTimeField(max_length=30, null=True)
     con_ed = models.DateTimeField(max_length=30, null=True)

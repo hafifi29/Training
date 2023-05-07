@@ -32,6 +32,37 @@ let header = document.querySelector("header");
   let myButton7 = document.querySelector("#b7");
   let myButton8 = document.querySelector("#b8");
   let myButton9 = document.querySelector("#b9");
+  let myButton10 = document.querySelector("#b10");
+  let myButton11 = document.querySelector("#b11");
+  let myButton12 = document.querySelector("#b12");
+  let myButton13 = document.querySelector("#b13");
+
+   let listhide = document.querySelectorAll(".list-hide")
+
+
+   listhide.forEach((elem) => {
+    let nextSibling = elem.nextElementSibling;
+    while(nextSibling) {
+        nextSibling.style.display = "none";
+        nextSibling = nextSibling.nextElementSibling;
+    }
+    elem.onclick = () => {
+    let nextSibling = elem.nextElementSibling;
+      console.log("frf");
+      while(nextSibling) {
+        let dis = nextSibling.style.display;
+      if (dis === "none") {
+        nextSibling.style.display = "block";
+      } else {
+        nextSibling.style.display = "none";
+      }
+        nextSibling = nextSibling.nextElementSibling;
+
+}
+
+    };
+  });
+
 
 
   if (myButton1 != null) {
@@ -52,17 +83,30 @@ if (myButton3 != null) {
   };
 };
 
-if (myButton4 != null){
-  myButton4.onclick = () => {
-    window.open("{% url 'result' %}", "_self");
+if (myButton10 != null) {
+  myButton10.onclick = () => {
+    window.open("{% url 'vote1' 'college' %}", "_self");
   };
 };
 
-if (myButton5 != null) {
-  myButton5.onclick = () => {
-    window.open("{% url 'vote1' %}", "_self");
+if (myButton11 != null) {
+  myButton11.onclick = () => {
+    window.open("{% url 'vote1' 'university' %}", "_self");
   };
 };
+
+if (myButton12 != null){
+  myButton12.onclick = () => {
+    window.open("{% url 'result' 'college' %}", "_self");
+  };
+};
+
+if (myButton13 != null){
+  myButton13.onclick = () => {
+    window.open("{% url 'result' 'university' %}", "_self");
+  };
+};
+
 
 if (myButton6 != null){
 myButton6.onclick = () => {
