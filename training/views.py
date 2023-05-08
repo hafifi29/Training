@@ -406,7 +406,7 @@ def admin(request):
         i = 1
         for Nominee in Nominee_user.objects.all():
             nominees.update({'n'+str(i): {'الاسم': Nominee.UserModelKey.Name,
-                            'عدد الأصوات': Nominee.collegeNumofvotes, "اللجنة": Nominee.get_community_display()}})
+                            'عدد الأصوات': Nominee.communityMemberElectionsNumOfVotes, "اللجنة": Nominee.get_community_display()}})
             i += 1
 
         context.update({'committee': committee, 'nominees': nominees})
