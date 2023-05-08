@@ -104,7 +104,7 @@ class voteForm1(forms.Form):
         for visible in self.visible_fields():
             visible.field.widget.attrs['class'] = 'vote-field'
             visible.field.queryset = Nominee_user.objects.filter(
-        community=i, UserModelKey__in = UsersinSamecollegeANDcollegeYear, final_list=True)
+        community=i, UserModelKey__in = UsersinSamecollegeANDcollegeYear, communityMemberElections = True, final_list=True)
             i += 1
 
     def validate_multiple_choices(value):
@@ -113,26 +113,20 @@ class voteForm1(forms.Form):
             raise forms.ValidationError("Select at least two options.")
 
 class voteForm2(forms.Form):
-    Scientific = forms.ModelMultipleChoiceField(Nominee_user.objects.none(),label='اللجنة العلمية')
-    Sports = forms.ModelMultipleChoiceField(Nominee_user.objects.none(),label='اللجنة الرياضية')
-    Social = forms.ModelMultipleChoiceField(Nominee_user.objects.none(),label='اللجنة الاجتماعية')
-    Scout = forms.ModelMultipleChoiceField(Nominee_user.objects.none(), label='لجنة الجوالة')
-    Cultural = forms.ModelMultipleChoiceField(Nominee_user.objects.none(), label='اللجنة الثقافية')
-    Art = forms.ModelMultipleChoiceField(Nominee_user.objects.none(), label='اللجنة الفنية')
-    Family = forms.ModelMultipleChoiceField(Nominee_user.objects.none(), label='لجنة الأسر')
-
+    collegeCommunityTrusteeNominee = forms.CharField(label='أمين اللجنة', disabled = True)
+    collegeCommunityTrusteeHelperNominee = forms.ModelMultipleChoiceField(Nominee_user.objects.none(), label='مساعد الأمين')
+    
     def __init__(self, *args, **kwargs):
         Userr = kwargs.pop('Userr', None)
-        type = kwargs.pop('typee', None)
-        if type == 'college':
-            super().__init__(*args, **kwargs)
-            UserModelKeyy = User_Model.objects.filter(college = Userr.college)
-            i=1
-            for visible in self.visible_fields():
-                visible.field.widget.attrs['class'] = 'vote-field'
-                visible.field.queryset = Nominee_user.objects.filter(
-            community=i, UserModelKey__in = UserModelKeyy  , final_list=True)
-                i += 1
+        super().__init__(*args, **kwargs)
+        UsersinSamecollege = User_Model.objects.filter(college = Userr.college)
+        i=1
+        for visible in self.visible_fields():
+            visible.field.widget.attrs['class'] = 'vote-field'
+            i += 1
+        self.fields['collegeCommunityTrusteeHelperNominee'].queryset = Nominee_user.objects.filter(
+    community=Nominee_user.objects.get(UserModelKey=Userr).community, UserModelKey__in = UsersinSamecollege, role = '2', collegeCommunityTrusteeOreHelperElections = True  , final_list=True)
+
 
 class voteForm3(forms.Form):
     Scientific = forms.ModelMultipleChoiceField(Nominee_user.objects.none(),label='اللجنة العلمية')

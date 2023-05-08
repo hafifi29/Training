@@ -324,6 +324,51 @@ def vote(request, type):
         return render(request, 'vote1.html', context=context)
 
     if type == 'collegeCommunityTrusteeOreHelperElections':
+
+        if not (Nominee_user.objects.filter(UserModelKey=User_Mod).exists()):
+                context.update({"ConfirmationMessage": 'متطلبات الانتخاب غير موافاة'})
+                return render(request, 'vote2.html', context=context)
+
+        if not (Nominee_user.objects.get(UserModelKey=User_Mod).role == '2'):
+                context.update({"ConfirmationMessage": 'متطلبات الانتخاب غير موافاة'})
+                return render(request, 'vote2.html', context=context)
+
+        if User_Mod.Voting_status_2:
+            context.update({"ConfirmationMessage": 'Already voted'})
+            return render(request, 'vote2.html', context=context)
+
+        else:
+            UsersinSamecollege = User_Model.objects.filter(college = User_Mod.college)
+            if Nominee_user.objects.filter(
+        community=Nominee_user.objects.get(UserModelKey=User_Mod).community, UserModelKey__in = UsersinSamecollege, role = '3').exists():
+            
+                collegeCommunityTrusteeNominee = Nominee_user.objects.get(
+            community=Nominee_user.objects.get(UserModelKey=User_Mod).community, UserModelKey__in = UsersinSamecollege, role = '3')
+            else:
+                collegeCommunityTrusteeNominee = 'الأمين لم يتم تحديده بعد'
+            initial_values = {'collegeCommunityTrusteeNominee': collegeCommunityTrusteeNominee,
+                }
+
+            form = voteForm2(request.POST or None, Userr = User_Mod, initial = initial_values)
+            context.update({
+                'form': form
+            })
+            if request.POST:
+                if form.is_valid():
+                    User_Mod.Voting_status_1 = 1
+                    User_Mod.save()
+                    nom = form.cleaned_data['collegeCommunityTrusteeHelperNominee'][0]
+                    print (nom)
+                    print(nom.collegeCommunityTrusteeOreHelperElectionsNumOfVotes, '\n')
+                    nom.collegeCommunityTrusteeOreHelperElectionsNumOfVotes = nom.collegeCommunityTrusteeOreHelperElectionsNumOfVotes + 1
+                    Vote.objects.create(nominations_period_id = dates.nominations_period_id,
+                                        voter_id=User_Mod, nominee_id=nom.UserModelKey, community = nom.community)
+                    
+                    print(nom.collegeCommunityTrusteeOreHelperElectionsNumOfVotes, '\n')
+                    nom.save()
+                    context['ConfirmationMessage'] = "Vote sent successfully"
+                else:
+                    context['ConfirmationMessage'] = "Error: couldn't save application"
         return render(request, 'vote2.html', context=context)
     
     if type == 'collegeStudentUnionPresidentOrViceElections':

@@ -13,7 +13,7 @@
   <form class="vote" method="POST">
     {%csrf_token%}
     <h2 class="form-name">انتخاب</h2>
-    {% if ConfirmationMessage == 'Vote sent successfully' or ConfirmationMessage == 'Already voted'%}
+    {% if ConfirmationMessage == 'Vote sent successfully' or ConfirmationMessage == 'Already voted' or ConfirmationMessage == 'متطلبات الانتخاب غير موافاة'  %}
     <div>{{ConfirmationMessage}}</div>
     {% else %}
     <div class="field">
