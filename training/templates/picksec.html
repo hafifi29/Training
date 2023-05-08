@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block headcontent %}
+{% load static %}
+  <meta property="og:title" content="Nominee Update Page" />
+  <link rel="stylesheet" href="{% static 'css/nomination.css' %}" />
+  <title>Nominee Update Form</title>
+{% endblock %}
+
+{% block maincontent %}
+<div>
+    <form enctype="multipart/form-data" id="myForm" class="form-container" method="POST">
+        {%csrf_token%}
+        <h2>اختيار الأمناء</h2>
+
+        <div class="field">
+            {{form.union_secretary.label}}
+            {{form.union_secretary}}
+        </div>
+
+        <div class="field">
+            {{form.helper_union_secretary.label}}
+            {{form.helper_union_secretary}}
+        </div>
+
+        {% if ConfirmationMessage %}
+        <div>{{ ConfirmationMessage }}</div>
+        {% endif %}
+
+        <input type="submit" value=" حفظ" />
+
+    </form>
+</div>
+{% endblock %}

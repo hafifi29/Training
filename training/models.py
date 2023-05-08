@@ -40,7 +40,13 @@ class User_Model(models.Model):
                                            ('28', 'كلية السياحة و الفنادق'),             
                                   ])
     collegeYear = models.IntegerField(null=True)
-    Voting_status = models.BooleanField(default=False)
+    Voting_status_1 = models.BooleanField(default=False)
+    Voting_status_2 = models.BooleanField(default=False)
+    Voting_status_3 = models.BooleanField(default=False)
+    Voting_status_4 = models.BooleanField(default=False)
+    Voting_status_5 = models.BooleanField(default=False)
+
+
 
     def __str__(self):
         return str(self.Name)
@@ -50,7 +56,7 @@ class Nominee_user(models.Model):
     UserModelKey = models.OneToOneField(User_Model, on_delete=models.CASCADE)
     phone_no = models.IntegerField()
     email = models.EmailField(max_length=50)
-    community = models.CharField(max_length=20, choices=[('1', 'اللجنة العلمية'),
+    community = models.CharField(max_length=30, choices=[('1', 'اللجنة العلمية'),
                                            ('2', 'اللجنة الرياضية'),
                                            ('3', 'اللجنة الاجتماعية'),
                                            ('4', 'أسرة الجوالة و الخدمات'),
@@ -58,11 +64,32 @@ class Nominee_user(models.Model):
                                            ('6', 'اللجنة الفنية'),
                                            ('7', 'لجنة الاسر و الرحلات')
                                            
-                                  ])
+                                  ], default='1')
     rec_letter = models.FileField()
     final_list = models.BooleanField(default=False)
-    collegeNumofvotes = models.IntegerField(default=0)
-    universityNumofvotes = models.IntegerField(default=0)
+    role = models.CharField(max_length=25, choices=[('1', 'لم يحدد'),
+                                           ('2', 'عضو'),
+                                           ('3', 'أمين لجنة على مستوى الكلية'),
+                                           ('4', 'مساعد أمين لجنة على مستوى الكلية'),
+                                           ('5', 'نائب رئيس اتحاد طلاب الكلية'),
+                                           ('6', 'رئيس اتحاد طلاب الكلية'),
+                                           ('7', 'أمين لجنة على مستوى الجامعة'),
+                                           ('8', 'مساعد أمين لجنة على مستوى الجامعة'),
+                                           ('9', 'نائب رئيس اتحاد طلاب الجامعة'),
+                                           ('10', 'رئيس اتحاد طلاب الجامعة'),                                           
+                                  ], default = "1")
+    
+    communityMemberElections = models.BooleanField(default=False)
+    collegeCommunityTrusteeOreHelperElections = models.BooleanField(default=False)
+    collegeStudentUnionPresidentOrViceElections = models.BooleanField(default=False)
+    universityCommunityTrusteeOrHelperElections = models.BooleanField(default=False)
+    universityStudentUnionPresidentOrViceElections = models.BooleanField(default=False)
+
+    communityMemberElectionsNumOfVotes = models.IntegerField(default=0)
+    collegeCommunityTrusteeOreHelperElectionsNumOfVotes = models.IntegerField(default=0)
+    collegeStudentUnionPresidentOrViceElectionsNumOfVotes = models.IntegerField(default=0)
+    universityCommunityTrusteeOrHelperElectionsNumOfVotes =  models.IntegerField(default=0)
+    universityStudentUnionPresidentOrViceElectionsNumOfVotes =  models.IntegerField(default=0)
 
 
 
@@ -73,7 +100,35 @@ class Nominee_user(models.Model):
 class Admin_user(models.Model):
     Userkey = models.OneToOneField(User, on_delete=models.CASCADE)
     Name = models.CharField(max_length=50, default="")
-
+    college = models.CharField(max_length=20, choices=[('1', 'كلية الحاسبات و الذكاء الاصطناعى'),
+                                           ('2', 'كلية الهندسة'),
+                                            ('3', 'كلية الطب'),
+                                            ('4', 'كلية طب الأسنان'),
+                                            ('5', 'كلية الطب البيطرى'),
+                                           ('6', 'كلية العلوم'),
+                                           ('7', 'كلية الصيدلة'),
+                                           ('8', 'كلية التمريض'),
+                                           ('9', 'كلية التكنولوجيا و التعليم'),
+                                           ('10', 'كلية الدراسات العليا للعلوم المتقدمة'),
+                                           ('11', 'كلية علوم الملاحة و تكنولوجيا الفضاء'),
+                                           ('12', 'كلية علوم ذوى الاحتياجات الخاصة'),
+                                           ('13', 'كلية علوم الأرض'),
+                                           ('14', 'كلية الفنون التطبيقية'),
+                                           ('15', 'كلية تكنولوجيا العلوم الصحية التطبيقية'),
+                                           ('16', 'كلية الزراعة'),
+                                           ('17', 'كلية العلاج الطبيعى'),
+                                           ('18', 'كلية الإعلام'),
+                                           ('19', 'كلية التجارة'),
+                                           ('20', 'كلية الآداب'),
+                                           ('21', 'كلية التربية'),
+                                            ('22', 'كلية الحقوق'),
+                                           ('23', 'كلية التربية الرياضية'),
+                                           ('24', 'كلية السياسة و الاقتصاد'),
+                                           ('25', 'كلية التربية للطفولة المبكرة'),
+                                           ('26', 'كلية الألسن'),
+                                           ('27', 'كلية الخدمة الاجتماعية التنموية'),
+                                           ('28', 'كلية السياحة و الفنادق'),             
+                                  ])
 
 
 class Vote(models.Model):
@@ -123,7 +178,24 @@ class SingletonModel(models.Model):
 
 
 class Control_content(SingletonModel):
-    nomination = models.BooleanField(default=False)
+    communityMemberElections = models.BooleanField(default=False)
+    collegeCommunityTrusteeOreHelperElections = models.BooleanField(default=False)
+    collegeStudentUnionPresidentOrViceElections = models.BooleanField(default=False)
+    universityCommunityTrusteeOrHelperElections = models.BooleanField(default=False)
+    universityStudentUnionPresidentOrViceElections = models.BooleanField(default=False)
+
+    Voting_1 = models.BooleanField(default=False)
+    Voting_2 = models.BooleanField(default=False)
+    Voting_3 = models.BooleanField(default=False)
+    Voting_4 = models.BooleanField(default=False)
+    Voting_5 = models.BooleanField(default=False)
+
+    result_1 = models.BooleanField(default=False)
+    result_2 = models.BooleanField(default=False)
+    result_3 = models.BooleanField(default=False)
+    result_4 = models.BooleanField(default=False)
+    result_5 = models.BooleanField(default=False)
+
     collegevote = models.BooleanField(default=False)
     universityvote = models.BooleanField(default=False)
     contention = models.BooleanField(default=False)
@@ -137,14 +209,50 @@ class Control_content(SingletonModel):
 
 
 class Dates(SingletonModel):
-    nomin_sd = models.DateTimeField(max_length=30, null=True)
-    nomin_ed = models.DateTimeField(max_length=30, null=True)
-    
-    collegevote_sd = models.DateTimeField(max_length=30, null=True)
-    collegevote_ed = models.DateTimeField(max_length=30, null=True)
+    communityMemberElections_sd = models.DateTimeField(max_length=30, null=True)
+    communityMemberElections_ed = models.DateTimeField(max_length=30, null=True)
 
-    universityvote_sd = models.DateTimeField(max_length=30, null=True)
-    universityvote_ed = models.DateTimeField(max_length=30, null=True)
+    collegeCommunityTrusteeOreHelperElections_sd = models.DateTimeField(max_length=30, null=True)
+    collegeCommunityTrusteeOreHelperElections_ed = models.DateTimeField(max_length=30, null=True)
+
+    collegeStudentUnionPresidentOrViceElections_sd = models.DateTimeField(max_length=30, null=True)
+    collegeStudentUnionPresidentOrViceElections_ed = models.DateTimeField(max_length=30, null=True)
+
+    universityCommunityTrusteeOrHelperElections_sd = models.DateTimeField(max_length=30, null=True)
+    universityCommunityTrusteeOrHelperElections_ed = models.DateTimeField(max_length=30, null=True)
+
+    universityStudentUnionPresidentOrViceElections_sd = models.DateTimeField(max_length=30, null=True)
+    universityStudentUnionPresidentOrViceElections_ed = models.DateTimeField(max_length=30, null=True)
+
+    Voting_1_sd = models.DateTimeField(max_length=30, null=True)
+    Voting_1_ed = models.DateTimeField(max_length=30, null=True)
+
+    Voting_2_sd = models.DateTimeField(max_length=30, null=True)
+    Voting_2_ed = models.DateTimeField(max_length=30, null=True)
+
+    Voting_3_sd = models.DateTimeField(max_length=30, null=True)
+    Voting_3_ed = models.DateTimeField(max_length=30, null=True)
+
+    Voting_4_sd = models.DateTimeField(max_length=30, null=True)
+    Voting_4_ed = models.DateTimeField(max_length=30, null=True)
+
+    Voting_5_sd = models.DateTimeField(max_length=30, null=True)
+    Voting_5_ed = models.DateTimeField(max_length=30, null=True)
+
+    result_1_sd = models.DateTimeField(max_length=30, null=True)
+    result_1_ed = models.DateTimeField(max_length=30, null=True)
+
+    result_2_sd = models.DateTimeField(max_length=30, null=True)
+    result_2_ed = models.DateTimeField(max_length=30, null=True)
+
+    result_3_sd = models.DateTimeField(max_length=30, null=True)
+    result_3_ed = models.DateTimeField(max_length=30, null=True)
+
+    result_4_sd = models.DateTimeField(max_length=30, null=True)
+    result_4_ed = models.DateTimeField(max_length=30, null=True)
+
+    result_5_sd = models.DateTimeField(max_length=30, null=True)
+    result_5_ed = models.DateTimeField(max_length=30, null=True)
 
     con_sd = models.DateTimeField(max_length=30, null=True)
     con_ed = models.DateTimeField(max_length=30, null=True)

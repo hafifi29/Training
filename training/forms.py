@@ -5,7 +5,95 @@ from .models import *
 from django.contrib.auth.models import User
 
 
-class NomineeForm(forms.ModelForm):
+class nomForm1(forms.ModelForm):
+    class Meta:
+        model = Nominee_user
+        fields = [
+            'phone_no',
+            'email',
+            'community',
+            'rec_letter',
+        ]
+        labels = {
+            "phone_no": "رقم الموبايل",
+            'email': 'الايميل',
+            'community': 'اللجنة',
+            'rec_letter': 'اثبات المشاركة فى الأنشطة'
+        }
+    nominee_id = forms.CharField(disabled=True, label="الكود")
+    Name = forms.CharField(disabled=True, label="الاسم")
+    address = forms.CharField(disabled=True, label="العنوان")
+    birthdate = forms.DateField(disabled=True, label="تاريخ الميلاد")
+    college = forms.CharField(disabled=True, label="الكلية")
+    collegeYear = forms.IntegerField(disabled=True, label="الفرقة")
+
+class nomForm2(forms.ModelForm):
+    class Meta:
+        model = Nominee_user
+        fields = [
+            'phone_no',
+            'email',
+            'community',
+            'rec_letter',
+        ]
+        labels = {
+            "phone_no": "رقم الموبايل",
+            'email': 'الايميل',
+            'community': 'اللجنة',
+            'rec_letter': 'اثبات المشاركة فى الأنشطة'
+        }
+    nominee_id = forms.CharField(disabled=True, label="الكود")
+    Name = forms.CharField(disabled=True, label="الاسم")
+    address = forms.CharField(disabled=True, label="العنوان")
+    birthdate = forms.DateField(disabled=True, label="تاريخ الميلاد")
+    college = forms.CharField(disabled=True, label="الكلية")
+    collegeYear = forms.IntegerField(disabled=True, label="الفرقة")
+
+class nomForm3(forms.ModelForm):
+    class Meta:
+        model = Nominee_user
+        fields = [
+            'phone_no',
+            'email',
+            'community',
+            'rec_letter',
+        ]
+        labels = {
+            "phone_no": "رقم الموبايل",
+            'email': 'الايميل',
+            'community': 'اللجنة',
+            'rec_letter': 'اثبات المشاركة فى الأنشطة'
+        }
+    nominee_id = forms.CharField(disabled=True, label="الكود")
+    Name = forms.CharField(disabled=True, label="الاسم")
+    address = forms.CharField(disabled=True, label="العنوان")
+    birthdate = forms.DateField(disabled=True, label="تاريخ الميلاد")
+    college = forms.CharField(disabled=True, label="الكلية")
+    collegeYear = forms.IntegerField(disabled=True, label="الفرقة")
+
+class nomForm4(forms.ModelForm):
+    class Meta:
+        model = Nominee_user
+        fields = [
+            'phone_no',
+            'email',
+            'community',
+            'rec_letter',
+        ]
+        labels = {
+            "phone_no": "رقم الموبايل",
+            'email': 'الايميل',
+            'community': 'اللجنة',
+            'rec_letter': 'اثبات المشاركة فى الأنشطة'
+        }
+    nominee_id = forms.CharField(disabled=True, label="الكود")
+    Name = forms.CharField(disabled=True, label="الاسم")
+    address = forms.CharField(disabled=True, label="العنوان")
+    birthdate = forms.DateField(disabled=True, label="تاريخ الميلاد")
+    college = forms.CharField(disabled=True, label="الكلية")
+    collegeYear = forms.IntegerField(disabled=True, label="الفرقة")
+
+class nomForm5(forms.ModelForm):
     class Meta:
         model = Nominee_user
         fields = [
@@ -28,7 +116,9 @@ class NomineeForm(forms.ModelForm):
     collegeYear = forms.IntegerField(disabled=True, label="الفرقة")
 
 
-class CollegeVoteForm(forms.Form):
+
+
+class voteForm1(forms.Form):
     Scientific = forms.ModelMultipleChoiceField(Nominee_user.objects.none(),label='اللجنة العلمية')
     Sports = forms.ModelMultipleChoiceField(Nominee_user.objects.none(),label='اللجنة الرياضية')
     Social = forms.ModelMultipleChoiceField(Nominee_user.objects.none(),label='اللجنة الاجتماعية')
@@ -50,26 +140,99 @@ class CollegeVoteForm(forms.Form):
             community=i, UserModelKey__in = UserModelKeyy  , final_list=True)
                 i += 1
 
-        if type == 'university':
-            super().__init__(*args, **kwargs)
-            UserModelKeyy = User_Model.objects.filter(college = Userr.college)
-            i=1
-
-            for visible in self.visible_fields():
-                visible.field.widget.attrs['class'] = 'vote-field'
-
-                for eachcollege in User_Model._meta.get_field('college').choices:
-
-                    visible.field.queryset = visible.field.queryset | Nominee_user.objects.filter(
-                    community=i, UserModelKey__in = User_Model.objects.filter(college = eachcollege[0]),
-                                                 final_list=True)
-                i += 1
-
-
     def validate_multiple_choices(value):
         # Check if the selected options count is less than two
         if len(value) < 2:
             raise forms.ValidationError("Select at least two options.")
+
+class voteForm2(forms.Form):
+    Scientific = forms.ModelMultipleChoiceField(Nominee_user.objects.none(),label='اللجنة العلمية')
+    Sports = forms.ModelMultipleChoiceField(Nominee_user.objects.none(),label='اللجنة الرياضية')
+    Social = forms.ModelMultipleChoiceField(Nominee_user.objects.none(),label='اللجنة الاجتماعية')
+    Scout = forms.ModelMultipleChoiceField(Nominee_user.objects.none(), label='لجنة الجوالة')
+    Cultural = forms.ModelMultipleChoiceField(Nominee_user.objects.none(), label='اللجنة الثقافية')
+    Art = forms.ModelMultipleChoiceField(Nominee_user.objects.none(), label='اللجنة الفنية')
+    Family = forms.ModelMultipleChoiceField(Nominee_user.objects.none(), label='لجنة الأسر')
+
+    def __init__(self, *args, **kwargs):
+        Userr = kwargs.pop('Userr', None)
+        type = kwargs.pop('typee', None)
+        if type == 'college':
+            super().__init__(*args, **kwargs)
+            UserModelKeyy = User_Model.objects.filter(college = Userr.college)
+            i=1
+            for visible in self.visible_fields():
+                visible.field.widget.attrs['class'] = 'vote-field'
+                visible.field.queryset = Nominee_user.objects.filter(
+            community=i, UserModelKey__in = UserModelKeyy  , final_list=True)
+                i += 1
+
+class voteForm3(forms.Form):
+    Scientific = forms.ModelMultipleChoiceField(Nominee_user.objects.none(),label='اللجنة العلمية')
+    Sports = forms.ModelMultipleChoiceField(Nominee_user.objects.none(),label='اللجنة الرياضية')
+    Social = forms.ModelMultipleChoiceField(Nominee_user.objects.none(),label='اللجنة الاجتماعية')
+    Scout = forms.ModelMultipleChoiceField(Nominee_user.objects.none(), label='لجنة الجوالة')
+    Cultural = forms.ModelMultipleChoiceField(Nominee_user.objects.none(), label='اللجنة الثقافية')
+    Art = forms.ModelMultipleChoiceField(Nominee_user.objects.none(), label='اللجنة الفنية')
+    Family = forms.ModelMultipleChoiceField(Nominee_user.objects.none(), label='لجنة الأسر')
+
+    def __init__(self, *args, **kwargs):
+        Userr = kwargs.pop('Userr', None)
+        type = kwargs.pop('typee', None)
+        if type == 'college':
+            super().__init__(*args, **kwargs)
+            UserModelKeyy = User_Model.objects.filter(college = Userr.college)
+            i=1
+            for visible in self.visible_fields():
+                visible.field.widget.attrs['class'] = 'vote-field'
+                visible.field.queryset = Nominee_user.objects.filter(
+            community=i, UserModelKey__in = UserModelKeyy  , final_list=True)
+                i += 1
+
+class CvoteForm4(forms.Form):
+    Scientific = forms.ModelMultipleChoiceField(Nominee_user.objects.none(),label='اللجنة العلمية')
+    Sports = forms.ModelMultipleChoiceField(Nominee_user.objects.none(),label='اللجنة الرياضية')
+    Social = forms.ModelMultipleChoiceField(Nominee_user.objects.none(),label='اللجنة الاجتماعية')
+    Scout = forms.ModelMultipleChoiceField(Nominee_user.objects.none(), label='لجنة الجوالة')
+    Cultural = forms.ModelMultipleChoiceField(Nominee_user.objects.none(), label='اللجنة الثقافية')
+    Art = forms.ModelMultipleChoiceField(Nominee_user.objects.none(), label='اللجنة الفنية')
+    Family = forms.ModelMultipleChoiceField(Nominee_user.objects.none(), label='لجنة الأسر')
+
+    def __init__(self, *args, **kwargs):
+        Userr = kwargs.pop('Userr', None)
+        type = kwargs.pop('typee', None)
+        if type == 'college':
+            super().__init__(*args, **kwargs)
+            UserModelKeyy = User_Model.objects.filter(college = Userr.college)
+            i=1
+            for visible in self.visible_fields():
+                visible.field.widget.attrs['class'] = 'vote-field'
+                visible.field.queryset = Nominee_user.objects.filter(
+            community=i, UserModelKey__in = UserModelKeyy  , final_list=True)
+                i += 1
+
+class voteForm5(forms.Form):
+    Scientific = forms.ModelMultipleChoiceField(Nominee_user.objects.none(),label='اللجنة العلمية')
+    Sports = forms.ModelMultipleChoiceField(Nominee_user.objects.none(),label='اللجنة الرياضية')
+    Social = forms.ModelMultipleChoiceField(Nominee_user.objects.none(),label='اللجنة الاجتماعية')
+    Scout = forms.ModelMultipleChoiceField(Nominee_user.objects.none(), label='لجنة الجوالة')
+    Cultural = forms.ModelMultipleChoiceField(Nominee_user.objects.none(), label='اللجنة الثقافية')
+    Art = forms.ModelMultipleChoiceField(Nominee_user.objects.none(), label='اللجنة الفنية')
+    Family = forms.ModelMultipleChoiceField(Nominee_user.objects.none(), label='لجنة الأسر')
+
+    def __init__(self, *args, **kwargs):
+        Userr = kwargs.pop('Userr', None)
+        type = kwargs.pop('typee', None)
+        if type == 'college':
+            super().__init__(*args, **kwargs)
+            UserModelKeyy = User_Model.objects.filter(college = Userr.college)
+            i=1
+            for visible in self.visible_fields():
+                visible.field.widget.attrs['class'] = 'vote-field'
+                visible.field.queryset = Nominee_user.objects.filter(
+            community=i, UserModelKey__in = UserModelKeyy  , final_list=True)
+                i += 1
+
 
 
 class ContentionForm(forms.ModelForm):
@@ -111,6 +274,27 @@ class NomineeForm_update(forms.ModelForm):
     birthdate = forms.DateField(disabled=True, label="تاريخ الميلاد")
     college = forms.CharField(disabled=True, label="الكلية")
     collegeYear = forms.IntegerField(disabled=True, label="الفرقة")
+
+
+class pickcollegerepres(forms.Form):
+    union_secretary = forms.ModelMultipleChoiceField(Nominee_user.objects.none(),label='أمين اتحاد')
+    helper_union_secretary = forms.ModelMultipleChoiceField(Nominee_user.objects.none(),label='أمين مساعد اتحاد')
+    
+    def __init__(self, *args, **kwargs):
+        Userr = kwargs.pop('Userr', None)
+        super().__init__(*args, **kwargs)
+        UserModelKeyy = User_Model.objects.filter(college = Userr.college)
+        for visible in self.visible_fields():
+            visible.field.widget.attrs['class'] = 'vote-field'
+            
+        i=1
+        for community in Nominee_user._meta.get_field('community').choices:
+            self.fields['union_secretary'].queryset = self.fields['union_secretary'].queryset | Nominee_user.objects.filter(
+        community=i, UserModelKey__in = UserModelKeyy  , final_list=True).order_by('-collegeNumofvotes')[:1]
+            
+            self.fields['helper_union_secretary'].queryset = self.fields['helper_union_secretary'].queryset | Nominee_user.objects.filter(
+        community=i, UserModelKey__in = UserModelKeyy  , final_list=True).order_by('-collegeNumofvotes')[1:2]
+            i += 1
 
 
 
