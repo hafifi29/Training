@@ -14,7 +14,7 @@
     {%csrf_token%}
 
     <h2 class="form-name">استمارة ترشح</h2>
-    {% if ConfirmationMessage == 'Application already sent' or ConfirmationMessage == 'Application sent successfuly' %}
+    {% if ConfirmationMessage == 'Application already sent' or ConfirmationMessage == 'Application sent successfuly' or ConfirmationMessage == 'متطلبات الترشح غير موافاة' %}
     <div>{{ ConfirmationMessage }}</div>
 
     {% else %}

@@ -27,27 +27,18 @@ class nomForm1(forms.ModelForm):
     college = forms.CharField(disabled=True, label="الكلية")
     collegeYear = forms.IntegerField(disabled=True, label="الفرقة")
 
-class nomForm2(forms.ModelForm):
-    class Meta:
-        model = Nominee_user
-        fields = [
-            'phone_no',
-            'email',
-            'community',
-            'rec_letter',
-        ]
-        labels = {
-            "phone_no": "رقم الموبايل",
-            'email': 'الايميل',
-            'community': 'اللجنة',
-            'rec_letter': 'اثبات المشاركة فى الأنشطة'
-        }
+class nomForm2(forms.Form):
+
     nominee_id = forms.CharField(disabled=True, label="الكود")
     Name = forms.CharField(disabled=True, label="الاسم")
     address = forms.CharField(disabled=True, label="العنوان")
     birthdate = forms.DateField(disabled=True, label="تاريخ الميلاد")
     college = forms.CharField(disabled=True, label="الكلية")
     collegeYear = forms.IntegerField(disabled=True, label="الفرقة")
+    phone_no = forms.IntegerField(disabled=True)
+    email = forms.EmailField(disabled=True)
+    community = forms.CharField(disabled=True)
+    rec_letter = forms.FileField(disabled=True)
 
 class nomForm3(forms.ModelForm):
     class Meta:
