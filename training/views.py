@@ -409,27 +409,24 @@ def showresult(request, type):
         return render(request, 'results1.html', context)
     
     if type == 'collegeCommunityTrusteeOreHelperElections':
-        context = admincheck(request)
-        context.update(durationcheck())
 
         committee = {}
 
         for c in Nominee_user.community.field.choices:
             nominees = {}
             i = 1
-            for eachcollege in User_Model.college.field.choices:
-                
-                for Nominee in Nominee_user.objects.filter(
-                community=c[0], UserModelKey__in = User_Model.objects.filter(college = eachcollege[0]),
-                                                final_list=True):
-                    nominees.update({'n'+str(i): {'الاسم': Nominee.UserModelKey.Name,
-                                    'عدد الأصوات': Nominee.universityNumofvotes}})
-                    i += 1
+            UsersinSamecollege = User_Model.objects.filter(college = User_Mod.college)
+            NomineesinSamecollege = Nominee_user.objects.filter(UserModelKey__in = UsersinSamecollege)
 
+            for Nominee in Current_Nom_Result.objects.filter(community = c[0], Nominee_user__in = NomineesinSamecollege):
+                nominees.update({'n'+str(i): {'الاسم': Nominee.Nominee_user.UserModelKey.Name,
+                                'عدد الأصوات': Nominee.numOfVotes,
+                                "الدور": Nominee.get_role_display()}})
+                i += 1
+                print (Nominee.get_role_display())
             committee.update({'c' + c[0] : {'name': c[1],'nominees': nominees}})
 
         context.update({'committee': committee})
-        print (context)
         return render(request, 'results2.html', context)
     
     if type == 'collegeStudentUnionPresidentOrViceElections':
