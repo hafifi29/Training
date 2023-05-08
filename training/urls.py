@@ -1,7 +1,8 @@
 
 from django.urls import path
 from . import views
-
+from django.conf import settings
+from django.conf.urls.static import static
 urlpatterns = [
     path('', views.home, name='home'),
     path('home/', views.home, name='home'),
@@ -11,9 +12,11 @@ urlpatterns = [
     path('nomination/<type>', views.nomination, name='nomination'),
 
     path('vote/<type>', views.vote, name='vote1'),
+    path('particular_nominee_prog/<int:id>/', views.particular_nominee_prog, name='particular_nominee_prog'),
 
     path('results/<type>', views.showresult, name='result'),
-
+    path('elctoral_program/',views.electoral_program,name='elctoral_program'),
+    path('nominees_programs/',views.electoral_prog_show,name='nominees_programs'),
     path('contention/', views.contention, name='contention'),
     path('new_elections/',views.new_elections,name='new_elections'),
     path('adminp/', views.admin, name='adminp'),
@@ -28,4 +31,4 @@ urlpatterns = [
          views.list_contention, name='list_contention'),
 
 
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

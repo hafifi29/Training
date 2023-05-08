@@ -5,6 +5,12 @@ from .models import *
 from django.contrib.auth.models import User
 
 
+class ElectoralProgForm(forms.ModelForm):
+    class Meta:
+        model = electoral_prog
+        fields = ['personnal_pic', 'acheivement_brief', 'program_brief', 'electoral_symbol', 'electoral_symbol_name']
+
+
 class nomForm1(forms.ModelForm):
     class Meta:
         model = Nominee_user

@@ -1,0 +1,163 @@
+{% extends 'base.html' %}
+
+{% block headcontent %}
+{% load static %}
+  <title>{{ nominee_program.electoral_symbol_name }}</title>
+{% endblock %}
+
+{% block maincontent %}
+<div class="program">
+    <div class="main-info">
+        <img src="{{ nominee_program.personnal_pic.url }}" alt="">
+        <h2>{{ nominee_program.nominee_key.UserModelKey.Name }}</h2>
+    </div>
+    
+    <div class="symbol">
+        <h2>{{ nominee_program.electoral_symbol_name }}</h2>
+        <img src="{{ nominee_program.electoral_symbol.url }}" alt="">
+    </div>
+    <div class="brief">
+        <div class="question">
+            <h2>الانجازات والانشطة التي شارك بها المرشح </h2>
+            <svg width="16" height="12" viewBox="0 0 42 25">
+                <path
+                  d="M3 3L21 21L39 3"
+                  stroke="white"
+                  stroke-width="7"
+                  stroke-linecap="round"
+                />
+            </svg>
+        </div>
+        <div class="answer">
+            <p>{{ nominee_program.acheivement_brief }}</p>
+        </div>
+    </div>
+    <div class="brief">
+        <div class="question">
+            <h2>الرؤية الانتخابية </h2>
+            <svg width="16" height="12" viewBox="0 0 42 25">
+                <path
+                  d="M3 3L21 21L39 3"
+                  stroke="white"
+                  stroke-width="7"
+                  stroke-linecap="round"
+                />
+            </svg>
+        </div>
+        <div class="answer">
+            <p>{{ nominee_program.program_brief }}</p>    
+        </div>
+    </div>    
+</div>
+<style>
+    .main-info{
+        align-self: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        width: 180px;
+        overflow: hidden;
+        /* box-sizing: border-box; */
+    }
+    .main-info img {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        object-fit: cover;
+
+    }
+    h2{
+        margin: 5px;
+        text-transform: capitalize;
+    }
+
+    .symbol{
+        display: flex;
+        flex-direction: row-reverse;
+    }
+    .symbol img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+    .program{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        height: 100%;
+        align-items: flex-end;
+    }
+    .brief {
+    color: #1c1c1c;
+    background-color: #fff;
+
+    width: 580px;
+
+    display: flex;
+    flex-direction: column;
+
+    border-bottom: 2px solid #1c1c1c;
+  }
+  .brief .question {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    direction: rtl;
+  }
+  .question h2::selection,
+  .question svg::selection {
+    background-color: transparent;
+  }
+  .question h2 {
+    line-height: 1.5;
+    caret-color: transparent;
+  }
+  .question svg {
+    margin-right: 10px;
+    transition: transform 0.5s ease-in;
+  }
+
+  .answer p {
+    line-height: 1.4;
+    font-size: 1.5rem;
+  }
+
+  .answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 1.2s ease;
+    direction: rtl;
+  }
+
+  .brief.active .answer {
+    max-height: 400px;
+    animation: show 1s ease-in-out;
+  }
+  .brief.active svg {
+    transform: rotate(180deg);
+  }
+  @keyframes show {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0px);
+    }
+  }
+  
+</style>
+
+<script>
+const briefs = document.querySelectorAll(".brief");
+briefs.forEach((brief) => {
+  brief.addEventListener("click", () => {
+    brief.classList.toggle("active");
+  });
+});
+</script>
+{% endblock %}
