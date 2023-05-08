@@ -106,16 +106,15 @@ class voteForm1(forms.Form):
 
     def __init__(self, *args, **kwargs):
         Userr = kwargs.pop('Userr', None)
-        type = kwargs.pop('typee', None)
-        if type == 'college':
-            super().__init__(*args, **kwargs)
-            UserModelKeyy = User_Model.objects.filter(college = Userr.college)
-            i=1
-            for visible in self.visible_fields():
-                visible.field.widget.attrs['class'] = 'vote-field'
-                visible.field.queryset = Nominee_user.objects.filter(
-            community=i, UserModelKey__in = UserModelKeyy  , final_list=True)
-                i += 1
+        super().__init__(*args, **kwargs)
+        UsersinSamecollegeANDcollegeYear = User_Model.objects.filter(college = Userr.college, collegeYear = Userr.collegeYear)
+        
+        i=1
+        for visible in self.visible_fields():
+            visible.field.widget.attrs['class'] = 'vote-field'
+            visible.field.queryset = Nominee_user.objects.filter(
+        community=i, UserModelKey__in = UsersinSamecollegeANDcollegeYear, final_list=True)
+            i += 1
 
     def validate_multiple_choices(value):
         # Check if the selected options count is less than two

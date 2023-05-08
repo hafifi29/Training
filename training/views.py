@@ -204,11 +204,12 @@ def logout_view(request):
 
 @login_required
 def nomination(request,type):
+    context = admincheck(request)
+    context.update(durationcheck())
+    current_user = request.user
+    User_Mod = User_Model.objects.get(Userkey_id=current_user.id)
+
     if type == 'communityMemberElections':
-        context = admincheck(request)
-        context.update(durationcheck())
-        current_user = request.user
-        User_Mod = User_Model.objects.get(Userkey_id=current_user.id)
         if Nominee_user.objects.filter(UserModelKey=User_Mod).exists():
             context.update({"ConfirmationMessage": 'Application already sent'})
             return render(request, 'nom1.html', context=context)
@@ -250,11 +251,13 @@ def nomination(request,type):
 
 @login_required
 def vote(request, type):
+
+    context = admincheck(request)
+    context.update(durationcheck())
+    current_user = request.user
+    User_Mod = User_Model.objects.get(Userkey_id=current_user.id)
     if type == 'communityMemberElections':
-        context = admincheck(request)
-        context.update(durationcheck())
-        current_user = request.user
-        User_Mod = User_Model.objects.get(Userkey_id=current_user.id)
+
         if User_Mod.Voting_status_1:
             context.update({"ConfirmationMessage": 'Already voted'})
             return render(request, 'vote1.html', context=context)
@@ -271,12 +274,12 @@ def vote(request, type):
                     for Community in form.cleaned_data:
                         Nominees = form.cleaned_data[Community]
                         for nom in Nominees:
-                            print(nom.communityMemberElections, '\n')
-                            nom.communityMemberElections = nom.communityMemberElections + 1
+                            print(nom.communityMemberElectionsNumOfVotes, '\n')
+                            nom.communityMemberElectionsNumOfVotes = nom.communityMemberElectionsNumOfVotes + 1
                             Vote.objects.create(nominations_period_id = dates.nominations_period_id,
                                                 voter_id=User_Mod, nominee_id=nom.UserModelKey, community = nom.community)
                             
-                            print(nom.communityMemberElections, '\n')
+                            print(nom.communityMemberElectionsNumOfVotes, '\n')
                             nom.save()
                     context['ConfirmationMessage'] = "Vote sent successfully"
                 else:
@@ -284,36 +287,6 @@ def vote(request, type):
         return render(request, 'vote1.html', context=context)
 
     if type == 'collegeCommunityTrusteeOreHelperElections':
-        context = admincheck(request)
-        context.update(durationcheck())
-        current_user = request.user
-        User_Mod = User_Model.objects.get(Userkey_id=current_user.id)
-        if User_Mod.Voting_status:
-            context.update({"ConfirmationMessage": 'Already voted'})
-            return render(request, 'vote2.html', context=context)
-
-        else:
-            form = CollegeVoteForm(request.POST or None, Userr = User_Mod, typee = type)
-            context.update({
-                'form': form
-            })
-            if request.POST:
-                if form.is_valid():
-                    User_Mod.Voting_status = 1
-                    User_Mod.save()
-                    for Community in form.cleaned_data:
-                        Nominees = form.cleaned_data[Community]
-                        for nom in Nominees:
-                            print(nom.universityNumofvotes, '\n')
-                            nom.universityNumofvotes = nom.universityNumofvotes + 1
-                            Vote.objects.create(nominations_period_id = dates.nominations_period_id,
-                                                voter_id=User_Mod, nominee_id=nom.UserModelKey, community = nom.community)
-                            
-                            print(nom.universityNumofvotes, '\n')
-                            nom.save()
-                    context['ConfirmationMessage'] = "Vote sent successfully"
-                else:
-                    context['ConfirmationMessage'] = "Error: couldn't save application"
         return render(request, 'vote2.html', context=context)
     
     if type == 'collegeStudentUnionPresidentOrViceElections':

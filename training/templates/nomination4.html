@@ -9,7 +9,7 @@
 
 {% block maincontent %}
 <div class="form-container">
-  {% if std_access.nomination %}
+  {% if std_access.universityElections %}
   <form enctype="multipart/form-data" id="myForm" class="nomination" action="" method="POST">
     {%csrf_token%}
 
