@@ -6,6 +6,8 @@ admin.site.register(Nominee_user)
 admin.site.register(Vote)
 admin.site.register(Contention)
 admin.site.register(User_Model)
+admin.site.register(Current_Nom_Result)
 admin.site.register(Control_content)
 admin.site.register(Admin_user)
 admin.site.register(Dates)
+

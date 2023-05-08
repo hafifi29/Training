@@ -300,18 +300,22 @@ def vote(request, type):
 
 @login_required
 def showresult(request, type):
+    context = admincheck(request)
+    context.update(durationcheck())
+    current_user = request.user
+    User_Mod = User_Model.objects.get(Userkey_id=current_user.id)
+
     if type == 'communityMemberElections':
-        context = admincheck(request)
-        context.update(durationcheck())
 
         committee = {}
 
         for c in Nominee_user.community.field.choices:
             nominees = {}
             i = 1
-            for Nominee in Nominee_user.objects.filter(community = c[0]):
-                nominees.update({'n'+str(i): {'الاسم': Nominee.UserModelKey.Name,
-                                'عدد الأصوات': Nominee.collegeNumofvotes}})
+            for Nominee in Current_Nom_Result.objects.filter(community = c[0]):
+                nominees.update({'n'+str(i): {'الاسم': Nominee.Nominee_user.UserModelKey.Name,
+                                'عدد الأصوات': Nominee.numOfVotes,
+                                "الدور": Nominee.get_role_display()}})
                 i += 1
 
             committee.update({'c' + c[0] : {'name': c[1],'nominees': nominees}})
