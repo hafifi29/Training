@@ -56,7 +56,7 @@ class Nominee_user(models.Model):
     UserModelKey = models.OneToOneField(User_Model, on_delete=models.CASCADE)
     phone_no = models.IntegerField()
     email = models.EmailField(max_length=50)
-    community = models.CharField(max_length=30, choices=[('1', 'اللجنة العلمية'),
+    community = models.CharField(max_length= 32, choices=[('1', 'اللجنة العلمية'),
                                            ('2', 'اللجنة الرياضية'),
                                            ('3', 'اللجنة الاجتماعية'),
                                            ('4', 'أسرة الجوالة و الخدمات'),
@@ -90,8 +90,6 @@ class Nominee_user(models.Model):
     collegeStudentUnionPresidentOrViceElectionsNumOfVotes = models.IntegerField(default=0)
     universityCommunityTrusteeOrHelperElectionsNumOfVotes =  models.IntegerField(default=0)
     universityStudentUnionPresidentOrViceElectionsNumOfVotes =  models.IntegerField(default=0)
-
-
 
     def __str__(self):
         return str(self.UserModelKey.Name)
@@ -209,53 +207,53 @@ class Control_content(SingletonModel):
 
 
 class Dates(SingletonModel):
-    communityMemberElections_sd = models.DateTimeField(max_length=30, null=True)
-    communityMemberElections_ed = models.DateTimeField(max_length=30, null=True)
+    communityMemberElections_sd = models.DateTimeField(max_length=32, null=True)
+    communityMemberElections_ed = models.DateTimeField(max_length=33, null=True)
 
-    collegeCommunityTrusteeOreHelperElections_sd = models.DateTimeField(max_length=30, null=True)
-    collegeCommunityTrusteeOreHelperElections_ed = models.DateTimeField(max_length=30, null=True)
+    collegeCommunityTrusteeOreHelperElections_sd = models.DateTimeField(max_length= 32, null=True)
+    collegeCommunityTrusteeOreHelperElections_ed = models.DateTimeField(max_length= 32, null=True)
 
-    collegeStudentUnionPresidentOrViceElections_sd = models.DateTimeField(max_length=30, null=True)
-    collegeStudentUnionPresidentOrViceElections_ed = models.DateTimeField(max_length=30, null=True)
+    collegeStudentUnionPresidentOrViceElections_sd = models.DateTimeField(max_length= 32, null=True)
+    collegeStudentUnionPresidentOrViceElections_ed = models.DateTimeField(max_length= 32, null=True)
 
-    universityCommunityTrusteeOrHelperElections_sd = models.DateTimeField(max_length=30, null=True)
-    universityCommunityTrusteeOrHelperElections_ed = models.DateTimeField(max_length=30, null=True)
+    universityCommunityTrusteeOrHelperElections_sd = models.DateTimeField(max_length= 32, null=True)
+    universityCommunityTrusteeOrHelperElections_ed = models.DateTimeField(max_length= 32, null=True)
 
-    universityStudentUnionPresidentOrViceElections_sd = models.DateTimeField(max_length=30, null=True)
-    universityStudentUnionPresidentOrViceElections_ed = models.DateTimeField(max_length=30, null=True)
+    universityStudentUnionPresidentOrViceElections_sd = models.DateTimeField(max_length= 32, null=True)
+    universityStudentUnionPresidentOrViceElections_ed = models.DateTimeField(max_length= 32, null=True)
 
-    Voting_1_sd = models.DateTimeField(max_length=30, null=True)
-    Voting_1_ed = models.DateTimeField(max_length=30, null=True)
+    Voting_1_sd = models.DateTimeField(max_length= 32, null=True)
+    Voting_1_ed = models.DateTimeField(max_length= 32, null=True)
 
-    Voting_2_sd = models.DateTimeField(max_length=30, null=True)
-    Voting_2_ed = models.DateTimeField(max_length=30, null=True)
+    Voting_2_sd = models.DateTimeField(max_length= 32, null=True)
+    Voting_2_ed = models.DateTimeField(max_length= 32, null=True)
 
-    Voting_3_sd = models.DateTimeField(max_length=30, null=True)
-    Voting_3_ed = models.DateTimeField(max_length=30, null=True)
+    Voting_3_sd = models.DateTimeField(max_length= 32, null=True)
+    Voting_3_ed = models.DateTimeField(max_length= 32, null=True)
 
-    Voting_4_sd = models.DateTimeField(max_length=30, null=True)
-    Voting_4_ed = models.DateTimeField(max_length=30, null=True)
+    Voting_4_sd = models.DateTimeField(max_length= 32, null=True)
+    Voting_4_ed = models.DateTimeField(max_length= 32, null=True)
 
-    Voting_5_sd = models.DateTimeField(max_length=30, null=True)
-    Voting_5_ed = models.DateTimeField(max_length=30, null=True)
+    Voting_5_sd = models.DateTimeField(max_length= 32, null=True)
+    Voting_5_ed = models.DateTimeField(max_length= 32, null=True)
 
-    result_1_sd = models.DateTimeField(max_length=30, null=True)
-    result_1_ed = models.DateTimeField(max_length=30, null=True)
+    result_1_sd = models.DateTimeField(max_length= 32, null=True)
+    result_1_ed = models.DateTimeField(max_length= 32, null=True)
 
-    result_2_sd = models.DateTimeField(max_length=30, null=True)
-    result_2_ed = models.DateTimeField(max_length=30, null=True)
+    result_2_sd = models.DateTimeField(max_length= 32, null=True)
+    result_2_ed = models.DateTimeField(max_length= 32, null=True)
 
-    result_3_sd = models.DateTimeField(max_length=30, null=True)
-    result_3_ed = models.DateTimeField(max_length=30, null=True)
+    result_3_sd = models.DateTimeField(max_length= 32, null=True)
+    result_3_ed = models.DateTimeField(max_length= 32, null=True)
 
-    result_4_sd = models.DateTimeField(max_length=30, null=True)
-    result_4_ed = models.DateTimeField(max_length=30, null=True)
+    result_4_sd = models.DateTimeField(max_length= 32, null=True)
+    result_4_ed = models.DateTimeField(max_length= 32, null=True)
 
-    result_5_sd = models.DateTimeField(max_length=30, null=True)
-    result_5_ed = models.DateTimeField(max_length=30, null=True)
+    result_5_sd = models.DateTimeField(max_length= 32, null=True)
+    result_5_ed = models.DateTimeField(max_length= 32, null=True)
 
-    con_sd = models.DateTimeField(max_length=30, null=True)
-    con_ed = models.DateTimeField(max_length=30, null=True)
+    con_sd = models.DateTimeField(max_length= 32, null=True)
+    con_ed = models.DateTimeField(max_length= 32, null=True)
 
     nominations_period_id = models.IntegerField(default=0)
 

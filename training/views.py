@@ -57,11 +57,6 @@ result_4_ed = dates.result_4_ed
 result_5_sd = dates.result_5_sd
 result_5_ed = dates.result_5_ed
 
-start_collegevote = dates.collegevote_sd
-end_collegevote = dates.collegevote_ed
-
-start_universityvote = dates.universityvote_sd
-end_universityvote = dates.universityvote_ed
 
 start_con = dates.con_sd
 end_con = dates.con_ed
@@ -88,7 +83,7 @@ def admincheck(request):
 def durationcheck():
     if communityMemberElections_sd <= now <= communityMemberElections_ed:
         std_access.communityMemberElections = True
-        std_access.save()
+        std_access.save()   
     else:
         std_access.communityMemberElections = False
         std_access.save()
@@ -298,23 +293,23 @@ def vote(request, type):
             return render(request, 'vote1.html', context=context)
 
         else:
-            form = CollegeVoteForm(request.POST or None, Userr = User_Mod, typee = type)
+            form = voteForm1(request.POST or None, Userr = User_Mod)
             context.update({
                 'form': form
             })
             if request.POST:
                 if form.is_valid():
-                    User_Mod.Voting_status = 1
+                    User_Mod.Voting_status_1 = 1
                     User_Mod.save()
                     for Community in form.cleaned_data:
                         Nominees = form.cleaned_data[Community]
                         for nom in Nominees:
-                            print(nom.collegeNumofvotes, '\n')
-                            nom.collegeNumofvotes = nom.collegeNumofvotes + 1
+                            print(nom.communityMemberElections, '\n')
+                            nom.communityMemberElections = nom.communityMemberElections + 1
                             Vote.objects.create(nominations_period_id = dates.nominations_period_id,
                                                 voter_id=User_Mod, nominee_id=nom.UserModelKey, community = nom.community)
                             
-                            print(nom.collegeNumofvotes, '\n')
+                            print(nom.communityMemberElections, '\n')
                             nom.save()
                     context['ConfirmationMessage'] = "Vote sent successfully"
                 else:
