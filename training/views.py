@@ -361,21 +361,29 @@ def contention(request):
     context.update(durationcheck())
     current_user = request.user
     user_mod = User_Model.objects.get(Userkey_id=current_user.id)
-    initial_values = {'Name': user_mod.Name,
-                      'User_id': user_mod.Student_id
-                      }
-    form = ContentionForm(request.POST or None, initial=initial_values)
-    if request.POST:
-        if form.is_valid():
-            Newcon = form.save(commit=False)
-            Newcon.user_id = user_mod
-            Newcon.save()
-            context['ConfirmationMessage'] = "Application sent successfuly"
-        else:
-            context['ConfirmationMessage'] = "Error: couldn't save application"
 
-    context['form'] = form
-    return render(request, 'contention.html', context=context)
+
+    if Nominee_user.objects.filter(UserModelKey = user_mod):
+        initial_values = {'Name': user_mod.Name,
+                        'User_id': user_mod.Student_id
+                        }
+        nom = Nominee_user.objects.get(UserModelKey = user_mod)
+        form = ContentionForm(request.POST or None, initial=initial_values ,Userr = user_mod, nom = nom)
+        if request.POST:
+            if form.is_valid():
+                Newcon = form.save(commit=False)
+                Newcon.user_id = user_mod
+                Newcon.save()
+                context['ConfirmationMessage'] = "Application sent successfuly"
+            else:
+                context['ConfirmationMessage'] = "Error: couldn't save application"
+
+        context['form'] = form
+        return render(request, 'contention.html', context=context)
+    
+    else:
+        context['ConfirmationMessage'] = "contention closed for non nominee"
+        return render(request, 'contention.html', context=context)
 
 
 # Admin related views

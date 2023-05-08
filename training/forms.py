@@ -200,8 +200,19 @@ class ContentionForm(forms.ModelForm):
     Name = forms.CharField(disabled=True, label="الاسم")
     User_id = forms.CharField(disabled=True, label="الكود")
     nominee_id = forms.ModelChoiceField(
-        Nominee_user.objects.filter(final_list=True), label="المرشح")
+        Nominee_user.objects.none(), label="المرشح")
     reason = forms.Field(label="السبب")
+
+    def __init__(self, *args, **kwargs):
+        Userr = kwargs.pop('Userr', None)
+        nom = kwargs.pop('nom', None)
+        super().__init__(*args, **kwargs)
+        UsersinSamecollegeANDcollegeYear = User_Model.objects.filter(college = Userr.college, collegeYear = Userr.collegeYear)
+        
+        for visible in self.visible_fields():
+            visible.field.widget.attrs['class'] = 'vote-field'
+            visible.field.queryset = Nominee_user.objects.filter(
+        community=nom.community, UserModelKey__in = UsersinSamecollegeANDcollegeYear)
 
 
 class NomineeForm_update(forms.ModelForm):

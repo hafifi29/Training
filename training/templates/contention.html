@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 
 {% block headcontent %}
-    {% load static %}
-    <meta property="og:title" content="Nomination page" />
-    <link rel="stylesheet" href="{% static 'css/contention.css' %}" />
-    <title>contention Form</title>
+{% load static %}
+<meta property="og:title" content="Nomination page" />
+<link rel="stylesheet" href="{% static 'css/contention.css' %}" />
+<title>contention Form</title>
 {% endblock %}
 
 {% block maincontent %}
@@ -18,13 +18,16 @@
         {% if ConfirmationMessage == 'Application sent successfuly' %}
         <div>{{ ConfirmationMessage }}</div>
 
+        {%elif ConfirmationMessage == 'contention closed for non nominee'%}
+        <div>{{ ConfirmationMessage }}</div>
+
         {% else %}
 
         <div class="field">
             <label>{{form.Name.label}}</label>
             {{form.Name}}
         </div>
-        
+
         <div class="field">
             <label>{{form.User_id.label}}</label>
             {{form.User_id}}
@@ -49,5 +52,5 @@
         الطعن غير متاح حاليا
     </div>
     {% endif %}
-    </div>
+</div>
 {% endblock %}
