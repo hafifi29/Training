@@ -214,14 +214,16 @@ class NomineeForm_update(forms.ModelForm):
             'email',
             'community',
             'rec_letter',
-            'final_list'
+            'final_list',
+            'role',  
         ]
         labels = {
             "phone_no": "رقم الموبايل",
             'email': 'الايميل',
             'community': 'اللجنة',
             'rec_letter': 'اثبات المشاركة فى الأنشطة',
-            'final_list': 'اللائحة النهائية'
+            'final_list': 'اللائحة النهائية',
+            'role':'الدور'
         }
     nominee_id = forms.CharField(disabled=True, label="الكود")
     Name = forms.CharField(disabled=True, label="الاسم")

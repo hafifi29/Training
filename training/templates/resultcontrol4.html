@@ -1,0 +1,1285 @@
+{% extends 'base.html' %}
+
+{% block headcontent %}
+{% load static %}
+<meta property="og:title" content="result control page" />
+<title>Nominee List</title>
+{% endblock %}
+
+{% block maincontent %}
+
+<div class="sharp card large">
+    <h1 class="card-name">كلية الحاسبات و الذكاء الاصطناعى </h1>
+    <table class="normal-table">
+        <tr>
+
+            <th>
+                الاسم
+            </th>
+
+            <th>
+                الكود
+            </th>
+
+            <th>
+                عدد الاصوات
+            </th>
+
+            <th>
+                الدور
+            </th>
+
+        </tr>
+
+        {%for j in one %}
+        <tr>
+            <td>
+                {{j}}
+            </td>
+            <td>
+                {{j.UserModelKey.Student_id}}
+            </td>
+            <td>
+                {{j.universityElectionsNumOfVotes}}
+            </td>
+            <td>
+                {{j.role}}
+            </td>
+            <td align="right">
+                <a href="{%url 'update_nominee_result' j.UserModelKey.Student_id%}">Update</a>
+            </td>
+
+        </tr>
+        {%endfor%}
+    </table>
+</div>
+
+<div class="sharp card large">
+    <h1 class="card-name">الهندسة </h1>
+    <table class="normal-table">
+        <tr>
+
+            <th>
+                الاسم
+            </th>
+
+            <th>
+                الكود
+            </th>
+
+            <th>
+                عدد الاصوات
+            </th>
+
+            <th>
+                الدور
+            </th>
+
+        </tr>
+
+        {%for j in two %}
+        <tr>
+            <td>
+                {{j}}
+            </td>
+            <td>
+                {{j.UserModelKey.Student_id}}
+            </td>
+            <td>
+                {{j.universityElectionsNumOfVotes}}
+            </td>
+            <td>
+                {{j.role}}
+            </td>
+            <td align="right">
+                <a href="{%url 'update_nominee_result' j.UserModelKey.Student_id%}">Update</a>
+            </td>
+
+        </tr>
+        {%endfor%}
+    </table>
+</div>
+<div class="sharp card large">
+    <h1 class="card-name">الطب </h1>
+    <table class="normal-table">
+        <tr>
+
+            <th>
+                الاسم
+            </th>
+
+            <th>
+                الكود
+            </th>
+
+            <th>
+                عدد الاصوات
+            </th>
+
+            <th>
+                الدور
+            </th>
+
+        </tr>
+
+        {%for j in three %}
+        <tr>
+            <td>
+                {{j}}
+            </td>
+            <td>
+                {{j.UserModelKey.Student_id}}
+            </td>
+            <td>
+                {{j.universityElectionsNumOfVotes}}
+            </td>
+            <td>
+                {{j.role}}
+            </td>
+            <td align="right">
+                <a href="{%url 'update_nominee_result' j.UserModelKey.Student_id%}">Update</a>
+            </td>
+
+        </tr>
+        {%endfor%}
+    </table>
+</div>
+
+<div class="sharp card large">
+    <h1 class="card-name">كلية طب الأسنان </h1>
+    <table class="normal-table">
+        <tr>
+
+            <th>
+                الاسم
+            </th>
+
+            <th>
+                الكود
+            </th>
+
+            <th>
+                عدد الاصوات
+            </th>
+
+            <th>
+                الدور
+            </th>
+
+        </tr>
+
+        {%for j in Four %}
+        <tr>
+            <td>
+                {{j}}
+            </td>
+            <td>
+                {{j.UserModelKey.Student_id}}
+            </td>
+            <td>
+                {{j.universityElectionsNumOfVotes}}
+            </td>
+            <td>
+                {{j.role}}
+            </td>
+            <td align="right">
+                <a href="{%url 'update_nominee_result' j.UserModelKey.Student_id%}">Update</a>
+            </td>
+
+        </tr>
+        {%endfor%}
+    </table>
+</div>
+<div class="sharp card large">
+    <h1 class="card-name">كلية الطب البيطرى </h1>
+    <table class="normal-table">
+        <tr>
+
+            <th>
+                الاسم
+            </th>
+
+            <th>
+                الكود
+            </th>
+
+            <th>
+                عدد الاصوات
+            </th>
+
+            <th>
+                الدور
+            </th>
+
+        </tr>
+
+        {%for j in Five %}
+        <tr>
+            <td>
+                {{j}}
+            </td>
+            <td>
+                {{j.UserModelKey.Student_id}}
+            </td>
+            <td>
+                {{j.universityElectionsNumOfVotes}}
+            </td>
+            <td>
+                {{j.role}}
+            </td>
+            <td align="right">
+                <a href="{%url 'update_nominee_result' j.UserModelKey.Student_id%}">Update</a>
+            </td>
+
+        </tr>
+        {%endfor%}
+    </table>
+</div>
+
+<div class="sharp card large">
+    <h1 class="card-name">كلية العلوم </h1>
+    <table class="normal-table">
+        <tr>
+
+            <th>
+                الاسم
+            </th>
+
+            <th>
+                الكود
+            </th>
+
+            <th>
+                عدد الاصوات
+            </th>
+
+            <th>
+                الدور
+            </th>
+
+        </tr>
+
+        {%for j in Six %}
+        <tr>
+            <td>
+                {{j}}
+            </td>
+            <td>
+                {{j.UserModelKey.Student_id}}
+            </td>
+            <td>
+                {{j.universityElectionsNumOfVotes}}
+            </td>
+            <td>
+                {{j.role}}
+            </td>
+            <td align="right">
+                <a href="{%url 'update_nominee_result' j.UserModelKey.Student_id%}">Update</a>
+            </td>
+
+        </tr>
+        {%endfor%}
+    </table>
+</div>
+<div class="sharp card large">
+    <h1 class="card-name">كلية الصيدلة </h1>
+    <table class="normal-table">
+        <tr>
+
+            <th>
+                الاسم
+            </th>
+
+            <th>
+                الكود
+            </th>
+
+            <th>
+                عدد الاصوات
+            </th>
+
+            <th>
+                الدور
+            </th>
+
+        </tr>
+
+        {%for j in Seven %}
+        <tr>
+            <td>
+                {{j}}
+            </td>
+            <td>
+                {{j.UserModelKey.Student_id}}
+            </td>
+            <td>
+                {{j.universityElectionsNumOfVotes}}
+            </td>
+            <td>
+                {{j.role}}
+            </td>
+            <td align="right">
+                <a href="{%url 'update_nominee_result' j.UserModelKey.Student_id%}">Update</a>
+            </td>
+
+        </tr>
+        {%endfor%}
+    </table>
+</div>
+
+<div class="sharp card large">
+    <h1 class="card-name">كلية التمريض</h1>
+    <table class="normal-table">
+        <tr>
+
+            <th>
+                الاسم
+            </th>
+
+            <th>
+                الكود
+            </th>
+
+            <th>
+                عدد الاصوات
+            </th>
+
+            <th>
+                الدور
+            </th>
+
+        </tr>
+
+        {%for j in Eight %}
+        <tr>
+            <td>
+                {{j}}
+            </td>
+            <td>
+                {{j.UserModelKey.Student_id}}
+            </td>
+            <td>
+                {{j.universityElectionsNumOfVotes}}
+            </td>
+            <td>
+                {{j.role}}
+            </td>
+            <td align="right">
+                <a href="{%url 'update_nominee_result' j.UserModelKey.Student_id%}">Update</a>
+            </td>
+
+        </tr>
+        {%endfor%}
+    </table>
+</div>
+<div class="sharp card large">
+    <h1 class="card-name">كلية التكنولوجيا و التعليم</h1>
+    <table class="normal-table">
+        <tr>
+
+            <th>
+                الاسم
+            </th>
+
+            <th>
+                الكود
+            </th>
+
+            <th>
+                عدد الاصوات
+            </th>
+
+            <th>
+                الدور
+            </th>
+
+        </tr>
+
+        {%for j in Nine %}
+        <tr>
+            <td>
+                {{j}}
+            </td>
+            <td>
+                {{j.UserModelKey.Student_id}}
+            </td>
+            <td>
+                {{j.universityElectionsNumOfVotes}}
+            </td>
+            <td>
+                {{j.role}}
+            </td>
+            <td align="right">
+                <a href="{%url 'update_nominee_result' j.UserModelKey.Student_id%}">Update</a>
+            </td>
+
+        </tr>
+        {%endfor%}
+    </table>
+</div>
+
+<div class="sharp card large">
+    <h1 class="card-name">كلية الدراسات العليا للعلوم المتقدمة</h1>
+    <table class="normal-table">
+        <tr>
+
+            <th>
+                الاسم
+            </th>
+
+            <th>
+                الكود
+            </th>
+
+            <th>
+                عدد الاصوات
+            </th>
+
+            <th>
+                الدور
+            </th>
+
+        </tr>
+
+        {%for j in Ten %}
+        <tr>
+            <td>
+                {{j}}
+            </td>
+            <td>
+                {{j.UserModelKey.Student_id}}
+            </td>
+            <td>
+                {{j.universityElectionsNumOfVotes}}
+            </td>
+            <td>
+                {{j.role}}
+            </td>
+            <td align="right">
+                <a href="{%url 'update_nominee_result' j.UserModelKey.Student_id%}">Update</a>
+            </td>
+
+        </tr>
+        {%endfor%}
+    </table>
+</div>
+<div class="sharp card large">
+    <h1 class="card-name">كلية علوم الملاحة و تكنولوجيا الفضاء</h1>
+    <table class="normal-table">
+        <tr>
+
+            <th>
+                الاسم
+            </th>
+
+            <th>
+                الكود
+            </th>
+
+            <th>
+                عدد الاصوات
+            </th>
+
+            <th>
+                الدور
+            </th>
+
+        </tr>
+
+        {%for j in Eleven %}
+        <tr>
+            <td>
+                {{j}}
+            </td>
+            <td>
+                {{j.UserModelKey.Student_id}}
+            </td>
+            <td>
+                {{j.universityElectionsNumOfVotes}}
+            </td>
+            <td>
+                {{j.role}}
+            </td>
+            <td align="right">
+                <a href="{%url 'update_nominee_result' j.UserModelKey.Student_id%}">Update</a>
+            </td>
+
+        </tr>
+        {%endfor%}
+    </table>
+</div>
+
+<div class="sharp card large">
+    <h1 class="card-name">كلية علوم ذوى الاحتياجات الخاصة</h1>
+    <table class="normal-table">
+        <tr>
+
+            <th>
+                الاسم
+            </th>
+
+            <th>
+                الكود
+            </th>
+
+            <th>
+                عدد الاصوات
+            </th>
+
+            <th>
+                الدور
+            </th>
+
+        </tr>
+
+        {%for j in Twelve %}
+        <tr>
+            <td>
+                {{j}}
+            </td>
+            <td>
+                {{j.UserModelKey.Student_id}}
+            </td>
+            <td>
+                {{j.universityElectionsNumOfVotes}}
+            </td>
+            <td>
+                {{j.role}}
+            </td>
+            <td align="right">
+                <a href="{%url 'update_nominee_result' j.UserModelKey.Student_id%}">Update</a>
+            </td>
+
+        </tr>
+        {%endfor%}
+    </table>
+</div>
+<div class="sharp card large">
+    <h1 class="card-name">كلية علوم الأرض</h1>
+    <table class="normal-table">
+        <tr>
+
+            <th>
+                الاسم
+            </th>
+
+            <th>
+                الكود
+            </th>
+
+            <th>
+                عدد الاصوات
+            </th>
+
+            <th>
+                الدور
+            </th>
+
+        </tr>
+
+        {%for j in Thirteen %}
+        <tr>
+            <td>
+                {{j}}
+            </td>
+            <td>
+                {{j.UserModelKey.Student_id}}
+            </td>
+            <td>
+                {{j.universityElectionsNumOfVotes}}
+            </td>
+            <td>
+                {{j.role}}
+            </td>
+            <td align="right">
+                <a href="{%url 'update_nominee_result' j.UserModelKey.Student_id%}">Update</a>
+            </td>
+
+        </tr>
+        {%endfor%}
+    </table>
+</div>
+
+<div class="sharp card large">
+    <h1 class="card-name">كلية الفنون التطبيقية</h1>
+    <table class="normal-table">
+        <tr>
+
+            <th>
+                الاسم
+            </th>
+
+            <th>
+                الكود
+            </th>
+
+            <th>
+                عدد الاصوات
+            </th>
+
+            <th>
+                الدور
+            </th>
+
+        </tr>
+
+        {%for j in Fourteen %}
+        <tr>
+            <td>
+                {{j}}
+            </td>
+            <td>
+                {{j.UserModelKey.Student_id}}
+            </td>
+            <td>
+                {{j.universityElectionsNumOfVotes}}
+            </td>
+            <td>
+                {{j.role}}
+            </td>
+            <td align="right">
+                <a href="{%url 'update_nominee_result' j.UserModelKey.Student_id%}">Update</a>
+            </td>
+
+        </tr>
+        {%endfor%}
+    </table>
+</div>
+
+<div class="sharp card large">
+    <h1 class="card-name">كلية تكنولوجيا العلوم الصحية التطبيقية</h1>
+    <table class="normal-table">
+        <tr>
+
+            <th>
+                الاسم
+            </th>
+
+            <th>
+                الكود
+            </th>
+
+            <th>
+                عدد الاصوات
+            </th>
+
+            <th>
+                الدور
+            </th>
+
+        </tr>
+
+        {%for j in Fifteen %}
+        <tr>
+            <td>
+                {{j}}
+            </td>
+            <td>
+                {{j.UserModelKey.Student_id}}
+            </td>
+            <td>
+                {{j.universityElectionsNumOfVotes}}
+            </td>
+            <td>
+                {{j.role}}
+            </td>
+            <td align="right">
+                <a href="{%url 'update_nominee_result' j.UserModelKey.Student_id%}">Update</a>
+            </td>
+
+        </tr>
+        {%endfor%}
+    </table>
+</div>
+<div class="sharp card large">
+    <h1 class="card-name">كلية الزراعة</h1>
+    <table class="normal-table">
+        <tr>
+
+            <th>
+                الاسم
+            </th>
+
+            <th>
+                الكود
+            </th>
+
+            <th>
+                عدد الاصوات
+            </th>
+
+            <th>
+                الدور
+            </th>
+
+        </tr>
+
+        {%for j in Sixteen %}
+        <tr>
+            <td>
+                {{j}}
+            </td>
+            <td>
+                {{j.UserModelKey.Student_id}}
+            </td>
+            <td>
+                {{j.universityElectionsNumOfVotes}}
+            </td>
+            <td>
+                {{j.role}}
+            </td>
+            <td align="right">
+                <a href="{%url 'update_nominee_result' j.UserModelKey.Student_id%}">Update</a>
+            </td>
+
+        </tr>
+        {%endfor%}
+    </table>
+</div>
+
+<div class="sharp card large">
+    <h1 class="card-name">كلية العلاج الطبيعى</h1>
+    <table class="normal-table">
+        <tr>
+
+            <th>
+                الاسم
+            </th>
+
+            <th>
+                الكود
+            </th>
+
+            <th>
+                عدد الاصوات
+            </th>
+
+            <th>
+                الدور
+            </th>
+
+        </tr>
+
+        {%for j in Seventeen %}
+        <tr>
+            <td>
+                {{j}}
+            </td>
+            <td>
+                {{j.UserModelKey.Student_id}}
+            </td>
+            <td>
+                {{j.universityElectionsNumOfVotes}}
+            </td>
+            <td>
+                {{j.role}}
+            </td>
+            <td align="right">
+                <a href="{%url 'update_nominee_result' j.UserModelKey.Student_id%}">Update</a>
+            </td>
+
+        </tr>
+        {%endfor%}
+    </table>
+</div>
+<div class="sharp card large">
+    <h1 class="card-name">كلية الإعلام</h1>
+    <table class="normal-table">
+        <tr>
+
+            <th>
+                الاسم
+            </th>
+
+            <th>
+                الكود
+            </th>
+
+            <th>
+                عدد الاصوات
+            </th>
+
+            <th>
+                الدور
+            </th>
+
+        </tr>
+
+        {%for j in Eighteen %}
+        <tr>
+            <td>
+                {{j}}
+            </td>
+            <td>
+                {{j.UserModelKey.Student_id}}
+            </td>
+            <td>
+                {{j.universityElectionsNumOfVotes}}
+            </td>
+            <td>
+                {{j.role}}
+            </td>
+            <td align="right">
+                <a href="{%url 'update_nominee_result' j.UserModelKey.Student_id%}">Update</a>
+            </td>
+
+        </tr>
+        {%endfor%}
+    </table>
+</div>
+<div class="sharp card large">
+    <h1 class="card-name">كلية التجارة</h1>
+    <table class="normal-table">
+        <tr>
+
+            <th>
+                الاسم
+            </th>
+
+            <th>
+                الكود
+            </th>
+
+            <th>
+                عدد الاصوات
+            </th>
+
+            <th>
+                الدور
+            </th>
+
+        </tr>
+
+        {%for j in Nineteen %}
+        <tr>
+            <td>
+                {{j}}
+            </td>
+            <td>
+                {{j.UserModelKey.Student_id}}
+            </td>
+            <td>
+                {{j.universityElectionsNumOfVotes}}
+            </td>
+            <td>
+                {{j.role}}
+            </td>
+            <td align="right">
+                <a href="{%url 'update_nominee_result' j.UserModelKey.Student_id%}">Update</a>
+            </td>
+
+        </tr>
+        {%endfor%}
+    </table>
+</div>
+
+<div class="sharp card large">
+    <h1 class="card-name">كلية الآداب</h1>
+    <table class="normal-table">
+        <tr>
+
+            <th>
+                الاسم
+            </th>
+
+            <th>
+                الكود
+            </th>
+
+            <th>
+                عدد الاصوات
+            </th>
+
+            <th>
+                الدور
+            </th>
+
+        </tr>
+
+        {%for j in Twenty %}
+        <tr>
+            <td>
+                {{j}}
+            </td>
+            <td>
+                {{j.UserModelKey.Student_id}}
+            </td>
+            <td>
+                {{j.universityElectionsNumOfVotes}}
+            </td>
+            <td>
+                {{j.role}}
+            </td>
+            <td align="right">
+                <a href="{%url 'update_nominee_result' j.UserModelKey.Student_id%}">Update</a>
+            </td>
+
+        </tr>
+        {%endfor%}
+    </table>
+</div>
+<div class="sharp card large">
+    <h1 class="card-name">كلية التربية</h1>
+    <table class="normal-table">
+        <tr>
+
+            <th>
+                الاسم
+            </th>
+
+            <th>
+                الكود
+            </th>
+
+            <th>
+                عدد الاصوات
+            </th>
+
+            <th>
+                الدور
+            </th>
+
+        </tr>
+
+        {%for j in Twentyone %}
+        <tr>
+            <td>
+                {{j}}
+            </td>
+            <td>
+                {{j.UserModelKey.Student_id}}
+            </td>
+            <td>
+                {{j.universityElectionsNumOfVotes}}
+            </td>
+            <td>
+                {{j.role}}
+            </td>
+            <td align="right">
+                <a href="{%url 'update_nominee_result' j.UserModelKey.Student_id%}">Update</a>
+            </td>
+
+        </tr>
+        {%endfor%}
+    </table>
+</div>
+
+<div class="sharp card large">
+    <h1 class="card-name">كلية الحقوق</h1>
+    <table class="normal-table">
+        <tr>
+
+            <th>
+                الاسم
+            </th>
+
+            <th>
+                الكود
+            </th>
+
+            <th>
+                عدد الاصوات
+            </th>
+
+            <th>
+                الدور
+            </th>
+
+        </tr>
+
+        {%for j in Twentytwo %}
+        <tr>
+            <td>
+                {{j}}
+            </td>
+            <td>
+                {{j.UserModelKey.Student_id}}
+            </td>
+            <td>
+                {{j.universityElectionsNumOfVotes}}
+            </td>
+            <td>
+                {{j.role}}
+            </td>
+            <td align="right">
+                <a href="{%url 'update_nominee_result' j.UserModelKey.Student_id%}">Update</a>
+            </td>
+
+        </tr>
+        {%endfor%}
+    </table>
+</div>
+<div class="sharp card large">
+    <h1 class="card-name">كلية التربية الرياضية</h1>
+    <table class="normal-table">
+        <tr>
+
+            <th>
+                الاسم
+            </th>
+
+            <th>
+                الكود
+            </th>
+
+            <th>
+                عدد الاصوات
+            </th>
+
+            <th>
+                الدور
+            </th>
+
+        </tr>
+
+        {%for j in Twentythree %}
+        <tr>
+            <td>
+                {{j}}
+            </td>
+            <td>
+                {{j.UserModelKey.Student_id}}
+            </td>
+            <td>
+                {{j.universityElectionsNumOfVotes}}
+            </td>
+            <td>
+                {{j.role}}
+            </td>
+            <td align="right">
+                <a href="{%url 'update_nominee_result' j.UserModelKey.Student_id%}">Update</a>
+            </td>
+
+        </tr>
+        {%endfor%}
+    </table>
+</div>
+
+<div class="sharp card large">
+    <h1 class="card-name">كلية التربية الرياضية</h1>
+    <table class="normal-table">
+        <tr>
+
+            <th>
+                الاسم
+            </th>
+
+            <th>
+                الكود
+            </th>
+
+            <th>
+                عدد الاصوات
+            </th>
+
+            <th>
+                الدور
+            </th>
+
+        </tr>
+
+        {%for j in Twentyfour %}
+        <tr>
+            <td>
+                {{j}}
+            </td>
+            <td>
+                {{j.UserModelKey.Student_id}}
+            </td>
+            <td>
+                {{j.universityElectionsNumOfVotes}}
+            </td>
+            <td>
+                {{j.role}}
+            </td>
+            <td align="right">
+                <a href="{%url 'update_nominee_result' j.UserModelKey.Student_id%}">Update</a>
+            </td>
+
+        </tr>
+        {%endfor%}
+    </table>
+</div>
+<div class="sharp card large">
+    <h1 class="card-name">كلية التربية للطفولة المبكرة</h1>
+    <table class="normal-table">
+        <tr>
+
+            <th>
+                الاسم
+            </th>
+
+            <th>
+                الكود
+            </th>
+
+            <th>
+                عدد الاصوات
+            </th>
+
+            <th>
+                الدور
+            </th>
+
+        </tr>
+
+        {%for j in Twentyfive %}
+        <tr>
+            <td>
+                {{j}}
+            </td>
+            <td>
+                {{j.UserModelKey.Student_id}}
+            </td>
+            <td>
+                {{j.universityElectionsNumOfVotes}}
+            </td>
+            <td>
+                {{j.role}}
+            </td>
+            <td align="right">
+                <a href="{%url 'update_nominee_result' j.UserModelKey.Student_id%}">Update</a>
+            </td>
+
+        </tr>
+        {%endfor%}
+    </table>
+</div>
+
+<div class="sharp card large">
+    <h1 class="card-name">كلية الألسن</h1>
+    <table class="normal-table">
+        <tr>
+
+            <th>
+                الاسم
+            </th>
+
+            <th>
+                الكود
+            </th>
+
+            <th>
+                عدد الاصوات
+            </th>
+
+            <th>
+                الدور
+            </th>
+
+        </tr>
+
+        {%for j in Twentysix %}
+        <tr>
+            <td>
+                {{j}}
+            </td>
+            <td>
+                {{j.UserModelKey.Student_id}}
+            </td>
+            <td>
+                {{j.universityElectionsNumOfVotes}}
+            </td>
+            <td>
+                {{j.role}}
+            </td>
+            <td align="right">
+                <a href="{%url 'update_nominee_result' j.UserModelKey.Student_id%}">Update</a>
+            </td>
+
+        </tr>
+        {%endfor%}
+    </table>
+</div>
+<div class="sharp card large">
+    <h1 class="card-name">كلية الخدمة الاجتماعية التنموية</h1>
+    <table class="normal-table">
+        <tr>
+
+            <th>
+                الاسم
+            </th>
+
+            <th>
+                الكود
+            </th>
+
+            <th>
+                عدد الاصوات
+            </th>
+
+            <th>
+                الدور
+            </th>
+
+        </tr>
+
+        {%for j in Twentyseven %}
+        <tr>
+            <td>
+                {{j}}
+            </td>
+            <td>
+                {{j.UserModelKey.Student_id}}
+            </td>
+            <td>
+                {{j.universityElectionsNumOfVotes}}
+            </td>
+            <td>
+                {{j.role}}
+            </td>
+            <td align="right">
+                <a href="{%url 'update_nominee_result' j.UserModelKey.Student_id%}">Update</a>
+            </td>
+
+        </tr>
+        {%endfor%}
+    </table>
+</div>
+
+<div class="sharp card large">
+    <h1 class="card-name">كلية السياحة و الفنادق</h1>
+    <table class="normal-table">
+        <tr>
+
+            <th>
+                الاسم
+            </th>
+
+            <th>
+                الكود
+            </th>
+
+            <th>
+                عدد الاصوات
+            </th>
+
+            <th>
+                الدور
+            </th>
+
+        </tr>
+
+        {%for j in Twentyeight %}
+        <tr>
+            <td>
+                {{j}}
+            </td>
+            <td>
+                {{j.UserModelKey.Student_id}}
+            </td>
+            <td>
+                {{j.universityElectionsNumOfVotes}}
+            </td>
+            <td>
+                {{j.role}}
+            </td>
+            <td align="right">
+                <a href="{%url 'update_nominee_result' j.UserModelKey.Student_id%}">Update</a>
+            </td>
+
+        </tr>
+        {%endfor%}
+    </table>
+</div>
+{% endblock %}

@@ -566,3 +566,55 @@ def save_data(request, form):
 
         std_access.result = form.cleaned_data['result']
         std_access.save()
+
+
+@login_required
+def result_control(request):
+    college = ['one','two','three','Four','Five','Six','Seven','Eight','Nine','Ten','Eleven'
+               ,'Twelve','Thirteen','Fourteen','Fifteen','Sixteen','Seventeen',
+               'Eighteen','Nineteen','Twenty','Twentyone','Twentytwo','Twentythree','Twentyfour',
+               'Twentyfive','Twentysix','Twentyseven','Twentyeight']
+    con = {}
+    
+    for i , item in enumerate(college):
+        userinsamecollege = User_Model.objects.filter(college = int(i + 1))
+        nominee_list = Nominee_user.objects.filter(final_list = True ,  UserModelKey__in = userinsamecollege)         
+        con[item] = nominee_list
+
+    if type == 'communityMemberElections':
+        return render(request, 'resultcontrol1.html', context = con)
+    
+    if type == 'collegeCommunityTrusteeOreHelperElections':
+        return render(request, 'resultcontrol2.html', context = con)
+    
+    if type == 'collegeStudentUnionPresidentOrViceElections':
+        return render(request, 'resultcontrol3.html', context = con)
+    
+    if type == 'universityElections':
+        return render(request, 'resultcontrol3.html', context = con)
+    
+    return render(request, 'resultcontrol1.html', context = con)
+
+@login_required
+def update_nominee_result(request, nominee_id):
+    context = {}
+    User_Mod = User_Model.objects.get(Student_id=nominee_id)
+    nominee = Nominee_user.objects.get(UserModelKey=User_Mod)
+    initial_values = {'Name': nominee.UserModelKey.Name,
+                      'nominee_id': nominee.UserModelKey.Student_id,
+                      'address': nominee.UserModelKey.address,
+                      'birthdate': nominee.UserModelKey.birthdate,
+                      'collegeYear': nominee.UserModelKey.collegeYear,
+                      }
+    form = NomineeForm_update(request.POST or None,
+                              instance=nominee, initial=initial_values)
+
+    if request.POST:
+        if form.is_valid():
+            form.save()
+            return redirect(result_control)
+        else:
+            context['ConfirmationMessage'] = "Error: couldn't update nominee"
+    context['form'] = form
+
+    return render(request, 'updatenomineeresult.html', context=context)
