@@ -324,6 +324,51 @@ def vote(request, type):
         return render(request, 'vote1.html', context=context)
 
     if type == 'collegeCommunityTrusteeOreHelperElections':
+
+        if not (Nominee_user.objects.filter(UserModelKey=User_Mod).exists()):
+                context.update({"ConfirmationMessage": 'متطلبات الانتخاب غير موافاة'})
+                return render(request, 'vote2.html', context=context)
+
+        if not (Nominee_user.objects.get(UserModelKey=User_Mod).role == '2'):
+                context.update({"ConfirmationMessage": 'متطلبات الانتخاب غير موافاة'})
+                return render(request, 'vote2.html', context=context)
+
+        if User_Mod.Voting_status_2:
+            context.update({"ConfirmationMessage": 'Already voted'})
+            return render(request, 'vote2.html', context=context)
+
+        else:
+            UsersinSamecollege = User_Model.objects.filter(college = User_Mod.college)
+            if Nominee_user.objects.filter(
+        community=Nominee_user.objects.get(UserModelKey=User_Mod).community, UserModelKey__in = UsersinSamecollege, role = '3').exists():
+            
+                collegeCommunityTrusteeNominee = Nominee_user.objects.get(
+            community=Nominee_user.objects.get(UserModelKey=User_Mod).community, UserModelKey__in = UsersinSamecollege, role = '3')
+            else:
+                collegeCommunityTrusteeNominee = 'الأمين لم يتم تحديده بعد'
+            initial_values = {'collegeCommunityTrusteeNominee': collegeCommunityTrusteeNominee,
+                }
+
+            form = voteForm2(request.POST or None, Userr = User_Mod, initial = initial_values)
+            context.update({
+                'form': form
+            })
+            if request.POST:
+                if form.is_valid():
+                    User_Mod.Voting_status_1 = 1
+                    User_Mod.save()
+                    nom = form.cleaned_data['collegeCommunityTrusteeHelperNominee'][0]
+                    print (nom)
+                    print(nom.collegeCommunityTrusteeOreHelperElectionsNumOfVotes, '\n')
+                    nom.collegeCommunityTrusteeOreHelperElectionsNumOfVotes = nom.collegeCommunityTrusteeOreHelperElectionsNumOfVotes + 1
+                    Vote.objects.create(nominations_period_id = dates.nominations_period_id,
+                                        voter_id=User_Mod, nominee_id=nom.UserModelKey, community = nom.community)
+                    
+                    print(nom.collegeCommunityTrusteeOreHelperElectionsNumOfVotes, '\n')
+                    nom.save()
+                    context['ConfirmationMessage'] = "Vote sent successfully"
+                else:
+                    context['ConfirmationMessage'] = "Error: couldn't save application"
         return render(request, 'vote2.html', context=context)
     
     if type == 'collegeStudentUnionPresidentOrViceElections':
@@ -364,27 +409,24 @@ def showresult(request, type):
         return render(request, 'results1.html', context)
     
     if type == 'collegeCommunityTrusteeOreHelperElections':
-        context = admincheck(request)
-        context.update(durationcheck())
 
         committee = {}
 
         for c in Nominee_user.community.field.choices:
             nominees = {}
             i = 1
-            for eachcollege in User_Model.college.field.choices:
-                
-                for Nominee in Nominee_user.objects.filter(
-                community=c[0], UserModelKey__in = User_Model.objects.filter(college = eachcollege[0]),
-                                                final_list=True):
-                    nominees.update({'n'+str(i): {'الاسم': Nominee.UserModelKey.Name,
-                                    'عدد الأصوات': Nominee.universityNumofvotes}})
-                    i += 1
+            UsersinSamecollege = User_Model.objects.filter(college = User_Mod.college)
+            NomineesinSamecollege = Nominee_user.objects.filter(UserModelKey__in = UsersinSamecollege)
 
+            for Nominee in Current_Nom_Result.objects.filter(community = c[0], Nominee_user__in = NomineesinSamecollege):
+                nominees.update({'n'+str(i): {'الاسم': Nominee.Nominee_user.UserModelKey.Name,
+                                'عدد الأصوات': Nominee.numOfVotes,
+                                "الدور": Nominee.get_role_display()}})
+                i += 1
+                print (Nominee.get_role_display())
             committee.update({'c' + c[0] : {'name': c[1],'nominees': nominees}})
 
         context.update({'committee': committee})
-        print (context)
         return render(request, 'results2.html', context)
     
     if type == 'collegeStudentUnionPresidentOrViceElections':
