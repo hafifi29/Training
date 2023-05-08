@@ -44,7 +44,6 @@ class User_Model(models.Model):
     Voting_status_2 = models.BooleanField(default=False)
     Voting_status_3 = models.BooleanField(default=False)
     Voting_status_4 = models.BooleanField(default=False)
-    Voting_status_5 = models.BooleanField(default=False)
 
 
 
@@ -82,14 +81,12 @@ class Nominee_user(models.Model):
     communityMemberElections = models.BooleanField(default=False)
     collegeCommunityTrusteeOreHelperElections = models.BooleanField(default=False)
     collegeStudentUnionPresidentOrViceElections = models.BooleanField(default=False)
-    universityCommunityTrusteeOrHelperElections = models.BooleanField(default=False)
-    universityStudentUnionPresidentOrViceElections = models.BooleanField(default=False)
+    universityElections = models.BooleanField(default=False)
 
     communityMemberElectionsNumOfVotes = models.IntegerField(default=0)
     collegeCommunityTrusteeOreHelperElectionsNumOfVotes = models.IntegerField(default=0)
     collegeStudentUnionPresidentOrViceElectionsNumOfVotes = models.IntegerField(default=0)
-    universityCommunityTrusteeOrHelperElectionsNumOfVotes =  models.IntegerField(default=0)
-    universityStudentUnionPresidentOrViceElectionsNumOfVotes =  models.IntegerField(default=0)
+    universityElectionsNumOfVotes =  models.IntegerField(default=0)
 
     def __str__(self):
         return str(self.UserModelKey.Name)
@@ -179,25 +176,19 @@ class Control_content(SingletonModel):
     communityMemberElections = models.BooleanField(default=False)
     collegeCommunityTrusteeOreHelperElections = models.BooleanField(default=False)
     collegeStudentUnionPresidentOrViceElections = models.BooleanField(default=False)
-    universityCommunityTrusteeOrHelperElections = models.BooleanField(default=False)
-    universityStudentUnionPresidentOrViceElections = models.BooleanField(default=False)
+    universityElections = models.BooleanField(default=False)
 
     Voting_1 = models.BooleanField(default=False)
     Voting_2 = models.BooleanField(default=False)
     Voting_3 = models.BooleanField(default=False)
     Voting_4 = models.BooleanField(default=False)
-    Voting_5 = models.BooleanField(default=False)
 
     result_1 = models.BooleanField(default=False)
     result_2 = models.BooleanField(default=False)
     result_3 = models.BooleanField(default=False)
     result_4 = models.BooleanField(default=False)
-    result_5 = models.BooleanField(default=False)
 
-    collegevote = models.BooleanField(default=False)
-    universityvote = models.BooleanField(default=False)
     contention = models.BooleanField(default=False)
-    result = models.BooleanField(default=False)
 
     def __str__(self):
         return 'Control Content'
@@ -216,11 +207,8 @@ class Dates(SingletonModel):
     collegeStudentUnionPresidentOrViceElections_sd = models.DateTimeField(max_length= 32, null=True)
     collegeStudentUnionPresidentOrViceElections_ed = models.DateTimeField(max_length= 32, null=True)
 
-    universityCommunityTrusteeOrHelperElections_sd = models.DateTimeField(max_length= 32, null=True)
-    universityCommunityTrusteeOrHelperElections_ed = models.DateTimeField(max_length= 32, null=True)
-
-    universityStudentUnionPresidentOrViceElections_sd = models.DateTimeField(max_length= 32, null=True)
-    universityStudentUnionPresidentOrViceElections_ed = models.DateTimeField(max_length= 32, null=True)
+    universityElections_sd = models.DateTimeField(max_length= 32, null=True)
+    universityElections_ed = models.DateTimeField(max_length= 32, null=True)
 
     Voting_1_sd = models.DateTimeField(max_length= 32, null=True)
     Voting_1_ed = models.DateTimeField(max_length= 32, null=True)
@@ -234,9 +222,6 @@ class Dates(SingletonModel):
     Voting_4_sd = models.DateTimeField(max_length= 32, null=True)
     Voting_4_ed = models.DateTimeField(max_length= 32, null=True)
 
-    Voting_5_sd = models.DateTimeField(max_length= 32, null=True)
-    Voting_5_ed = models.DateTimeField(max_length= 32, null=True)
-
     result_1_sd = models.DateTimeField(max_length= 32, null=True)
     result_1_ed = models.DateTimeField(max_length= 32, null=True)
 
@@ -248,9 +233,6 @@ class Dates(SingletonModel):
 
     result_4_sd = models.DateTimeField(max_length= 32, null=True)
     result_4_ed = models.DateTimeField(max_length= 32, null=True)
-
-    result_5_sd = models.DateTimeField(max_length= 32, null=True)
-    result_5_ed = models.DateTimeField(max_length= 32, null=True)
 
     con_sd = models.DateTimeField(max_length= 32, null=True)
     con_ed = models.DateTimeField(max_length= 32, null=True)

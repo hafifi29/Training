@@ -21,11 +21,9 @@ collegeCommunityTrusteeOreHelperElections_ed = dates.collegeCommunityTrusteeOreH
 collegeStudentUnionPresidentOrViceElections_sd = dates.collegeStudentUnionPresidentOrViceElections_sd
 collegeStudentUnionPresidentOrViceElections_ed = dates.collegeStudentUnionPresidentOrViceElections_ed
 
-universityCommunityTrusteeOrHelperElections_sd = dates.universityCommunityTrusteeOrHelperElections_sd
-universityCommunityTrusteeOrHelperElections_ed = dates.universityCommunityTrusteeOrHelperElections_ed
+universityElections_sd = dates.universityElections_sd
+universityElections_ed = dates.universityElections_ed
 
-universityStudentUnionPresidentOrViceElections_sd = dates.universityStudentUnionPresidentOrViceElections_sd
-universityStudentUnionPresidentOrViceElections_ed = dates.universityStudentUnionPresidentOrViceElections_ed
 
 Voting_1_sd = dates.Voting_1_sd
 Voting_1_ed = dates.Voting_1_ed
@@ -39,9 +37,6 @@ Voting_3_ed = dates.Voting_3_ed
 Voting_4_sd = dates.Voting_4_sd
 Voting_4_ed = dates.Voting_4_ed
 
-Voting_5_sd = dates.Voting_5_sd
-Voting_5_ed = dates.Voting_5_ed
-
 result_1_sd = dates.result_1_sd
 result_1_ed = dates.result_1_ed
 
@@ -53,10 +48,6 @@ result_3_ed = dates.result_3_ed
 
 result_4_sd = dates.result_4_sd
 result_4_ed = dates.result_4_ed
-
-result_5_sd = dates.result_5_sd
-result_5_ed = dates.result_5_ed
-
 
 start_con = dates.con_sd
 end_con = dates.con_ed
@@ -104,18 +95,11 @@ def durationcheck():
         std_access.collegeStudentUnionPresidentOrViceElections = False
         std_access.save()
 
-    if universityCommunityTrusteeOrHelperElections_sd <= now <= universityCommunityTrusteeOrHelperElections_ed:
-        std_access.universityCommunityTrusteeOrHelperElections = True
+    if universityElections_sd <= now <= universityElections_ed:
+        std_access.universityElections = True
         std_access.save()
     else:
-        std_access.universityCommunityTrusteeOrHelperElections = False
-        std_access.save()
-
-    if universityStudentUnionPresidentOrViceElections_sd <= now <= universityStudentUnionPresidentOrViceElections_ed:
-        std_access.universityStudentUnionPresidentOrViceElections = True
-        std_access.save()
-    else:
-        std_access.universityStudentUnionPresidentOrViceElections = False
+        std_access.universityElections = False
         std_access.save()
 
     if Voting_1_sd <= now <= Voting_1_ed:
@@ -146,13 +130,6 @@ def durationcheck():
         std_access.Voting_4 = False
         std_access.save()
 
-    if Voting_5_sd <= now <= Voting_5_ed:
-        std_access.Voting_5 = True
-        std_access.save()
-    else:
-        std_access.Voting_5 = False
-        std_access.save()
-
     if result_1_sd <= now <= result_1_ed:
         std_access.result_1 = True
         std_access.save()
@@ -180,14 +157,6 @@ def durationcheck():
     else:
         std_access.result_4 = False
         std_access.save()
-
-    if result_5_sd <= now <= result_5_ed:
-        std_access.result_5 = True
-        std_access.save()
-    else:
-        std_access.result_5 = False
-        std_access.save()
-
 
     return {'std_access': std_access}
 
@@ -273,11 +242,9 @@ def nomination(request,type):
     if type == 'collegeStudentUnionPresidentOrViceElections':
         return render(request, 'nom1.html', context=context)
     
-    if type == 'universityCommunityTrusteeOrHelperElections':
+    if type == 'universityElections':
         return render(request, 'nom1.html', context=context)
     
-    if type == 'universityStudentUnionPresidentOrViceElections':
-        return render(request, 'nom1.html', context=context)
 
 
 
@@ -352,10 +319,7 @@ def vote(request, type):
     if type == 'collegeStudentUnionPresidentOrViceElections':
         return render(request, 'vote2.html', context=context)
     
-    if type == 'universityCommunityTrusteeOrHelperElections':
-        return render(request, 'vote2.html', context=context)
-    
-    if type == 'universityStudentUnionPresidentOrViceElections':
+    if type == 'universityElections':
         return render(request, 'vote2.html', context=context)
     
 
@@ -410,10 +374,7 @@ def showresult(request, type):
     if type == 'collegeStudentUnionPresidentOrViceElections':
         return render(request, 'results1.html', context=context)
     
-    if type == 'universityCommunityTrusteeOrHelperElections':
-        return render(request, 'results1.html', context=context)
-    
-    if type == 'universityStudentUnionPresidentOrViceElections':
+    if type == 'universityElections':
         return render(request, 'results1.html', context=context)
 
 
