@@ -161,6 +161,7 @@ class Current_Nom_Result(models.Model):
                                            ('7', 'لجنة الاسر و الرحلات')
                                            
                                   ], default='1')
+    
     numOfVotes = models.IntegerField(default=0)
     role = models.CharField(max_length=33, choices=[('1', 'لم يحدد'),
                                         ('2', 'عضو'),
