@@ -6,6 +6,8 @@ from django.contrib.auth.models import User as User_
 from .models import *
 from datetime import datetime
 from django.utils import timezone
+from django.db.models import Q
+
 
 
 # global varables
@@ -278,8 +280,44 @@ def nomination(request,type):
             return render(request, 'nomination2.html', context=context)
     
     if type == 'collegeStudentUnionPresidentOrViceElections':
-        return render(request, 'nom1.html', context=context)
-    
+        if not (Nominee_user.objects.filter(UserModelKey=User_Mod).exists()):
+                context.update({"ConfirmationMessage": 'متطلبات الترشح غير موافاة'})
+                return render(request, 'nomination3.html', context=context)
+
+        if not ((Nominee_user.objects.get(UserModelKey=User_Mod).role == '3') or (Nominee_user.objects.get(UserModelKey=User_Mod).role == '4')):
+                context.update({"ConfirmationMessage": 'متطلبات الترشح غير موافاة'})
+                return render(request, 'nomination3.html', context=context)
+
+        if Nominee_user.objects.get(UserModelKey=User_Mod).collegeStudentUnionPresidentOrViceElections:
+            context.update({"ConfirmationMessage": 'Application already sent'})
+            return render(request, 'nomination3.html', context=context)
+
+        else:
+            initial_values = {'Name': User_Mod.Name,
+                            'nominee_id': User_Mod.Student_id,
+                            'address': User_Mod.address,
+                            'birthdate': User_Mod.birthdate,
+                            'college' : User_Mod.get_college_display,
+                            'collegeYear': User_Mod.collegeYear,
+                            'phone_no': Nominee_user.objects.get(UserModelKey=User_Mod).phone_no,
+                            'email': Nominee_user.objects.get(UserModelKey=User_Mod).email,
+                            'community': Nominee_user.objects.get(UserModelKey=User_Mod).get_community_display,
+                            'rec_letter': Nominee_user.objects.get(UserModelKey=User_Mod).rec_letter
+                            }
+            form = nomForm3(request.POST or None,
+                            request.FILES, initial=initial_values)
+
+            if request.POST:
+                if form.is_valid():
+                    NomineeUpdate = Nominee_user.objects.get(UserModelKey=User_Mod)
+                    NomineeUpdate.collegeStudentUnionPresidentOrViceElections = True
+                    NomineeUpdate.save()
+                    context['ConfirmationMessage'] = "Application sent successfuly"
+                else:
+                    context['ConfirmationMessage'] = "Error: couldn't save application"
+            context['form'] = form
+            return render(request, 'nomination3.html', context=context)
+            
     if type == 'universityElections':
         return render(request, 'nom1.html', context=context)
     
@@ -339,6 +377,7 @@ def vote(request, type):
 
         else:
             UsersinSamecollege = User_Model.objects.filter(college = User_Mod.college)
+
             if Nominee_user.objects.filter(
         community=Nominee_user.objects.get(UserModelKey=User_Mod).community, UserModelKey__in = UsersinSamecollege, role = '3').exists():
             
@@ -355,7 +394,7 @@ def vote(request, type):
             })
             if request.POST:
                 if form.is_valid():
-                    User_Mod.Voting_status_1 = 1
+                    User_Mod.Voting_status_2 = 1
                     User_Mod.save()
                     nom = form.cleaned_data['collegeCommunityTrusteeHelperNominee'][0]
                     print (nom)
@@ -372,7 +411,43 @@ def vote(request, type):
         return render(request, 'vote2.html', context=context)
     
     if type == 'collegeStudentUnionPresidentOrViceElections':
-        return render(request, 'vote2.html', context=context)
+
+        if not (Nominee_user.objects.filter(UserModelKey=User_Mod).exists()):
+                context.update({"ConfirmationMessage": 'متطلبات الانتخاب غير موافاة'})
+                return render(request, 'vote3.html', context=context)
+
+        if not ((Nominee_user.objects.get(UserModelKey=User_Mod).role == '3') or (Nominee_user.objects.get(UserModelKey=User_Mod).role == '4')):
+                context.update({"ConfirmationMessage": 'متطلبات الانتخاب غير موافاة'})
+                return render(request, 'vote3.html', context=context)
+
+        if User_Mod.Voting_status_2:
+            context.update({"ConfirmationMessage": 'Already voted'})
+            return render(request, 'vote3.html', context=context)
+
+        else:
+            UsersinSamecollege = User_Model.objects.filter(college = User_Mod.college)
+
+            form = voteForm3(request.POST or None, Userr = User_Mod)
+            context.update({
+                'form': form
+            })
+            if request.POST:
+                if form.is_valid():
+                    User_Mod.Voting_status_3 = 1
+                    User_Mod.save()
+                    nom = form.cleaned_data['collegeStudentUnionPresidentOrVice'][0]
+                    print (nom)
+                    print(nom.collegeStudentUnionPresidentOrViceElectionsNumOfVotes, '\n')
+                    nom.collegeStudentUnionPresidentOrViceElectionsNumOfVotes = nom.collegeStudentUnionPresidentOrViceElectionsNumOfVotes + 1
+                    Vote.objects.create(nominations_period_id = dates.nominations_period_id,
+                                        voter_id=User_Mod, nominee_id=nom.UserModelKey, community = nom.community)
+                    
+                    print(nom.collegeStudentUnionPresidentOrViceElectionsNumOfVotes, '\n')
+                    nom.save()
+                    context['ConfirmationMessage'] = "Vote sent successfully"
+                else:
+                    context['ConfirmationMessage'] = "Error: couldn't save application"
+        return render(request, 'vote3.html', context=context)
     
     if type == 'universityElections':
         return render(request, 'vote2.html', context=context)
@@ -430,8 +505,26 @@ def showresult(request, type):
         return render(request, 'results2.html', context)
     
     if type == 'collegeStudentUnionPresidentOrViceElections':
-        return render(request, 'results1.html', context=context)
-    
+
+        committee = {}
+
+        for c in {('1',' ')}:
+            nominees = {}
+            i = 1
+            UsersinSamecollege = User_Model.objects.filter(college = User_Mod.college)
+            NomineesinSamecollege = Nominee_user.objects.filter(UserModelKey__in = UsersinSamecollege)
+
+            for Nominee in Current_Nom_Result.objects.filter(Nominee_user__in = NomineesinSamecollege):
+                nominees.update({'n'+str(i): {'الاسم': Nominee.Nominee_user.UserModelKey.Name,
+                                'عدد الأصوات': Nominee.numOfVotes,
+                                "الدور": Nominee.get_role_display()}})
+                i += 1
+                print (Nominee.get_role_display())
+            committee.update({'c' + c[0] : {'name': c[1],'nominees': nominees}})
+
+        context.update({'committee': committee})
+        return render(request, 'results3.html', context)
+        
     if type == 'universityElections':
         return render(request, 'results1.html', context=context)
 
