@@ -10,7 +10,7 @@
 {% block maincontent %}
 <div class="form-container">
   {% if std_access.communityMemberElections %}
-  <form enctype="multipart/form-data" id="myForm" class="nomination" action="{% url 'nomination' %}" method="POST">
+  <form enctype="multipart/form-data" id="myForm" class="nomination" action="" method="POST">
     {%csrf_token%}
 
     <h2 class="form-name">استمارة ترشح</h2>
