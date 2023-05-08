@@ -312,7 +312,10 @@ def showresult(request, type):
         for c in Nominee_user.community.field.choices:
             nominees = {}
             i = 1
-            for Nominee in Current_Nom_Result.objects.filter(community = c[0]):
+            UsersinSamecollegeANDcollegeYear = User_Model.objects.filter(college = User_Mod.college, collegeYear = User_Mod.collegeYear)
+            NomineesinSamecollegeANDcollegeYear = Nominee_user.objects.filter(UserModelKey__in = UsersinSamecollegeANDcollegeYear)
+
+            for Nominee in Current_Nom_Result.objects.filter(community = c[0], Nominee_user__in = NomineesinSamecollegeANDcollegeYear):
                 nominees.update({'n'+str(i): {'الاسم': Nominee.Nominee_user.UserModelKey.Name,
                                 'عدد الأصوات': Nominee.numOfVotes,
                                 "الدور": Nominee.get_role_display()}})
