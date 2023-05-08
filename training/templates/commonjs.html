@@ -20,29 +20,36 @@ let menu_icon = document.querySelector(".menu-icon")
 
 
 let header = document.querySelector("header");
-Elec5b19
-n5b20
-v5b21
-r5b22
+
 /*Buttons*/
-  let Elec1b1 = document.querySelector("#Elec1b3");
-  let n1b2 = document.querySelector("#n1b4");
-  let v1b3 = document.querySelector("#v1b5");
-  let r1b4 = document.querySelector("#r1b6");
 
-  let myButton4 = document.querySelector("#b4");
-  let myButton6 = document.querySelector("#b6");
+   let loginb = document.querySelector("loginb")
+   let logoutb = document.querySelector("logoutb")
 
-  let myButton7 = document.querySelector("#b7");
-  let myButton8 = document.querySelector("#b8");
-  let myButton9 = document.querySelector("#b9");
-  let myButton10 = document.querySelector("#b10");
-  let myButton11 = document.querySelector("#b11");
-  let myButton12 = document.querySelector("#b12");
-  let myButton13 = document.querySelector("#b13");
 
-   let listhide = document.querySelectorAll(".list-hide")
+  let Elec1b = document.querySelector("#Elec1b");
+  let n1b = document.querySelector("#n1b");
+  let v1b = document.querySelector("#v1b");
+  let r1b = document.querySelector("#r1b");
 
+  let Elec2b = document.querySelector("#Elec2b");
+  let n2b = document.querySelector("#n2b");
+  let v2b = document.querySelector("#v2b");
+  let r2b = document.querySelector("#r2b");
+
+  let Elec3b = document.querySelector("#Elec3b");
+  let n3b = document.querySelector("#n3b");
+  let v3b = document.querySelector("#v3b");
+  let r3b = document.querySelector("#r3b");
+
+  let Elec4b = document.querySelector("#Elec4b");
+  let n4b = document.querySelector("#n4b");
+  let v4b = document.querySelector("#v4b");
+  let r4b = document.querySelector("#r4b");
+
+
+  let listhide = document.querySelectorAll(".list-hide")
+  let Buttonlist = document.querySelectorAll(".Button-list")
 
    listhide.forEach((elem) => {
     let nextSibling = elem.nextElementSibling;
@@ -50,9 +57,9 @@ r5b22
         nextSibling.style.display = "none";
         nextSibling = nextSibling.nextElementSibling;
     }
+
     elem.onclick = () => {
     let nextSibling = elem.nextElementSibling;
-      console.log("frf");
       while(nextSibling) {
         let dis = nextSibling.style.display;
       if (dis === "none") {
@@ -61,79 +68,121 @@ r5b22
         nextSibling.style.display = "none";
       }
         nextSibling = nextSibling.nextElementSibling;
+    
+      Buttonlist.forEach((anotherbuttonlist) => {
+        if (anotherbuttonlist.firstElementChild != elem)
+        {let nextSibling = anotherbuttonlist.firstElementChild.nextElementSibling;
+          while(nextSibling) {
+        nextSibling.style.display = "none";
+        nextSibling = nextSibling.nextElementSibling;
+    }
+ }
 
+      })
 }
-
     };
   });
 
 
-
-  if (myButton1 != null) {
-  myButton1.onclick = () => {
+/*User_Buttons*/
+  if (loginb != null) {
+    loginb.onclick = () => {
     window.open("{% url 'sign_in' %}", "_self");
   };
 };
-
-if (myButton2 != null) {
-  myButton2.onclick = () => {
+if (logoutb != null) {
+  logoutb.onclick = () => {
     window.open("{% url 'log_out' %}", "_self");
   };
 };
 
-if (myButton3 != null) {
-  myButton3.onclick = () => {
+if (n1b != null) {
+  n1b.onclick = () => {
     window.open("{% url 'nomination' 'anything' %}", "_self");
   };
 };
-
-if (myButton10 != null) {
-  myButton10.onclick = () => {
+if (v1b != null) {
+  v1b.onclick = () => {
     window.open("{% url 'vote1' 'college' %}", "_self");
   };
 };
-
-if (myButton11 != null) {
-  myButton11.onclick = () => {
-    window.open("{% url 'vote1' 'university' %}", "_self");
-  };
-};
-
-if (myButton12 != null){
-  myButton12.onclick = () => {
+if (r1b != null) {
+  r1b.onclick = () => {
     window.open("{% url 'result' 'college' %}", "_self");
   };
 };
 
-if (myButton13 != null){
-  myButton13.onclick = () => {
-    window.open("{% url 'result' 'university' %}", "_self");
+if (n2b != null) {
+  n2b.onclick = () => {
+    window.open("{% url 'nomination' 'anything' %}", "_self");
+  };
+};
+if (v2b != null) {
+  v2b.onclick = () => {
+    window.open("{% url 'vote1' 'college' %}", "_self");
+  };
+};
+if (r2b != null) {
+  r2b.onclick = () => {
+    window.open("{% url 'result' 'college' %}", "_self");
   };
 };
 
+if (n3b != null) {
+  n3b.onclick = () => {
+    window.open("{% url 'nomination' 'anything' %}", "_self");
+  };
+};
+if (v3b != null) {
+  v3b.onclick = () => {
+    window.open("{% url 'vote1' 'college' %}", "_self");
+  };
+};
+if (r3b != null) {
+  r3b.onclick = () => {
+    window.open("{% url 'result' 'college' %}", "_self");
+  };
+};
 
-if (myButton6 != null){
-myButton6.onclick = () => {
+if (n4b != null) {
+  n4b.onclick = () => {
+    window.open("{% url 'nomination' 'anything' %}", "_self");
+  };
+};
+if (v4b != null) {
+  v4b.onclick = () => {
+    window.open("{% url 'vote1' 'college' %}", "_self");
+  };
+};
+if (r4b != null) {
+  r4b.onclick = () => {
+    window.open("{% url 'result' 'college' %}", "_self");
+  };
+};
+
+if (contenb != null) {
+  contenb.onclick = () => {
     window.open("{% url 'contention' %}", "_self");
   };
 };
 
-if (myButton7 != null) {
-  myButton7.onclick = () => {
+/*Admin_Buttons*/
+if (nomdatab != null) {
+  nomdatab.onclick = () => {
     window.open("{% url 'list_nominee' %}", "_self");
   };
 };
-
-if (myButton8 != null) {
-  myButton8.onclick = () => {
-    window.open("{% url 'duration' %}", "_self");
-  };
-};
-  if (myButton9 != null) {
-  myButton9.onclick = () => {
+if (showcontenb != null) {
+  showcontenb.onclick = () => {
     window.open("{% url 'list_contention' %}", "_self");
   };
 };
+if (setdatesb != null) {
+  setdatesb.onclick = () => {
+    window.open("{% url 'duration' %}", "_self");
+  };
+};
+
 
 });
 </script>
