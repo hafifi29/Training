@@ -162,8 +162,27 @@ def durationcheck():
 
     return {'std_access': std_access}
 
+@login_required
+def applyresult(request):
+    context = admincheck(request)
+    context.update(durationcheck())
+
+    for nom in Nominee_user.objects.all():
+        if nom.final_list == True and not(Current_Nom_Result.objects.filter(Nominee_user = nom)):
+
+            if nom.communityMemberElectionsNumOfVotes !=0:
+                numofvotess = nom.communityMemberElectionsNumOfVotes
+            elif nom.collegeCommunityTrusteeOreHelperElectionsNumOfVotes !=0:
+                numofvotess = nom.collegeCommunityTrusteeOreHelperElectionsNumOfVotes
+            elif nom.collegeStudentUnionPresidentOrViceElectionsNumOfVotes !=0:
+                numofvotess = nom.collegeStudentUnionPresidentOrViceElectionsNumOfVotes
+            else:
+                numofvotess = nom.universityElectionsNumOfVotes
+
+            Current_Nom_Result.objects.create(Nominee_user = nom, community = nom.community, numOfVotes = numofvotess, role = nom.role)
 
 def home(request):
+    applyresult(request)
     context = admincheck(request)
     durationcheck()
     if context['admin'] == True:

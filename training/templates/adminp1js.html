@@ -70,8 +70,24 @@ const gridOptions = {
 
 /*Grid download*/
 let gdb3 = document.querySelector('#gdb3')
-gdb3.addEventListener('click',() => {
-    print(gdb3.parentNode);
+// Get the element you want to print as PDF
+var element = document.getElementById('elementId');
 
+// Create a new window and load the content to be printed
+var printWindow = window.open('', '', 'height=500,width=500');
+printWindow.document.write('<html><head><title>Print Element</title>');
+printWindow.document.write('</head><body>');
+printWindow.document.write(element.innerHTML);
+printWindow.document.write('</body></html>');
+
+// Wait for the window to finish loading and then print
+printWindow.document.addEventListener('DOMContentLoaded', function() {
+  printWindow.print();
 });
+
+// Close the window after printing
+printWindow.onafterprint = function() {
+  printWindow.close();
+}
+
 </script>
