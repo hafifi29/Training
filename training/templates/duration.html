@@ -12,78 +12,170 @@
 
 
 {% block maincontent %}
-
-<div class="form-container">
+<div class="sharp medium card">
     <form method="post" action="{% url 'duration' %}">
-        <h2 class="form-name">تحديد المواعيد</h2>
-
+        <h2 class="form-name" style="direction: rtl;">انتخابات الفرق</h2>
         {%csrf_token%}
         <div class="field">
-        <label for=""> {{df.nomin_start_date.label}} </label>
-            {{df.nomin_start_date}}
-        </div>
-        <div class="field">
-            {{df.nomin_end_date.label}}
-            {{df.nomin_end_date}}
-        </div>
-    
-        <div class="field">
-            {{df.collegevote_start_date.label}}
-            {{df.collegevote_start_date}}
-        </div>
-        <div class="field">
-            {{df.collegevote_end_date.label}}
-            {{df.collegevote_end_date}}
+        <label for=""> {{df.communityMemberElections_sd.label}} </label>
+            {{df.communityMemberElections_sd}}
         </div>
 
         <div class="field">
-            {{df.universityvote_start_date.label}}
-            {{df.universityvote_start_date}}
-        </div>
-        <div class="field">
-            {{df.universityvote_end_date.label}}
-            {{df.universityvote_end_date}}
+            {{df.communityMemberElections_ed.label}}
+            {{df.communityMemberElections_ed}}
         </div>
 
         <div class="field">
-            {{df.con_start_date.label}}
-            {{df.con_start_date}}
+            {{df.Voting_1_sd.label}}
+            {{df.Voting_1_sd}}
         </div>
+
+
         <div class="field">
-            <label for="id_con_end_date">{{df.con_end_date.label}}</label>    
-            {{df.con_end_date}}
+            {{df.Voting_1_ed.label}}
+            {{df.Voting_1_ed}}
         </div>
+
         <div class="field">
-            <label for="id_result">{{df.result.label}}</label>
-            <label for="id_result">
-                {{df.result}}
-                <div class="toggel-switch"></div>
-            </label>
+            {{df.con_sd.label}}
+            {{df.con_sd}}
+        </div>
+
+        <div class="field">
+            {{df.con_ed.label}}
+            {{df.con_ed}}
+        </div>
+
+        <div class="field">
+            {{df.result_1_sd.label}}
+            {{df.result_1_sd}}
+        </div>
+
+        <div class="field">
+            {{df.result_1_ed.label}}
+            {{df.result_1_ed}}
         </div>
         <input type="submit" value="Save Changes">
     </form>
-
-<hr>
-
-    <div class="new-elec">
-
-        <button id="start-election-btn" >بداية انتخابات جديدة</button>
-
-        <div class="confirm" id="confirm">
-            <p>هل انت متاكد من انهاء العملية الانتخابيه؟ هذا سيؤدي لمسح بيانات جميع المرشحين</p>
-            <div class="con">
-                <button id="yes-btn">نعم</button>
-                <button id="no-btn">لا</button>
-            </div>
-        </div>
-    </div>
-
-    <div>
-        {{ConfirmationMessage}}
-    </div>
-    
 </div>
 
+
+<div class="sharp medium card">
+    <form method="post" action="{% url 'duration' %}">
+        <h2 class="form-name" style="direction: rtl;">انتخابات أمناء/مساعدى اللجان على مستوى الكلية</h2>
+        {%csrf_token%}
+        <div class="field">
+        <label for=""> {{df.collegeCommunityTrusteeOreHelperElections_sd.label}} </label>
+            {{df.collegeCommunityTrusteeOreHelperElections_sd}}
+        </div>
+
+        <div class="field">
+            {{df.collegeCommunityTrusteeOreHelperElections_ed.label}}
+            {{df.collegeCommunityTrusteeOreHelperElections_ed}}
+        </div>
+
+        <div class="field">
+            {{df.Voting_2_sd.label}}
+            {{df.Voting_2_sd}}
+        </div>
+
+
+        <div class="field">
+            {{df.Voting_2_ed.label}}
+            {{df.Voting_2_ed}}
+        </div>
+
+        <div class="field">
+            {{df.result_2_sd.label}}
+            {{df.result_2_sd}}
+        </div>
+
+        <div class="field">
+            {{df.result_2_ed.label}}
+            {{df.result_2_ed}}
+        </div>
+        <input type="submit" value="Save Changes">
+    </form>
+</div>
+
+<div class="sharp medium card">
+    <form method="post" action="{% url 'duration' %}">
+        <h2 class="form-name" style="direction: rtl;">انتخابات رئيس/نائب رئيس الاتحاد على مستوى الكلية</h2>
+
+        {%csrf_token%}
+        <div class="field">
+        <label for=""> {{df.collegeStudentUnionPresidentOrViceElections_sd.label}} </label>
+            {{df.collegeStudentUnionPresidentOrViceElections_sd}}
+        </div>
+
+        <div class="field">
+            {{df.collegeStudentUnionPresidentOrViceElections_ed.label}}
+            {{df.collegeStudentUnionPresidentOrViceElections_ed}}
+        </div>
+
+        <div class="field">
+            {{df.Voting_3_sd.label}}
+            {{df.Voting_3_sd}}
+        </div>
+
+
+        <div class="field">
+            {{df.Voting_3_ed.label}}
+            {{df.Voting_3_ed}}
+        </div>
+
+        <div class="field">
+            {{df.result_3_sd.label}}
+            {{df.result_3_sd}}
+        </div>
+
+        <div class="field">
+            {{df.result_3_ed.label}}
+            {{df.result_3_ed}}
+        </div>
+        <input type="submit" value="Save Changes">
+    </form>
+</div>
+
+<div class="sharp medium card">
+    <form method="post" action="{% url 'duration' %}">
+        <h2 class="form-name" style="direction: rtl;">انتخابات الجامعة</h2>
+
+        {%csrf_token%}
+        <div class="field">
+        <label for=""> {{df.universityElections_sd.label}} </label>
+            {{df.universityElections_sd}}
+        </div>
+
+        <div class="field">
+            {{df.universityElections_ed.label}}
+            {{df.universityElections_ed}}
+        </div>
+
+        <div class="field">
+            {{df.Voting_4_sd.label}}
+            {{df.Voting_4_sd}}
+        </div>
+
+
+        <div class="field">
+            {{df.Voting_4_ed.label}}
+            {{df.Voting_4_ed}}
+        </div>
+
+        <div class="field">
+            {{df.result_4_sd.label}}
+            {{df.result_4_sd}}
+        </div>
+
+        <div class="field">
+            {{df.result_4_ed.label}}
+            {{df.result_4_ed}}
+        </div>
+        <input type="submit" value="Save Changes">
+    </form>
+</div>
 {% include 'durationjs.html' %}
 
 {% endblock %}

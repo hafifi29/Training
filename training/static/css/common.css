@@ -43,7 +43,7 @@ header a:last-of-type {
   background-color: #1e1a1a;
   display: grid;
   grid-template-columns: 80px min(250px);
-  grid-template-rows: 200px 1fr;
+  grid-template-rows: 180px 1fr;
   align-items: start;
   z-index: 2;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
@@ -69,7 +69,7 @@ header a:last-of-type {
 
 .side-bar-button {
   width: 100%;
-  height: 60px;
+  height: 59px;
   background-color: transparent;
   color: white;
   cursor: pointer;

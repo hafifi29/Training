@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block headcontent %}
+{% load static %}
+  <title>Nominee Electoral Program</title>
+{% endblock %}
+
+{% block maincontent %}
+
+<!-- <img src="{{program.personnal_pic.url}}" alt=""> -->
+<div class="form-container">
+    <form method="post" enctype="multipart/form-data">
+        {%csrf_token%}
+        <div class="field">
+            {{ form.personnal_pic }}
+        </div>
+        <div class="field">
+            {{form.acheivement_brief}}
+        </div>
+        <div class="field">
+            {{form.program_brief}}
+        </div>
+        <div class="field">
+            {{form.electoral_symbol}}
+        </div>
+        <div class="field">
+            {{form.electoral_symbol_name}}
+        </div>
+
+        <input type="submit" value="حفط">
+    </form>
+</div>
+
+
+{% endblock %}

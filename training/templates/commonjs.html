@@ -47,11 +47,14 @@ let header = document.querySelector("header");
   let v4b = document.querySelector("#v4b");
   let r4b = document.querySelector("#r4b");
 
+  let progb = document.querySelector("#progb");
+
+
   let contenb = document.querySelector("#contenb");
   let nomdatab = document.querySelector("#nomdatab");
   let showcontenb = document.querySelector("#showcontenb");
   let setdatesb = document.querySelector("#setdatesb");
-
+  let resultcontrolb = document.querySelector("#resultcontrolb");
 
   let listhide = document.querySelectorAll(".list-hide")
   let Buttonlist = document.querySelectorAll(".Button-list")
@@ -171,6 +174,12 @@ if (contenb != null) {
   };
 };
 
+if (progb != null) {
+  progb.onclick = () => {
+    window.open("{% url 'nominees_programs' %}", "_self");
+  };
+};
+
 /*Admin_Buttons*/
 if (nomdatab != null) {
   nomdatab.onclick = () => {
@@ -187,7 +196,11 @@ if (setdatesb != null) {
     window.open("{% url 'duration' %}", "_self");
   };
 };
-
+if (resultcontrolb != null) {
+  resultcontrolb.onclick = () => {
+    window.open("{% url 'result_control' %}", "_self");
+  };
+};
 
 });
 </script>
