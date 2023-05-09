@@ -1,7 +1,8 @@
 
 from django.urls import path
 from . import views
-
+from django.conf import settings
+from django.conf.urls.static import static
 urlpatterns = [
     path('', views.home, name='home'),
     path('home/', views.home, name='home'),
@@ -30,7 +31,11 @@ urlpatterns = [
      path('result_control/',
            views.result_control , name = "result_control"),
      path('update_nominee_result/<nominee_id>',
-          views.update_nominee_result,name = "update_nominee_result")          
+          views.update_nominee_result,name = "update_nominee_result"),
+     path('elctoral_program/',views.electoral_program,name='elctoral_program'),
+     path('particular_nominee_prog/<int:id>/', views.particular_nominee_prog, name='particular_nominee_prog'),
+     path('nominees_programs/',views.electoral_prog_show,name='nominees_programs'),
 
 
-]
+
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

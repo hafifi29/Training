@@ -10,4 +10,5 @@ admin.site.register(Current_Nom_Result)
 admin.site.register(Control_content)
 admin.site.register(Admin_user)
 admin.site.register(Dates)
+admin.site.register(electoral_prog)
 

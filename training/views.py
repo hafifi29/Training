@@ -664,6 +664,48 @@ def contention(request):
         context['ConfirmationMessage'] = "contention closed for non nominee"
         return render(request, 'contention.html', context=context)
 
+@login_required
+def electoral_program(request):
+    context = admincheck(request)
+    context.update(durationcheck())
+    current_user = request.user
+    User_Mod = User_Model.objects.get(Userkey_id=current_user.id)
+    
+
+    try:
+        nominee_user = Nominee_user.objects.get(UserModelKey=User_Mod)
+    except Nominee_user.DoesNotExist:
+        nominee_user = None
+
+    if request.method == 'POST':
+        form = ElectoralProgForm(request.POST, request.FILES)
+        if form.is_valid():
+            electoral_prog = form.save(commit=False)
+            electoral_prog.nominee_key = nominee_user
+            electoral_prog.save()
+            return redirect('home')
+    else:
+        form = ElectoralProgForm()
+    
+    return render(request, 'electoral_prog.html', {'form': form})
+
+@login_required
+def electoral_prog_show(request):
+    context = admincheck(request)
+    context.update(durationcheck())
+    # userinsamecollege = User_Model.objects.filter(college = 1)
+    # nominee_list - Nominee_user.objects.filter(UserModelKey_in =  userinsamecollege)
+    # programs = electoral_prog.filter(Nominee_user_in = nominee_list)
+    programs = electoral_prog.objects.all()
+    return render(request,'electoral_prog_show.html',{'programs':programs})
+
+@login_required
+def particular_nominee_prog(request, id):
+    context = admincheck(request)
+    context.update(durationcheck())
+    electoral_prog_obj = electoral_prog.objects.get(id=id)
+    return render(request, 'particular_nominee_prog.html', {'nominee_program': electoral_prog_obj})
+
 
 # Admin related views
 

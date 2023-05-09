@@ -92,6 +92,15 @@ class Nominee_user(models.Model):
         return str(self.UserModelKey.Name)
 
 
+class electoral_prog(models.Model):
+    nominee_key = models.OneToOneField(Nominee_user,null=True,on_delete=models.SET_NULL)
+    personnal_pic = models.ImageField(blank=True,upload_to='nominees_pictures')
+    acheivement_brief = models.TextField()
+    program_brief = models.TextField()
+    electoral_symbol = models.ImageField(blank=True,upload_to='electoral_symbol')
+    electoral_symbol_name = models.CharField(max_length=50)
+
+
 class Admin_user(models.Model):
     Userkey = models.OneToOneField(User, on_delete=models.CASCADE)
     Name = models.CharField(max_length=50, default="")
