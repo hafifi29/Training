@@ -51,7 +51,7 @@ let header = document.querySelector("header");
   let nomdatab = document.querySelector("#nomdatab");
   let showcontenb = document.querySelector("#showcontenb");
   let setdatesb = document.querySelector("#setdatesb");
-
+  let resultcontrolb = document.querySelector("#resultcontrolb");
 
   let listhide = document.querySelectorAll(".list-hide")
   let Buttonlist = document.querySelectorAll(".Button-list")
@@ -187,7 +187,11 @@ if (setdatesb != null) {
     window.open("{% url 'duration' %}", "_self");
   };
 };
-
+if (resultcontrolb != null) {
+  resultcontrolb.onclick = () => {
+    window.open("{% url 'result_control' %}", "_self");
+  };
+};
 
 });
 </script>

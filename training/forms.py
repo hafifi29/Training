@@ -199,7 +199,7 @@ class NomineeForm_update(forms.ModelForm):
             'final_list': 'اللائحة النهائية',
             'role':'الدور'
         }
-    nominee_id = forms.CharField(disabled=True, label="الكود")
+    nominee_id = forms.IntegerField(disabled=True, label="الكود")
     Name = forms.CharField(disabled=True, label="الاسم")
     address = forms.CharField(disabled=True, label="العنوان")
     birthdate = forms.DateField(disabled=True, label="تاريخ الميلاد")
@@ -228,61 +228,59 @@ class pickcollegerepres(forms.Form):
             i += 1
 
 # Admin Panel Forms
-class Dates_form (forms.Form):
-    
-    nomin_start_date = forms.DateTimeField(label='بداية مرحلة التقديم',widget=forms.widgets.DateTimeInput(
-            attrs={
-                'type': 'datetime-local',
-                'min':datetime.now().strftime('%Y-%m-%dT%H:%M')
-            }
-        ))
+class Dates_form (forms.ModelForm):
+    class Meta:
+        model = Dates
+        fields = '__all__'
+        labels = {
+            "communityMemberElections_sd": "بداية مرحلة الترشح",
+            "communityMemberElections_ed": "نهاية مرحلة الترشح",
 
-    nomin_end_date = forms.DateTimeField(label='نهاية مرحلة التقديم', widget=forms.widgets.DateTimeInput(
-            attrs={
-                'type': 'datetime-local',
-                'min':datetime.now().strftime('%Y-%m-%dT%H:%M')
-            }
-        ))
-    collegevote_start_date = forms.DateTimeField(label='بداية مرحلة انتخاب الكليات',widget=forms.widgets.DateTimeInput(
-            attrs={
-                'type': 'datetime-local',
-                'min':datetime.now().strftime('%Y-%m-%dT%H:%M')
-            }
-        ))
+            "collegeCommunityTrusteeOreHelperElections_sd": "بداية مرحلة الترشح",
+            "collegeCommunityTrusteeOreHelperElections_ed": "نهاية مرحلة الترشح",
 
-    collegevote_end_date = forms.DateTimeField(label='نهاية مرحلة انتخاب الكليات', widget=forms.widgets.DateTimeInput(
-            attrs={
-                'type': 'datetime-local',
-                'min':datetime.now().strftime('%Y-%m-%dT%H:%M')
-            }
-        ))
-    
-    universityvote_start_date = forms.DateTimeField(label='بداية مرحلة انتخاب الجامعة',widget=forms.widgets.DateTimeInput(
-            attrs={
-                'type': 'datetime-local',
-                'min':datetime.now().strftime('%Y-%m-%dT%H:%M')
-            }
-        ))
+            "collegeStudentUnionPresidentOrViceElections_sd": "بداية مرحلة الترشح",
+            "collegeStudentUnionPresidentOrViceElections_ed": "نهاية مرحلة الترشح",
 
-    universityvote_end_date = forms.DateTimeField(label='نهاية مرحلة انتخاب الجامعة', widget=forms.widgets.DateTimeInput(
-            attrs={
-                'type': 'datetime-local',
-                'min':datetime.now().strftime('%Y-%m-%dT%H:%M')
-            }
-        ))
-    
-    con_start_date = forms.DateTimeField(label='بداية مرحلة الطعن',widget=forms.widgets.DateTimeInput(
-            attrs={
-                'type': 'datetime-local',
-                'min':datetime.now().strftime('%Y-%m-%dT%H:%M')
-            }
-        ))
+            "universityElections_sd": "بداية مرحلة الترشح",
+            "universityElections_ed": "نهاية مرحلة الترشح",
 
-    con_end_date = forms.DateTimeField(label='نهاية مرحلة الطعن', widget=forms.widgets.DateTimeInput(
-            attrs={
-                'type': 'datetime-local',
-                'min':datetime.now().strftime('%Y-%m-%dT%H:%M')
-            }
-        ))
+            "Voting_1_sd": "بداية مرحلة الانتخاب",
+            "Voting_1_ed": "نهاية مرحلة الانتخاب",
+
+            "Voting_2_sd": "بداية مرحلة الانتخاب",
+            "Voting_2_ed": "نهاية مرحلة الانتخاب",
+
+            "Voting_3_sd": "بداية مرحلة الانتخاب",
+            "Voting_3_ed": "نهاية مرحلة الانتخاب",
+
+            "Voting_4_sd": "بداية مرحلة الانتخاب",
+            "Voting_4_ed": "نهاية مرحلة الانتخاب",
+
+            "result_1_sd": "بداية النتيجة",
+            "result_1_ed": "نهاية النتيجة",
+
+            "result_2_sd": "بداية النتيجة",
+            "result_2_ed": "نهاية النتيجة",
     
-    result = forms.BooleanField(label='اظهار النتيجة للمرشحين', required=False)
+            "result_3_sd": "بداية النتيجة",
+            "result_3_ed": "نهاية النتيجة",
+
+            "result_4_sd": "بداية النتيجة",
+            "result_4_ed": "نهاية النتيجة",
+
+            "con_sd": "بداية مرحلة الطعن",
+            "con_ed": "نهاية مرحلة الطعن",
+
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget = forms.widgets.DateTimeInput(
+        attrs={
+            'type': 'datetime-local',
+            'min':datetime.now().strftime('%Y-%m-%dT%H:%M')
+        })
+
+

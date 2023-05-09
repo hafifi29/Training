@@ -734,13 +734,15 @@ def picksec(request):
 @login_required
 def duration(request):
     context = admincheck(request)
+    instance = get_object_or_404(Dates, id=1)
+
     if context['admin'] == True:
-        form = Dates_form(request.POST or None)
+        form = Dates_form(request.POST or None, instance = instance)
         context['df'] = form
 
         if request.POST:
             if form.is_valid():
-                save_data(request, form)
+                form.save()
                 context['ConfirmationMessage'] = "تم التعديل بنجاح"
             else:
                 print(form.errors)
@@ -831,7 +833,7 @@ def result_control(request):
         return render(request, 'resultcontrol3.html', context = con)
     
     if type == 'universityElections':
-        return render(request, 'resultcontrol3.html', context = con)
+        return render(request, 'resultcontrol4.html', context = con)
     
     return render(request, 'resultcontrol1.html', context = con)
 
