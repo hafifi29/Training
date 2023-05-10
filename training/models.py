@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
+import os
+from django.conf import settings
 
 # Create your models here.
 
@@ -64,7 +66,7 @@ class Nominee_user(models.Model):
                                            ('7', 'لجنة الاسر و الرحلات')
                                            
                                   ], default='1')
-    rec_letter = models.FileField()
+    rec_letter = models.FileField(upload_to='rec_letters')
     final_list = models.BooleanField(default=False)
     role = models.CharField(max_length=25, choices=[('1', 'لم يحدد'),
                                            ('2', 'عضو'),
@@ -90,6 +92,12 @@ class Nominee_user(models.Model):
 
     def __str__(self):
         return str(self.UserModelKey.Name)
+    
+    def delete(self, *args, **kwargs):
+        if self.rec_letter:
+            os.remove(os.path.join(settings.MEDIA_ROOT, str(self.rec_letter)))
+        super().delete(*args, **kwargs)
+
 
 
 class electoral_prog(models.Model):
@@ -99,6 +107,16 @@ class electoral_prog(models.Model):
     program_brief = models.TextField()
     electoral_symbol = models.ImageField(blank=True,upload_to='electoral_symbol')
     electoral_symbol_name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return f"{self.nominee_key.UserModelKey.Name} - Electoral Program"
+
+    def delete(self, *args, **kwargs):
+        if self.personnal_pic:
+            os.remove(os.path.join(settings.MEDIA_ROOT, str(self.personnal_pic)))
+        if self.electoral_symbol:
+            os.remove(os.path.join(settings.MEDIA_ROOT, str(self.electoral_symbol)))
+        super().delete(*args, **kwargs)
 
 
 class Admin_user(models.Model):

@@ -42,6 +42,10 @@ let header = document.querySelector("header");
   let v3b = document.querySelector("#v3b");
   let r3b = document.querySelector("#r3b");
 
+
+  const submitElectProg = document.getElementById('prog')
+  const showNomineesProgs = document.getElementById('progs')
+
   let Elec4b = document.querySelector("#Elec4b");
   let n4b = document.querySelector("#n4b");
   let v4b = document.querySelector("#v4b");
@@ -201,6 +205,17 @@ if (resultcontrolb != null) {
     window.open("{% url 'result_control' %}", "_self");
   };
 };
+if (submitElectProg != null) {
+  submitElectProg.onclick = () => {
+    window.open("{% url 'elctoral_program' %}", "_self");
+  };
+};
+if (showNomineesProgs != null) {
+  showNomineesProgs.onclick = () => {
+    window.open("{% url 'nominees_programs' %}", "_self");
+  };
+};
+
 
 });
 </script>

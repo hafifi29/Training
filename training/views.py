@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseNotFound
 from .forms import *
 from django.contrib.auth.models import User as User_
 from .models import *
@@ -683,18 +684,18 @@ def contention(request):
         context['ConfirmationMessage'] = "contention closed for non nominee"
         return render(request, 'contention.html', context=context)
 
+
 @login_required
 def electoral_program(request):
-    context = admincheck(request)
-    context.update(durationcheck())
+    # context = admincheck(request)
+    # context.update(durationcheck())
     current_user = request.user
     User_Mod = User_Model.objects.get(Userkey_id=current_user.id)
-    
 
     try:
         nominee_user = Nominee_user.objects.get(UserModelKey=User_Mod)
     except Nominee_user.DoesNotExist:
-        nominee_user = None
+        return HttpResponseNotFound("You are not a nominee user.")
 
     if request.method == 'POST':
         form = ElectoralProgForm(request.POST, request.FILES)
@@ -705,9 +706,8 @@ def electoral_program(request):
             return redirect('home')
     else:
         form = ElectoralProgForm()
-    
-    return render(request, 'electoral_prog.html', {'form': form})
 
+    return render(request, 'electoral_prog.html', {'form': form})
 @login_required
 def electoral_prog_show(request):
     context = admincheck(request)
@@ -717,6 +717,11 @@ def electoral_prog_show(request):
     # programs = electoral_prog.filter(Nominee_user_in = nominee_list)
     programs = electoral_prog.objects.all()
     return render(request,'electoral_prog_show.html',{'programs':programs})
+
+@login_required
+def particular_nominee_prog(request, id):
+    electoral_prog_obj = electoral_prog.objects.get(id=id)
+    return render(request, 'particular_nominee_prog.html', {'nominee_program': electoral_prog_obj})
 
 @login_required
 def particular_nominee_prog(request, id):
