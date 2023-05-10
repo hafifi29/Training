@@ -684,11 +684,19 @@ def contention(request):
         context['ConfirmationMessage'] = "contention closed for non nominee"
         return render(request, 'contention.html', context=context)
 
+def admincheck(request):
+    current_user = request.user
+    if current_user.is_authenticated:
+        if Admin_user.objects.filter(Userkey=current_user).exists():
+            return {'admin': True}
+        else:
+            return {'admin': False}
+    return {'admin': False}
 
 @login_required
 def electoral_program(request):
-    # context = admincheck(request)
-    # context.update(durationcheck())
+    context = admincheck(request)
+    context.update(durationcheck())
     current_user = request.user
     User_Mod = User_Model.objects.get(Userkey_id=current_user.id)
 
@@ -708,6 +716,8 @@ def electoral_program(request):
         form = ElectoralProgForm()
 
     return render(request, 'electoral_prog.html', {'form': form})
+
+
 @login_required
 def electoral_prog_show(request):
     context = admincheck(request)

@@ -52,57 +52,48 @@
         </div>
         
         <div class="sidebar-options">
-
-        {% if admin == False %}
-        <div class="Button-list">
-          <button class="list-hide side-bar-button" id="Elec1b">انتخابات أعضاء اللجان</button>
-          <button class="small-side-bar-button" id="n1b">ترشح</button>
-          <button class="small-side-bar-button" id="v1b">انتخاب</button>
-          <button class="small-side-bar-button" id="r1b">نتيجة</button>
-
-        </div>
-
-        <div class="Button-list">
-          <button class="list-hide side-bar-button" id="Elec2b">انتخابات أمناء/مساعدى اللجان على مستوى الكلية</button>
-          <button class="small-side-bar-button" id="n2b">ترشح</button>
-          <button class="small-side-bar-button" id="v2b">انتخاب</button>
-          <button class="small-side-bar-button" id="r2b">نتيجة</button>
-        </div>
-
-        <div class="Button-list">
-          <button class="list-hide side-bar-button" id="Elec3b">انتخابات رئيس/نائب رئيس الاتحاد على مستوى الكلية</button>
-          <button class="small-side-bar-button" id="n3b">ترشح</button>
-          <button class="small-side-bar-button" id="v3b">انتخاب</button>
-          <button class="small-side-bar-button" id="r3b">نتيجة</button>
-        </div>
-
-        <div class="Button-list">
-          <button class="list-hide side-bar-button" id="Elec4b">انتخابات أمناء/مساعدى اللجان على مستوى الجامعة</button>
-          <button class="small-side-bar-button" id="n4b">ترشح</button>
-          <button class="small-side-bar-button" id="v4b">انتخاب</button>
-          <button class="small-side-bar-button" id="r4b">نتيجة</button>
-        </div>
-
-        <button class="side-bar-button" id="contenb">تقديم طعن</button>
-        <div class="Button-list">
-          <button class="list-hide side-bar-button" id="Elec4b">البرامج الانتخابية</button>
-          <button class="side-bar-button elc-prog " id="prog">تقديم برنامج انتخابي</button>
-          <button class="side-bar-button show-elec-progs " id="progs"> عرض البرامج الانتخابية</button>
-        </div>
-
-
-        {% else %}
-
-        <button class="side-bar-button" id="nomdatab">بيانات المرشحين</button>
-        <button class="side-bar-button" id="setdatesb">تحديد المواعيد</button>
-        <button class="side-bar-button" id="showcontenb">الطعن</button>
-        <button class="side-bar-button" id="resultcontrolb">تحديد النتيجة</button>
-
-        {% endif %}
-
-
-        </div>
-      </aside>
+          {% if admin %}
+          <button class="side-bar-button" id="nomdatab">بيانات المرشحين</button>
+          <button class="side-bar-button" id="setdatesb">تحديد المواعيد</button>
+          <button class="side-bar-button" id="showcontenb">الطعن</button>
+          <button class="side-bar-button" id="resultcontrolb">تحديد النتيجة</button>
+          {% else %}
+          <div class="Button-list">
+              <button class="list-hide side-bar-button" id="Elec1b">انتخابات أعضاء اللجان</button>
+              <button class="small-side-bar-button" id="n1b">ترشح</button>
+              <button class="small-side-bar-button" id="v1b">انتخاب</button>
+              <button class="small-side-bar-button" id="r1b">نتيجة</button>
+          </div>
+        
+          <div class="Button-list">
+              <button class="list-hide side-bar-button" id="Elec2b">انتخابات أمناء/مساعدى اللجان على مستوى الكلية</button>
+              <button class="small-side-bar-button" id="n2b">ترشح</button>
+              <button class="small-side-bar-button" id="v2b">انتخاب</button>
+              <button class="small-side-bar-button" id="r2b">نتيجة</button>
+          </div>
+        
+          <div class="Button-list">
+              <button class="list-hide side-bar-button" id="Elec3b">انتخابات رئيس/نائب رئيس الاتحاد على مستوى الكلية</button>
+              <button class="small-side-bar-button" id="n3b">ترشح</button>
+              <button class="small-side-bar-button" id="v3b">انتخاب</button>
+              <button class="small-side-bar-button" id="r3b">نتيجة</button>
+          </div>
+        
+          <div class="Button-list">
+              <button class="list-hide side-bar-button" id="Elec4b">انتخابات أمناء/مساعدى اللجان على مستوى الجامعة</button>
+              <button class="small-side-bar-button" id="n4b">ترشح</button>
+              <button class="small-side-bar-button" id="v4b">انتخاب</button>
+              <button class="small-side-bar-button" id="r4b">نتيجة</button>
+          </div>
+        
+          <button class="side-bar-button" id="contenb">تقديم طعن</button>
+          <div class="Button-list">
+              <button class="list-hide side-bar-button" id="Elec4b">البرامج الانتخابية</button>
+              <button class="side-bar-button elc-prog " id="prog">تقديم برنامج انتخابي</button>
+              <button class="side-bar-button show-elec-progs " id="progs"> عرض البرامج الانتخابية</button>
+          </div>
+          {% endif %}
+        </div>      </aside>
 
       <section class="main-content">
         {% block maincontent %}
@@ -118,5 +109,12 @@
     {% include 'commonjs.html' %}
   </body>
 </html>
+
+
+
+
+
+
+
 
 
