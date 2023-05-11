@@ -12,9 +12,43 @@
 
 
 {% block maincontent %}
-<div class="sharp medium card">
+<div class ="sharp form-container">
+    <h1 class="card-name">التحكم فى الانتخابات</h1>
+
+    <section class="flexvert borderdiv">
+        <div class="muli-m">بداية مرحلة جديدة</div>
+        <button class="main-button" id="newStageb">تطبيق</button>
+    </section>
+
+    <div class="confirm" id="confirm1">
+        <p>هل انت متاكد من بداية انتخابات جديدة؟ هذا سيؤدي لمسح بيانات جميع المرشحين</p>
+        <div class="con">
+            <button class="main-button" id="yes-btn1">نعم</button>
+            <button class="main-button" id="no-btn1">لا</button>
+        </div>
+    </div>
+    <section class="flexvert borderdiv">
+        <div class="muli-m">بداية انتخابات جديدة</div>
+        <button type="submit" class="main-button" id="newElectionb">تطبيق</button>
+    </section>
+
+    <div class="confirm" id="confirm2">
+        <p>هل انت متاكد من بداية انتخابات جديدة؟ هذا سيؤدي لمسح بيانات جميع المرشحين</p>
+        <div class="con">
+            <button class="main-button" id="yes-btn2">نعم</button>
+            <button class="main-button" id="no-btn2">لا</button>
+        </div>
+
+    </div>
+
+    <div class="flexhoriz"></div>
+    {{confirmationmessage}}
+</div>
+
+<div class="sharp form-container">
+    <h2 class="form-name" style="direction: rtl;">انتخابات الفرق</h2>
+
     <form method="post" action="{% url 'duration' %}">
-        <h2 class="form-name" style="direction: rtl;">انتخابات الفرق</h2>
         {%csrf_token%}
         <div class="field">
         <label for=""> {{df.communityMemberElections_sd.label}} </label>
@@ -56,14 +90,16 @@
             {{df.result_1_ed.label}}
             {{df.result_1_ed}}
         </div>
+        {{ConfirmationMessage2}}
         <input type="submit" value="Save Changes">
     </form>
 </div>
 
 
-<div class="sharp medium card">
+<div class="sharp form-container">
+    <h2 class="form-name" style="direction: rtl;">انتخابات أمناء/مساعدى اللجان على مستوى الكلية</h2>
+
     <form method="post" action="{% url 'duration' %}">
-        <h2 class="form-name" style="direction: rtl;">انتخابات أمناء/مساعدى اللجان على مستوى الكلية</h2>
         {%csrf_token%}
         <div class="field">
         <label for=""> {{df.collegeCommunityTrusteeOreHelperElections_sd.label}} </label>
@@ -95,13 +131,15 @@
             {{df.result_2_ed.label}}
             {{df.result_2_ed}}
         </div>
+        {{ConfirmationMessage2}}
         <input type="submit" value="Save Changes">
     </form>
 </div>
 
-<div class="sharp medium card">
+<div class="sharp form-container">
+    <h2 class="form-name" style="direction: rtl;">انتخابات رئيس/نائب رئيس الاتحاد على مستوى الكلية</h2>
+
     <form method="post" action="{% url 'duration' %}">
-        <h2 class="form-name" style="direction: rtl;">انتخابات رئيس/نائب رئيس الاتحاد على مستوى الكلية</h2>
 
         {%csrf_token%}
         <div class="field">
@@ -134,13 +172,15 @@
             {{df.result_3_ed.label}}
             {{df.result_3_ed}}
         </div>
+        {{ConfirmationMessage2}}
         <input type="submit" value="Save Changes">
     </form>
 </div>
 
-<div class="sharp medium card">
+<div class="sharp form-container">
+    <h2 class="form-name" style="direction: rtl;">انتخابات الجامعة</h2>
+
     <form method="post" action="{% url 'duration' %}">
-        <h2 class="form-name" style="direction: rtl;">انتخابات الجامعة</h2>
 
         {%csrf_token%}
         <div class="field">
@@ -173,6 +213,7 @@
             {{df.result_4_ed.label}}
             {{df.result_4_ed}}
         </div>
+        {{ConfirmationMessage2}}
         <input type="submit" value="Save Changes">
     </form>
 </div>

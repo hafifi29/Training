@@ -12,7 +12,7 @@
   {% if std_access.Voting_3 %}
   <form class="vote" method="POST">
     {%csrf_token%}
-    <h2 class="form-name">انتخاب</h2>
+    <h2 class="card-name form-name">انتخاب</h2>
     {% if ConfirmationMessage == 'Vote sent successfully' or ConfirmationMessage == 'Already voted' or ConfirmationMessage == 'متطلبات الانتخاب غير موافاة' %}
     <div>{{ConfirmationMessage}}</div>
     {% else %}
@@ -22,7 +22,7 @@
       {{form.collegeStudentUnionPresidentOrVice}}
     </div>
 
-    <input type="submit" value="ارسال" />
+    <button type="submit" class="main-button">ارسال</button>
     {% endif %}
   </form>
   {% else %}

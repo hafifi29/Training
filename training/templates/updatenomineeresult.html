@@ -11,7 +11,7 @@
 <div>
     <form enctype="multipart/form-data" id="myForm" class="form-container" method="POST">
         {%csrf_token%}
-        <h2>تعديل البيانات</h2>
+        <h2 class="card-name">تعديل البيانات</h2>
         <div class="field">
             {{form.Name.label}}
             {{form.Name}}

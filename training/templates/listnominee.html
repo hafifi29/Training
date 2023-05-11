@@ -7,6 +7,33 @@
 {% endblock %}
 
 {% block maincontent %}
+<div class ="sharp form-container" style = "gap:30px;">
+    <h1 class="card-name">التحكم فى البيانات</h1>
+
+    <form method="POST" enctype="multipart/form-data">
+        {%csrf_token%}
+
+    <section class="flexvert borderdiv">
+        <div class="muli-m">رفع بيانات جديدة</div>
+        <div class="field">
+        {{loaddataform.datafile.label}}
+        {{loaddataform.datafile}}
+      </div>
+    </form>
+    <button class="main-button" id="uploadNewDataFileb">حفظ</button>
+    </section>
+    <form method="POST" action = "{% url 'list_nominee' 'original' %}">
+        {%csrf_token%}
+    <section class="flexvert borderdiv">
+        <div class="muli-m">استعادة البيانات الأصلية</div>
+
+    <button type="submit" class="main-button" id="restoreOrigDataFileb">تطبيق</button>
+    </section>
+    </form>
+    <div class="flexhoriz">ملحوظة: قد تستغرق العمليات بعض الدقائق</div>
+    {{confirmationmessage}}
+</div>
+
 <div class ="sharp card large">
         <h1 class="card-name">المرشحين</h1>
         <table class="normal-table">
@@ -52,4 +79,7 @@
             {%endfor%}
         </table>
     </div>
+
+{% include 'listnomineejs.html' %}
+
 {% endblock %}

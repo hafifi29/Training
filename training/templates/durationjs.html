@@ -1,23 +1,45 @@
 <script>
-const newElec = document.getElementById("start-election-btn");
-const comfirmMenu = document.getElementById("confirm");
+const newStage = document.getElementById("newStageb");
+const comfirmMenu1 = document.getElementById("confirm1");
+
+newStage.addEventListener("click", (event) => {
+  event.preventDefault();
+  comfirmMenu1.className = "confirm-show";
+
+});
+
+
+const confirmYesBtn1 = document.getElementById("yes-btn1");
+confirmYesBtn1.addEventListener("click", () => {
+  window.open("{% url 'election_control' 'new-election-stage' %}", "_self");
+});
+
+const confirmNoBtn1 = document.getElementById('no-btn1')
+confirmNoBtn1.addEventListener("click", () => {
+
+  comfirmMenu1.className = "confirm";
+
+});
+
+const newElec = document.getElementById("newElectionb");
+const comfirmMenu2 = document.getElementById("confirm2");
 
 newElec.addEventListener("click", (event) => {
   event.preventDefault();
-  comfirmMenu.style.display = "block";
+  comfirmMenu2.className = "confirm-show";
 
 });
 
 
-const confirmYesBtn = document.getElementById("yes-btn");
-confirmYesBtn.addEventListener("click", () => {
-  window.open("{% url 'new_elections' %}", "_self");
+const confirmYesBtn2 = document.getElementById("yes-btn2");
+confirmYesBtn2.addEventListener("click", () => {
+  window.open("{% url 'election_control' 'new-elections' %}", "_self");
 });
 
-const confirmNoBtn = document.getElementById('no-btn')
-confirmNoBtn.addEventListener("click", () => {
+const confirmNoBtn2 = document.getElementById('no-btn2')
+confirmNoBtn2.addEventListener("click", () => {
 
-    comfirmMenu.style.display = "none";
+  comfirmMenu2.className = "confirm";
 
 });
 </script>

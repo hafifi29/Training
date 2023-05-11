@@ -14,9 +14,9 @@ urlpatterns = [
     path('vote/<type>', views.vote, name='vote1'),
 
     path('results/<type>', views.showresult, name='result'),
-
+     path('list_nominee/<type>',
+         views.list_nominee, name='list_nominee'),
     path('contention/', views.contention, name='contention'),
-    path('new_elections/',views.new_elections,name='new_elections'),
     path('adminp/', views.admin, name='adminp'),
      path('picksec/', views.picksec, name='picksec'),
     path('list_nominee/',
@@ -25,6 +25,8 @@ urlpatterns = [
          views.update_nominee, name='update_nominee'),
     path('duration/',
          views.duration, name='duration'),
+     path('election_control/<type>',
+          views.election_control , name = "election_control"),
     path('list_contention/',
          views.list_contention, name='list_contention'),
 

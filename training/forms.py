@@ -288,3 +288,5 @@ class Dates_form (forms.ModelForm):
         })
 
 
+class loadData(forms.Form):
+    datafile = forms.FileField(label = "اختيار الملف")

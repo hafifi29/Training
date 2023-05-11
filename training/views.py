@@ -8,7 +8,10 @@ from .models import *
 from datetime import datetime
 from django.utils import timezone
 from django.db.models import Q
-
+import os
+import pandas as pd
+from django.core.files import File
+import random
 
 
 # global varables
@@ -72,6 +75,11 @@ def admincheck(request):
         else:
             return {'admin': False}
     return {'admin': False}
+
+def currentUser_model(request, context):
+    if request.user.is_authenticated:
+        context['User_Mod'] = User_Model.objects.get(Userkey_id=request.user.id)
+    return context
 
 
 def durationcheck():
@@ -182,9 +190,62 @@ def applyresult(request):
 
             Current_Nom_Result.objects.create(Nominee_user = nom, community = nom.community, numOfVotes = numofvotess, role = nom.role)
 
+
+
+@login_required
+def loaddata(request, type = 'none'):
+        context = admincheck(request)
+        loaddataform = loadData(request)
+        context['loaddataform'] = loaddataform
+        print(request.method)
+        if type == 'original':
+            if request.method == 'POST':
+                print('frf')
+
+                User.objects.filter(is_superuser=False).delete()
+                for i, file in enumerate(os.listdir('Data/Tables'), start = 1):
+                    read_file = pd.read_excel('Data/Tables/' + file, sheet_name='Sheet1', skiprows=1).values.tolist()
+                    for row in read_file:
+                        randomNum = ''.join( map( str, [random.choice(range(1, 10)) for _ in range(6) ] ) )
+                        user = User.objects.create_user(username=row[0] + randomNum, password='Fcai123456')
+                        usermodel = User_Model.objects.create(Userkey = user, Name = row[1], Student_id = row[2], address = row[3], birthdate = row[4], college = row[5], 
+                                                            collegeYear = row[6], Voting_status_1 = row[7], 
+                                                            Voting_status_2 = row[8], Voting_status_3 = row[9], Voting_status_4 = row[10])
+                        Nominee_user.objects.create(UserModelKey =usermodel, phone_no = row[11], email = row[12], community = row[13], 
+                                                    rec_letter = File(open('Acrobat_ccFu7WLDxu_hBQMt0M.png', 'rb')),final_list = row[14], role = row[15], 
+                                                    communityMemberElections = row[16], collegeCommunityTrusteeOreHelperElections = row[17], 
+                                                    collegeStudentUnionPresidentOrViceElections = row[18], universityElections = row[19], 
+                                                    communityMemberElectionsNumOfVotes = row[20], 
+                                                    collegeCommunityTrusteeOreHelperElectionsNumOfVotes = row[21], 
+                                                    collegeStudentUnionPresidentOrViceElectionsNumOfVotes = row[22], 
+                                                    universityElectionsNumOfVotes = row[23])
+                context['confirmationmessage'] = 'تم الرفع بنجاح'
+        if type == 'new':
+            if request.method == 'POST':
+                User.objects.filter(is_superuser=False).delete()
+                read_file = pd.read_excel(loaddataform.cleaned_data['datafile'], sheet_name='Sheet1', skiprows=1).values.tolist()
+                for row in read_file:
+                    randomNum = ''.join( map( str, [ random.choice(range(1, 10)) for _ in range(6) ] ) )
+                    user = User.objects.create_user(username=row[0] + randomNum, password='Fcai123456')
+                    usermodel = User_Model.objects.create(Userkey = user, Name = row[1], Student_id = row[2], address = row[3], birthdate = row[4], college = row[5], 
+                                                        collegeYear = row[6], Voting_status_1 = row[7], 
+                                                        Voting_status_2 = row[8], Voting_status_3 = row[9], Voting_status_4 = row[10])
+                    Nominee_user.objects.create(UserModelKey =usermodel, phone_no = row[11], email = row[12], community = row[13], 
+                                                rec_letter = File(open('Acrobat_ccFu7WLDxu_hBQMt0M.png', 'rb')),final_list = row[14], role = row[15], 
+                                                communityMemberElections = row[16], collegeCommunityTrusteeOreHelperElections = row[17], 
+                                                collegeStudentUnionPresidentOrViceElections = row[18], universityElections = row[19], 
+                                                communityMemberElectionsNumOfVotes = row[20], 
+                                                collegeCommunityTrusteeOreHelperElectionsNumOfVotes = row[21], 
+                                                collegeStudentUnionPresidentOrViceElectionsNumOfVotes = row[22], 
+                                                universityElectionsNumOfVotes = row[23])
+                context['confirmationmessage'] = 'تم التطبيق بنجاح'
+
+        return context
+
 def home(request):
     applyresult(request)
     context = admincheck(request)
+    currentUser_model(request, context)
     durationcheck()
     if context['admin'] == True:
         return redirect('adminp')
@@ -196,7 +257,7 @@ def home(request):
 def sign_in(request):
 
     context = admincheck(request)
-
+    currentUser_model(request, context)
     if request.method == "POST":
         username = request.POST.get("username")
         password = request.POST.get("password")
@@ -221,12 +282,14 @@ def sign_in(request):
 def logout_view(request):
     logout(request)
     context = admincheck(request)
+    currentUser_model(request, context)
     return redirect('home')
 
 
 @login_required
 def nomination(request,type):
     context = admincheck(request)
+    currentUser_model(request, context)
     context.update(durationcheck())
     current_user = request.user
     User_Mod = User_Model.objects.get(Userkey_id=current_user.id)
@@ -388,8 +451,8 @@ def nomination(request,type):
 
 @login_required
 def vote(request, type):
-
     context = admincheck(request)
+    currentUser_model(request, context)
     context.update(durationcheck())
     current_user = request.user
     User_Mod = User_Model.objects.get(Userkey_id=current_user.id)
@@ -555,6 +618,7 @@ def vote(request, type):
 @login_required
 def showresult(request, type):
     context = admincheck(request)
+    currentUser_model(request, context)
     context.update(durationcheck())
     current_user = request.user
     User_Mod = User_Model.objects.get(Userkey_id=current_user.id)
@@ -657,6 +721,7 @@ def showresult(request, type):
 @login_required
 def contention(request):
     context = admincheck(request)
+    currentUser_model(request, context)
     context.update(durationcheck())
     current_user = request.user
     user_mod = User_Model.objects.get(Userkey_id=current_user.id)
@@ -696,6 +761,7 @@ def admincheck(request):
 @login_required
 def electoral_program(request):
     context = admincheck(request)
+    currentUser_model(request, context)
     context.update(durationcheck())
     current_user = request.user
     User_Mod = User_Model.objects.get(Userkey_id=current_user.id)
@@ -721,6 +787,7 @@ def electoral_program(request):
 @login_required
 def electoral_prog_show(request):
     context = admincheck(request)
+    currentUser_model(request, context)
     context.update(durationcheck())
     # userinsamecollege = User_Model.objects.filter(college = 1)
     # nominee_list - Nominee_user.objects.filter(UserModelKey_in =  userinsamecollege)
@@ -746,6 +813,7 @@ def particular_nominee_prog(request, id):
 @login_required
 def admin(request):
     context = admincheck(request)
+    currentUser_model(request, context)
     if context['admin'] == True:
 
         committee = {}
@@ -756,9 +824,9 @@ def admin(request):
             committee.update({'c' + c[0]: {'numofNom': NumofNominees}})
 
         i = 1
-        for Nominee in Nominee_user.objects.all():
-            nominees.update({'n'+str(i): {'الاسم': Nominee.UserModelKey.Name,
-                            'عدد الأصوات': Nominee.communityMemberElectionsNumOfVotes, "اللجنة": Nominee.get_community_display()}})
+        for Nominee in Current_Nom_Result.objects.all():
+            nominees.update({'n'+str(i): {'الاسم': Nominee.Nominee_user.UserModelKey.Name,
+                            'عدد الأصوات': Nominee.Nominee_user.communityMemberElectionsNumOfVotes, "اللجنة": Nominee.Nominee_user.get_community_display()}})
             i += 1
 
         context.update({'committee': committee, 'nominees': nominees})
@@ -767,27 +835,61 @@ def admin(request):
         return HttpResponse('Erorr 404 Not found')
 
 @login_required
-def new_elections(request):
+def election_control(request, type):
     context = admincheck(request)
+    currentUser_model(request, context)
     if context['admin'] == True:
-        form = Dates_form(request.POST or None)
-        context['df'] = form
-        if request.method == 'GET':
-            Nominee_user.objects.all().delete()
-            Contention.objects.all().delete()
-            User_Model.objects.update(Voting_status = 0)
-            dates.nominations_period_id = dates.nominations_period_id + 1
-            dates.save()
-            
-            context['ConfirmationMessage'] = "تم بداية مرحلة ترشح جديدة"
-            return render(request, 'duration.html', context)
+        if type == "new-elections":
+            form = Dates_form(request.POST or None)
+            context['df'] = form
+            if request.method == 'GET':
+                try:
+                    Nominee_user.objects.all().delete()
+                    Current_Nom_Result.objects.all().delete()
+                    Contention.objects.all().delete()
+                    electoral_prog.all().delete()
+                    User_Model.objects.all().update(Voting_status_1 = 0, Voting_status_2 = 0, Voting_status_3 = 0, Voting_status_4 = 0)
+
+                except:
+                    {}
+                dates.nominations_period_id = dates.nominations_period_id + 1
+                dates.save()
+                
+                context['ConfirmationMessage'] = "تم بداية مرحلة ترشح جديدة"
+                return render(request, 'duration.html', context)
         else:
-            return HttpResponse("Invalid request method.")
+            form = Dates_form(request.POST or None)
+            context['df'] = form
+            if request.method == 'GET':
+                try:
+                    Nominee_user.objects.all().update(communityMemberElections = 0,
+                        collegeCommunityTrusteeOreHelperElections = 0,
+                        collegeStudentUnionPresidentOrViceElections = 0,
+                        universityElections = 0,
+                        communityMemberElectionsNumOfVotes = 0,           
+                        collegeCommunityTrusteeOreHelperElectionsNumOfVotes = 0,                     
+                        collegeStudentUnionPresidentOrViceElectionsNumOfVotes = 0,                      
+                        universityElectionsNumOfVotes = 0)
+
+                    User_Model.objects.all().update(Voting_status_1 = 0, Voting_status_2 = 0, Voting_status_3 = 0, Voting_status_4 = 0)
+                    Current_Nom_Result.objects.all().delete()
+                    Contention.objects.all().delete()
+                    electoral_prog.all().delete()
+                except:
+                    {}
+                dates.nominations_period_id = dates.nominations_period_id + 1
+                dates.save()
+                
+                context['ConfirmationMessage'] = "تم بداية مرحلة ترشح جديدة"
+                return render(request, 'duration.html', context)   
+    else:
+        return HttpResponse("Invalid request method.")
 
 
 @login_required
 def picksec(request):
     context = admincheck(request)
+    currentUser_model(request, context)
     if context['admin'] == True:
         current_user = request.user
         user_mod = User_Model.objects.get(Userkey_id=current_user.id)
@@ -810,6 +912,7 @@ def picksec(request):
 @login_required
 def duration(request):
     context = admincheck(request)
+    currentUser_model(request, context)
     instance = get_object_or_404(Dates, id=1)
 
     if context['admin'] == True:
@@ -819,7 +922,7 @@ def duration(request):
         if request.POST:
             if form.is_valid():
                 form.save()
-                context['ConfirmationMessage'] = "تم التعديل بنجاح"
+                context['ConfirmationMessage2'] = "تم التعديل بنجاح"
             else:
                 print(form.errors)
         return render(request, 'duration.html', context)
@@ -828,41 +931,57 @@ def duration(request):
 
 
 @login_required
-def list_nominee(request):
-    nominee_list = Nominee_user.objects.all()
-    return render(request, 'listnominee.html', {'nominee': nominee_list})
-
+def list_nominee(request, type = 'none'):
+    print(type)
+    context = admincheck(request)
+    currentUser_model(request, context)
+    if context['admin'] == True:
+        context = loaddata(request, type)
+        context['nominee'] = nominee_list = Nominee_user.objects.all()
+        return render(request, 'listnominee.html',context)
+    else:
+        return HttpResponse('Erorr 404 Not found')
 
 @login_required
 def list_contention(request):
-    contention_list = Contention.objects.all()
-    print(contention_list)
-    return render(request, 'contentioncontrol.html', {'nominee': contention_list})
+    context = admincheck(request)
+    currentUser_model(request, context)
+    if context['admin'] == True:
+        contention_list = Contention.objects.all()
+        context['nominee'] = contention_list
+        return render(request, 'contentioncontrol.html', context)
+    else:
+        return HttpResponse('Erorr 404 Not found')
 
 
 @login_required
 def update_nominee(request, nominee_id):
-    context = {}
-    User_Mod = User_Model.objects.get(Student_id=nominee_id)
-    nominee = Nominee_user.objects.get(UserModelKey=User_Mod)
-    initial_values = {'Name': nominee.UserModelKey.Name,
-                      'nominee_id': nominee.UserModelKey.Student_id,
-                      'address': nominee.UserModelKey.address,
-                      'birthdate': nominee.UserModelKey.birthdate,
-                      'collegeYear': nominee.UserModelKey.collegeYear,
-                      }
-    form = NomineeForm_update(request.POST or None,
-                              instance=nominee, initial=initial_values)
+    context = admincheck(request)
+    currentUser_model(request, context)
+    if context['admin'] == True:
 
-    if request.POST:
-        if form.is_valid():
-            form.save()
-            return redirect(list_nominee)
-        else:
-            context['ConfirmationMessage'] = "Error: couldn't update nominee"
-    context['form'] = form
+        User_Mod = User_Model.objects.get(Student_id=nominee_id)
+        nominee = Nominee_user.objects.get(UserModelKey=User_Mod)
+        initial_values = {'Name': nominee.UserModelKey.Name,
+                        'nominee_id': nominee.UserModelKey.Student_id,
+                        'address': nominee.UserModelKey.address,
+                        'birthdate': nominee.UserModelKey.birthdate,
+                        'collegeYear': nominee.UserModelKey.collegeYear,
+                        }
+        form = NomineeForm_update(request.POST or None,
+                                instance=nominee, initial=initial_values)
 
-    return render(request, 'updatenominee.html', context=context)
+        if request.POST:
+            if form.is_valid():
+                form.save()
+                return redirect(list_nominee)
+            else:
+                context['ConfirmationMessage'] = "Error: couldn't update nominee"
+        context['form'] = form
+
+        return render(request, 'updatenominee.html', context=context)
+    else:
+        return HttpResponse('Erorr 404 Not found')
 
 
 
@@ -888,51 +1007,60 @@ def save_data(request, form):
 
 @login_required
 def result_control(request):
-    college = ['one','two','three','Four','Five','Six','Seven','Eight','Nine','Ten','Eleven'
-               ,'Twelve','Thirteen','Fourteen','Fifteen','Sixteen','Seventeen',
-               'Eighteen','Nineteen','Twenty','Twentyone','Twentytwo','Twentythree','Twentyfour',
-               'Twentyfive','Twentysix','Twentyseven','Twentyeight']
-    con = {}
-    
-    for i , item in enumerate(college):
-        userinsamecollege = User_Model.objects.filter(college = int(i + 1))
-        nominee_list = Nominee_user.objects.filter(final_list = True ,  UserModelKey__in = userinsamecollege)         
-        con[item] = nominee_list
+    context = admincheck(request)
+    currentUser_model(request, context)
+    if context['admin'] == True:
 
-    if type == 'communityMemberElections':
-        return render(request, 'resultcontrol1.html', context = con)
-    
-    if type == 'collegeCommunityTrusteeOreHelperElections':
-        return render(request, 'resultcontrol2.html', context = con)
-    
-    if type == 'collegeStudentUnionPresidentOrViceElections':
-        return render(request, 'resultcontrol3.html', context = con)
-    
-    if type == 'universityElections':
-        return render(request, 'resultcontrol4.html', context = con)
-    
-    return render(request, 'resultcontrol1.html', context = con)
+        college = ['one','two','three','Four','Five','Six','Seven','Eight','Nine','Ten','Eleven'
+                ,'Twelve','Thirteen','Fourteen','Fifteen','Sixteen','Seventeen',
+                'Eighteen','Nineteen','Twenty','Twentyone','Twentytwo','Twentythree','Twentyfour',
+                'Twentyfive','Twentysix','Twentyseven','Twentyeight']
+        
+        for i , item in enumerate(college):
+            userinsamecollege = User_Model.objects.filter(college = int(i + 1))
+            nominee_list = Nominee_user.objects.filter(final_list = True ,  UserModelKey__in = userinsamecollege)         
+            context[item] = nominee_list
+
+        if type == 'communityMemberElections':
+            return render(request, 'resultcontrol1.html', context)
+        
+        if type == 'collegeCommunityTrusteeOreHelperElections':
+            return render(request, 'resultcontrol2.html', context)
+        
+        if type == 'collegeStudentUnionPresidentOrViceElections':
+            return render(request, 'resultcontrol3.html', context)
+        
+        if type == 'universityElections':
+            return render(request, 'resultcontrol4.html', context)
+        
+        return render(request, 'resultcontrol1.html', context)
+    else:
+        return HttpResponse('Erorr 404 Not found')
 
 @login_required
 def update_nominee_result(request, nominee_id):
-    context = {}
-    User_Mod = User_Model.objects.get(Student_id=nominee_id)
-    nominee = Nominee_user.objects.get(UserModelKey=User_Mod)
-    initial_values = {'Name': nominee.UserModelKey.Name,
-                      'nominee_id': nominee.UserModelKey.Student_id,
-                      'address': nominee.UserModelKey.address,
-                      'birthdate': nominee.UserModelKey.birthdate,
-                      'collegeYear': nominee.UserModelKey.collegeYear,
-                      }
-    form = NomineeForm_update(request.POST or None,
-                              instance=nominee, initial=initial_values)
+    context = admincheck(request)
+    currentUser_model(request, context)
+    if context['admin'] == True:
+        User_Mod = User_Model.objects.get(Student_id=nominee_id)
+        nominee = Nominee_user.objects.get(UserModelKey=User_Mod)
+        initial_values = {'Name': nominee.UserModelKey.Name,
+                        'nominee_id': nominee.UserModelKey.Student_id,
+                        'address': nominee.UserModelKey.address,
+                        'birthdate': nominee.UserModelKey.birthdate,
+                        'collegeYear': nominee.UserModelKey.collegeYear,
+                        }
+        form = NomineeForm_update(request.POST or None,
+                                instance=nominee, initial=initial_values)
 
-    if request.POST:
-        if form.is_valid():
-            form.save()
-            return redirect(result_control)
-        else:
-            context['ConfirmationMessage'] = "Error: couldn't update nominee"
-    context['form'] = form
+        if request.POST:
+            if form.is_valid():
+                form.save()
+                return redirect(result_control)
+            else:
+                context['ConfirmationMessage'] = "Error: couldn't update nominee"
+        context['form'] = form
 
-    return render(request, 'updatenomineeresult.html', context=context)
+        return render(request, 'updatenomineeresult.html', context=context)
+    else:
+        return HttpResponse('Erorr 404 Not found')

@@ -13,7 +13,7 @@
   <form enctype="multipart/form-data" id="myForm" class="nomination" action="" method="POST">
     {%csrf_token%}
 
-    <h2 class="form-name">استمارة ترشح</h2>
+    <h2 class="card-name form-name">استمارة ترشح</h2>
     {% if ConfirmationMessage == 'Application already sent' or ConfirmationMessage == 'Application sent successfuly' or ConfirmationMessage == 'متطلبات الترشح غير موافاة' %}
     <div>{{ ConfirmationMessage }}</div>
 
@@ -76,7 +76,7 @@
     {% if ConfirmationMessage %}
     <div>{{ ConfirmationMessage }}</div>
     {% endif %}
-    <input type="submit" value="تقديم الاستمارة" />
+    <button type="submit" class="main-button">تقديم الاستمارة</button>
     {% endif %}
   </form>
   {% else %}

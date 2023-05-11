@@ -1,14 +1,17 @@
-.new-elec{
-    display: flex;
-    justify-content: center;
+.main-content{
+    flex-direction: column;
+    gap: 60px;
 }
-button{
+.con button{
+    min-width: 75px;
+    width: 25%;
     cursor: pointer;
 }
 .confirm {
     display: none;
-  
     position: fixed;
+    width: 90%;
+    min-height: 150px;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -18,16 +21,29 @@ button{
     border: 1px solid black;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
-.confirm .con{
-    width: 150px;
+
+.confirm-show {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    min-height: 150px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 999;
+    background-color: white;
+    padding: 20px;
+    border: 1px solid black;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
-.confirm p{
+
+.con{
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+p{
     text-align: center;
-}
-.confirm  button{
-    width: 70px;
-    height: 35px;
-    cursor: pointer;
+    font: 20px muli;
 }
