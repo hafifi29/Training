@@ -3,33 +3,103 @@
 {% block headcontent %}
 {% load static %}
   <title>Nominee Electoral Program</title>
+  <style>
+    input[type='file']{
+        display: none;
+    }
+    .field{
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin: 10px 0px;
+    }
+    label{
+        margin: 10px;
+    }
+    .show-pic{
+        width: 150px;
+        height: 150px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+    }
+    .show-pic img{
+        width: 140px;
+    }
+    .show-symbol{
+        margin-top: 10px;
+        width: 60px;
+        height: 60px;
+        /* overflow: hidden; */
+        display: flex;
+        align-items: center;
+    }
+    .show-symbol img{
+        width: 80px;
+        aspect-ratio: 1/1;
+        border-radius: 50%;
+    }
+  </style>
 {% endblock %}
 
 {% block maincontent %}
-
-<!-- <img src="{{program.personnal_pic.url}}" alt=""> -->
 <div class="form-container">
     <form method="post" enctype="multipart/form-data">
-        {%csrf_token%}
+        {% csrf_token %}
         <div class="field">
+            <label for="id_personnal_pic">{{ form.personnal_pic.label }} 
+                <div class="show-pic">
+                </div>
+            </label>
             {{ form.personnal_pic }}
         </div>
         <div class="field">
-            {{form.acheivement_brief}}
+            <label for="id_acheivement_brief">{{ form.acheivement_brief.label }}</label>
+            {{ form.acheivement_brief }}
         </div>
         <div class="field">
-            {{form.program_brief}}
+            <label for="id_program_brief">{{ form.program_brief.label }}</label>
+            {{ form.program_brief }}
         </div>
         <div class="field">
-            {{form.electoral_symbol}}
+            <label for="id_electoral_symbol">{{ form.electoral_symbol.label }}
+                <div class="show-symbol">
+                </div>
+            </label>
+            {{ form.electoral_symbol }}
         </div>
         <div class="field">
-            {{form.electoral_symbol_name}}
+            <label for="id_electoral_symbol_name">{{ form.electoral_symbol_name.label }}</label>
+            {{ form.electoral_symbol_name }}
         </div>
-
-        <input type="submit" value="حفط">
+        <input type="submit" value="حفظ">
     </form>
 </div>
 
+<script>
+    const personalPicInput = document.querySelector('#id_personnal_pic');
+    const personalPicShowPic = document.querySelector('.show-pic');
+    const electoralSymbolInput = document.querySelector('#id_electoral_symbol');
+    const electoralSymbolShowSymbol = document.querySelector('.show-symbol');
 
+    personalPicInput.addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            const imageUrl = event.target.result;
+            personalPicShowPic.innerHTML = `<img src="${imageUrl}" alt="Personal Pic">`;
+        };
+        reader.readAsDataURL(file);
+    });
+
+    electoralSymbolInput.addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            const imageUrl = event.target.result;
+            electoralSymbolShowSymbol.innerHTML = `<img src="${imageUrl}" alt="Electoral Symbol">`;
+        };
+        reader.readAsDataURL(file);
+    });
+</script>
 {% endblock %}
