@@ -66,9 +66,9 @@ class Nominee_user(models.Model):
                                            ('7', 'لجنة الاسر و الرحلات')
                                            
                                   ], default='1')
-    rec_letter = models.FileField(upload_to='rec_letters')
+    rec_letter = models.FileField(upload_to="rec_letters")
     final_list = models.BooleanField(default=False)
-    role = models.CharField(max_length=25, choices=[('1', 'لم يحدد'),
+    role = models.CharField(max_length=26, choices=[('1', 'لم يحدد'),
                                            ('2', 'عضو'),
                                            ('3', 'أمين لجنة على مستوى الكلية'),
                                            ('4', 'مساعد أمين لجنة على مستوى الكلية'),

@@ -60,12 +60,8 @@ end_con = dates.con_ed
 
 
 now = timezone.now()
-# end global varables
-
-# Create your views here.
 
 # helper functions
-
 
 def admincheck(request):
     current_user = request.user
@@ -195,13 +191,11 @@ def applyresult(request):
 @login_required
 def loaddata(request, type = 'none'):
         context = admincheck(request)
-        loaddataform = loadData(request)
+        loaddataform = loadData(request, request.FILES)
         context['loaddataform'] = loaddataform
         print(request.method)
         if type == 'original':
             if request.method == 'POST':
-                print('frf')
-
                 User.objects.filter(is_superuser=False).delete()
                 for i, file in enumerate(os.listdir('Data/Tables'), start = 1):
                     read_file = pd.read_excel('Data/Tables/' + file, sheet_name='Sheet1', skiprows=1).values.tolist()
@@ -212,35 +206,41 @@ def loaddata(request, type = 'none'):
                                                             collegeYear = row[6], Voting_status_1 = row[7], 
                                                             Voting_status_2 = row[8], Voting_status_3 = row[9], Voting_status_4 = row[10])
                         Nominee_user.objects.create(UserModelKey =usermodel, phone_no = row[11], email = row[12], community = row[13], 
-                                                    rec_letter = File(open('Acrobat_ccFu7WLDxu_hBQMt0M.png', 'rb')),final_list = row[14], role = row[15], 
+                                                    rec_letter = File(open('Example_.png', 'rb')),final_list = row[14], role = row[15], 
                                                     communityMemberElections = row[16], collegeCommunityTrusteeOreHelperElections = row[17], 
                                                     collegeStudentUnionPresidentOrViceElections = row[18], universityElections = row[19], 
                                                     communityMemberElectionsNumOfVotes = row[20], 
                                                     collegeCommunityTrusteeOreHelperElectionsNumOfVotes = row[21], 
                                                     collegeStudentUnionPresidentOrViceElectionsNumOfVotes = row[22], 
                                                     universityElectionsNumOfVotes = row[23])
-                context['confirmationmessage'] = 'تم الرفع بنجاح'
+                context['confirmationmessage'] = 'تم التطبيق بنجاح'
         if type == 'new':
             if request.method == 'POST':
-                User.objects.filter(is_superuser=False).delete()
-                read_file = pd.read_excel(loaddataform.cleaned_data['datafile'], sheet_name='Sheet1', skiprows=1).values.tolist()
-                for row in read_file:
-                    randomNum = ''.join( map( str, [ random.choice(range(1, 10)) for _ in range(6) ] ) )
-                    user = User.objects.create_user(username=row[0] + randomNum, password='Fcai123456')
-                    usermodel = User_Model.objects.create(Userkey = user, Name = row[1], Student_id = row[2], address = row[3], birthdate = row[4], college = row[5], 
-                                                        collegeYear = row[6], Voting_status_1 = row[7], 
-                                                        Voting_status_2 = row[8], Voting_status_3 = row[9], Voting_status_4 = row[10])
-                    Nominee_user.objects.create(UserModelKey =usermodel, phone_no = row[11], email = row[12], community = row[13], 
-                                                rec_letter = File(open('Acrobat_ccFu7WLDxu_hBQMt0M.png', 'rb')),final_list = row[14], role = row[15], 
-                                                communityMemberElections = row[16], collegeCommunityTrusteeOreHelperElections = row[17], 
-                                                collegeStudentUnionPresidentOrViceElections = row[18], universityElections = row[19], 
-                                                communityMemberElectionsNumOfVotes = row[20], 
-                                                collegeCommunityTrusteeOreHelperElectionsNumOfVotes = row[21], 
-                                                collegeStudentUnionPresidentOrViceElectionsNumOfVotes = row[22], 
-                                                universityElectionsNumOfVotes = row[23])
-                context['confirmationmessage'] = 'تم التطبيق بنجاح'
+                if loaddataform.is_valid():
+                    User.objects.filter(is_superuser=False).delete()
+                    read_file = pd.read_excel(loaddataform.cleaned_data['datafile'], sheet_name='Sheet1', skiprows=1).values.tolist()
+                    for row in read_file:
+                        randomNum = ''.join( map( str, [ random.choice(range(1, 10)) for _ in range(6) ] ) )
+                        user = User.objects.create_user(username=row[0] + randomNum, password='Fcai123456')
+                        usermodel = User_Model.objects.create(Userkey = user, Name = row[1], Student_id = row[2], address = row[3], birthdate = row[4], college = row[5], 
+                                                            collegeYear = row[6], Voting_status_1 = row[7], 
+                                                            Voting_status_2 = row[8], Voting_status_3 = row[9], Voting_status_4 = row[10])
+                        Nominee_user.objects.create(UserModelKey =usermodel, phone_no = row[11], email = row[12], community = row[13], 
+                                                    rec_letter = File(open('Example_.png', 'rb')),final_list = row[14], role = row[15], 
+                                                    communityMemberElections = row[16], collegeCommunityTrusteeOreHelperElections = row[17], 
+                                                    collegeStudentUnionPresidentOrViceElections = row[18], universityElections = row[19], 
+                                                    communityMemberElectionsNumOfVotes = row[20], 
+                                                    collegeCommunityTrusteeOreHelperElectionsNumOfVotes = row[21], 
+                                                    collegeStudentUnionPresidentOrViceElectionsNumOfVotes = row[22], 
+                                                    universityElectionsNumOfVotes = row[23])
+                    context['confirmationmessage'] = 'تم الرفع بنجاح'
+                else:
+                    context['confirmationmessage'] = 'يرجى رفع ملف Excel'
+
 
         return context
+
+#Common views
 
 def home(request):
     applyresult(request)
@@ -251,11 +251,7 @@ def home(request):
         return redirect('adminp')
     return render(request, 'index.html', context)
 
-
-# User related views
-
 def sign_in(request):
-
     context = admincheck(request)
     currentUser_model(request, context)
     if request.method == "POST":
@@ -285,6 +281,7 @@ def logout_view(request):
     currentUser_model(request, context)
     return redirect('home')
 
+# User related views
 
 @login_required
 def nomination(request,type):
@@ -749,15 +746,6 @@ def contention(request):
         context['ConfirmationMessage'] = "contention closed for non nominee"
         return render(request, 'contention.html', context=context)
 
-def admincheck(request):
-    current_user = request.user
-    if current_user.is_authenticated:
-        if Admin_user.objects.filter(Userkey=current_user).exists():
-            return {'admin': True}
-        else:
-            return {'admin': False}
-    return {'admin': False}
-
 @login_required
 def electoral_program(request):
     context = admincheck(request)
@@ -855,7 +843,7 @@ def election_control(request, type):
                 dates.nominations_period_id = dates.nominations_period_id + 1
                 dates.save()
                 
-                context['ConfirmationMessage'] = "تم بداية مرحلة ترشح جديدة"
+                context['ConfirmationMessage'] = "تم بداية انتخابات جدبدة"
                 return render(request, 'duration.html', context)
         else:
             form = Dates_form(request.POST or None)
@@ -932,27 +920,14 @@ def duration(request):
 
 @login_required
 def list_nominee(request, type = 'none'):
-    print(type)
     context = admincheck(request)
     currentUser_model(request, context)
     if context['admin'] == True:
         context = loaddata(request, type)
-        context['nominee'] = nominee_list = Nominee_user.objects.all()
+        context['nominee'] = Nominee_user.objects.all()
         return render(request, 'listnominee.html',context)
     else:
         return HttpResponse('Erorr 404 Not found')
-
-@login_required
-def list_contention(request):
-    context = admincheck(request)
-    currentUser_model(request, context)
-    if context['admin'] == True:
-        contention_list = Contention.objects.all()
-        context['nominee'] = contention_list
-        return render(request, 'contentioncontrol.html', context)
-    else:
-        return HttpResponse('Erorr 404 Not found')
-
 
 @login_required
 def update_nominee(request, nominee_id):
@@ -982,28 +957,6 @@ def update_nominee(request, nominee_id):
         return render(request, 'updatenominee.html', context=context)
     else:
         return HttpResponse('Erorr 404 Not found')
-
-
-
-def save_data(request, form):
-    if form.is_valid():
-        dates.nomin_sd = form.cleaned_data['nomin_start_date']
-        dates.nomin_ed = form.cleaned_data['nomin_end_date']
-
-        dates.collegevote_sd = form.cleaned_data['vote_start_date']
-        dates.collegevote_ed = form.cleaned_data['vote_end_date']
-
-        dates.universityvote_sd = form.cleaned_data['vote_start_date']
-        dates.universityvote_ed = form.cleaned_data['vote_end_date']
-
-        dates.con_sd = form.cleaned_data['con_start_date']
-        dates.con_ed = form.cleaned_data['con_end_date']
-
-        dates.save()
-
-        std_access.result = form.cleaned_data['result']
-        std_access.save()
-
 
 @login_required
 def result_control(request):
@@ -1062,5 +1015,16 @@ def update_nominee_result(request, nominee_id):
         context['form'] = form
 
         return render(request, 'updatenomineeresult.html', context=context)
+    else:
+        return HttpResponse('Erorr 404 Not found')
+    
+@login_required
+def list_contention(request):
+    context = admincheck(request)
+    currentUser_model(request, context)
+    if context['admin'] == True:
+        contention_list = Contention.objects.all()
+        context['nominee'] = contention_list
+        return render(request, 'contentioncontrol.html', context)
     else:
         return HttpResponse('Erorr 404 Not found')

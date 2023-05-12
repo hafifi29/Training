@@ -10,7 +10,7 @@
 <div class ="sharp form-container" style = "gap:30px;">
     <h1 class="card-name">التحكم فى البيانات</h1>
 
-    <form method="POST" enctype="multipart/form-data">
+    <form method="POST" action = "{% url 'list_nominee' 'new' %}" enctype="multipart/form-data">
         {%csrf_token%}
 
     <section class="flexvert borderdiv">
