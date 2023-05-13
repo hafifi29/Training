@@ -6,8 +6,9 @@
 {% endblock %} 
 {% block maincontent %}
 <div class="landing-container">
+
   <section class="landing">
-  <div class="progect-logo">
+  <div class="project-logo">
     <img src="{% static 'img/logoooo.png' %}" alt="">
   </div>
   <div class="contribuaters">
@@ -300,14 +301,28 @@
 
 
 <style>
-    /* .landing-container{
+     .landing-container{
       display: flex;
       flex-direction: column;
+      align-items: center;
       overflow: hidden;
-    } */
-    .progect-logo img
+      width: 90%;
+    } 
+    .landing{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow: hidden;
+      width: 90%;
+    }
+    .project-logo{
+      min-width: 200px;
+      width: 60%
+    }
+    .project-logo img
     {
-      width: 666px;
+      width:100%
+
     }
     .faq-container h2:first-of-type
     {
@@ -317,7 +332,8 @@
     .contribuaters {
       display: flex;
       flex-direction: column;
-      align-items: flex-end;
+      align-items: start;
+      direction: rtl;
     }
     .contribuaters h3{
       margin: 5px;
@@ -325,18 +341,16 @@
   .faq-container {
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
+    align-items: center;
     justify-content: center;
+    width: 100%
   }
   .faq {
-    color: #1c1c1c;
-    background-color: #fff;
-
-    width: 580px;
-
     display: flex;
     flex-direction: column;
-
+    color: #1c1c1c;
+    background-color: #fff;
+    width: 100%;
     border-bottom: 2px solid #1c1c1c;
   }
   .faq .question {
