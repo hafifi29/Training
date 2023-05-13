@@ -14,11 +14,25 @@
         {%csrf_token%}
 
     <section class="flexvert borderdiv">
-        <div class="muli-m">رفع بيانات جديدة</div>
+
+        <div class="muli-m">
+            <div class="icon-box">
+                <img src="{% static 'img/info.png' %}" width="18px"></img>
+                <div class="info-box">
+                        <li>الملف يجب أن يكون فى صيغة xlsx</li>
+                        <li>صور اثبات النشاطات يجب أن يكون اسمها على هيئة collegenumber_studientId</li>
+                </div>
+              </div>
+            رفع بيانات جديدة
+        </div>
         <div class="field">
         {{loaddataform.datafile.label}}
         {{loaddataform.datafile}}
-      </div>
+        </div>
+        <div class="field">
+        {{loaddataform.my_files.label}}
+        {{loaddataform.my_files}}
+        </div>
     </form>
     <button class="main-button" id="uploadNewDataFileb">حفظ</button>
     </section>

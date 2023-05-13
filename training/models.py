@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 import os
 from django.conf import settings
+from django.dispatch import receiver
 
 # Create your models here.
 
@@ -50,10 +51,16 @@ class User_Model(models.Model):
 
 
     def __str__(self):
-        return str(self.Name)
+        return str(self.Name)  
 
 
-class Nominee_user(models.Model):
+
+class Nominee_user(models.Model):    
+    def get_upload_path(instance, filename):
+        base_filename, extension = os.path.splitext(filename)
+        new_filename = str(instance.UserModelKey.college) + "_" + str(instance.UserModelKey.Student_id) + extension
+        return 'rec_letters/%s' % new_filename
+
     UserModelKey = models.OneToOneField(User_Model, on_delete=models.CASCADE)
     phone_no = models.IntegerField()
     email = models.EmailField(max_length=50)
@@ -66,7 +73,7 @@ class Nominee_user(models.Model):
                                            ('7', 'لجنة الاسر و الرحلات')
                                            
                                   ], default='1')
-    rec_letter = models.FileField(upload_to="rec_letters")
+    rec_letter = models.FileField(upload_to =get_upload_path)
     final_list = models.BooleanField(default=False)
     role = models.CharField(max_length=26, choices=[('1', 'لم يحدد'),
                                            ('2', 'عضو'),
@@ -95,10 +102,12 @@ class Nominee_user(models.Model):
     
     def delete(self, *args, **kwargs):
         if self.rec_letter:
-            os.remove(os.path.join(settings.MEDIA_ROOT, str(self.rec_letter)))
+            self.rec_letter.delete(False)
         super().delete(*args, **kwargs)
 
-
+@receiver(models.signals.pre_delete, sender=Nominee_user)
+def delete_file(sender, instance, **kwargs):
+    instance.rec_letter.delete(False)
 
 class electoral_prog(models.Model):
     nominee_key = models.OneToOneField(Nominee_user,null=True,on_delete=models.SET_NULL)

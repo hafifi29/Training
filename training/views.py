@@ -13,7 +13,6 @@ import pandas as pd
 from django.core.files import File
 import random
 
-
 # global varables
 std_access = Control_content.objects.first()
 dates = Dates.objects.first()
@@ -193,46 +192,71 @@ def loaddata(request, type = 'none'):
         context = admincheck(request)
         loaddataform = loadData(request, request.FILES)
         context['loaddataform'] = loaddataform
-        print(request.method)
+
         if type == 'original':
             if request.method == 'POST':
                 User.objects.filter(is_superuser=False).delete()
-                for i, file in enumerate(os.listdir('Data/Tables'), start = 1):
-                    read_file = pd.read_excel('Data/Tables/' + file, sheet_name='Sheet1', skiprows=1).values.tolist()
+                for file in os.listdir('Data/Tables'):
+                    read_file_dir = "Data/Tables/"
+                    read_rec_dir = 'Data/rec_letters/'
+                    read_file = pd.read_excel(read_file_dir + file, sheet_name='Sheet1', skiprows=1)
+                    read_file.dropna(inplace=True)
+                    read_file = read_file.values.tolist()
+                    read_rec_letters = os.listdir(read_rec_dir)
                     for row in read_file:
-                        randomNum = ''.join( map( str, [random.choice(range(1, 10)) for _ in range(6) ] ) )
-                        user = User.objects.create_user(username=row[0] + randomNum, password='Fcai123456')
-                        usermodel = User_Model.objects.create(Userkey = user, Name = row[1], Student_id = row[2], address = row[3], birthdate = row[4], college = row[5], 
-                                                            collegeYear = row[6], Voting_status_1 = row[7], 
-                                                            Voting_status_2 = row[8], Voting_status_3 = row[9], Voting_status_4 = row[10])
-                        Nominee_user.objects.create(UserModelKey =usermodel, phone_no = row[11], email = row[12], community = row[13], 
-                                                    rec_letter = File(open('Example_.png', 'rb')),final_list = row[14], role = row[15], 
-                                                    communityMemberElections = row[16], collegeCommunityTrusteeOreHelperElections = row[17], 
-                                                    collegeStudentUnionPresidentOrViceElections = row[18], universityElections = row[19], 
-                                                    communityMemberElectionsNumOfVotes = row[20], 
-                                                    collegeCommunityTrusteeOreHelperElectionsNumOfVotes = row[21], 
-                                                    collegeStudentUnionPresidentOrViceElectionsNumOfVotes = row[22], 
-                                                    universityElectionsNumOfVotes = row[23])
-                context['confirmationmessage'] = 'تم التطبيق بنجاح'
+                        if len(row) == 11 or len(row) == 24:
+                            randomNum = ''.join( map( str, [random.choice(range(1, 10)) for _ in range(6) ] ) )
+                            user = User.objects.create_user(username=row[0] + randomNum, password='Fcai123456')
+                            usermodel = User_Model.objects.create(Userkey = user, Name = row[1], Student_id = row[2], address = row[3], birthdate = row[4], college = row[5], 
+                                                                collegeYear = row[6], Voting_status_1 = row[7], 
+                                                                Voting_status_2 = row[8], Voting_status_3 = row[9], Voting_status_4 = row[10])
+                            rec_letter_exists = False
+                            rec = {}
+                            for file in read_rec_letters:
+                                if file.split('.')[0] == str(row[6]) + "_" + str(row[2]):
+                                    rec_letter_exists = True
+                                    rec = File(open(read_rec_dir + file, 'rb'))
+                            if row[11] and rec_letter_exists:
+                                Nominee_user.objects.create(UserModelKey =usermodel, phone_no = row[11], email = row[12], community = row[13], 
+                                                            rec_letter = rec, final_list = row[14], role = row[15], 
+                                                            communityMemberElections = row[16], collegeCommunityTrusteeOreHelperElections = row[17], 
+                                                            collegeStudentUnionPresidentOrViceElections = row[18], universityElections = row[19], 
+                                                            communityMemberElectionsNumOfVotes = row[20], 
+                                                            collegeCommunityTrusteeOreHelperElectionsNumOfVotes = row[21], 
+                                                            collegeStudentUnionPresidentOrViceElectionsNumOfVotes = row[22], 
+                                                            universityElectionsNumOfVotes = row[23])
+                    context['confirmationmessage'] = 'تم التطبيق بنجاح'
+
         if type == 'new':
             if request.method == 'POST':
                 if loaddataform.is_valid():
                     User.objects.filter(is_superuser=False).delete()
-                    read_file = pd.read_excel(loaddataform.cleaned_data['datafile'], sheet_name='Sheet1', skiprows=1).values.tolist()
+                    read_file = pd.read_excel(loaddataform.cleaned_data['datafile'], sheet_name='Sheet1', skiprows=1)
+                    read_file.dropna(inplace=True)
+                    read_file = read_file.values.tolist()
+                    read_rec_letters = loaddataform.cleaned_data['my_files']
                     for row in read_file:
-                        randomNum = ''.join( map( str, [ random.choice(range(1, 10)) for _ in range(6) ] ) )
-                        user = User.objects.create_user(username=row[0] + randomNum, password='Fcai123456')
-                        usermodel = User_Model.objects.create(Userkey = user, Name = row[1], Student_id = row[2], address = row[3], birthdate = row[4], college = row[5], 
-                                                            collegeYear = row[6], Voting_status_1 = row[7], 
-                                                            Voting_status_2 = row[8], Voting_status_3 = row[9], Voting_status_4 = row[10])
-                        Nominee_user.objects.create(UserModelKey =usermodel, phone_no = row[11], email = row[12], community = row[13], 
-                                                    rec_letter = File(open('Example_.png', 'rb')),final_list = row[14], role = row[15], 
-                                                    communityMemberElections = row[16], collegeCommunityTrusteeOreHelperElections = row[17], 
-                                                    collegeStudentUnionPresidentOrViceElections = row[18], universityElections = row[19], 
-                                                    communityMemberElectionsNumOfVotes = row[20], 
-                                                    collegeCommunityTrusteeOreHelperElectionsNumOfVotes = row[21], 
-                                                    collegeStudentUnionPresidentOrViceElectionsNumOfVotes = row[22], 
-                                                    universityElectionsNumOfVotes = row[23])
+                        if len(row) == 11 or len(row) == 24:
+                            randomNum = ''.join( map( str, [ random.choice(range(1, 10)) for _ in range(6) ] ) )
+                            user = User.objects.create_user(username=row[0] + randomNum, password='Fcai123456')
+                            usermodel = User_Model.objects.create(Userkey = user, Name = row[1], Student_id = row[2], address = row[3], birthdate = row[4], college = row[5], 
+                                                                collegeYear = row[6], Voting_status_1 = row[7], 
+                                                                Voting_status_2 = row[8], Voting_status_3 = row[9], Voting_status_4 = row[10])
+                            rec_letter_exists = False
+                            rec = {}
+                            for file in read_rec_letters:
+                                if file.name.split('.')[0] == str(row[6]) + "_" + str(row[2]):
+                                    rec_letter_exists = True
+                                    rec = file
+                            if row[11] and rec_letter_exists:
+                                Nominee_user.objects.create(UserModelKey =usermodel, phone_no = row[11], email = row[12], community = row[13], 
+                                                            rec_letter = rec, final_list = row[14], role = row[15], 
+                                                            communityMemberElections = row[16], collegeCommunityTrusteeOreHelperElections = row[17], 
+                                                            collegeStudentUnionPresidentOrViceElections = row[18], universityElections = row[19], 
+                                                            communityMemberElectionsNumOfVotes = row[20], 
+                                                            collegeCommunityTrusteeOreHelperElectionsNumOfVotes = row[21], 
+                                                            collegeStudentUnionPresidentOrViceElectionsNumOfVotes = row[22], 
+                                                            universityElectionsNumOfVotes = row[23])
                     context['confirmationmessage'] = 'تم الرفع بنجاح'
                 else:
                     context['confirmationmessage'] = 'يرجى رفع ملف Excel'

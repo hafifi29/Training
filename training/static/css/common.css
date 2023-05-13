@@ -413,6 +413,53 @@ input[type='checkbox']:checked + .toggel-switch{
   background-color: lightgreen;
 }
 
+/*progress-bar*/
+
+.progress-container {
+  width: 40%;
+  height: 20px;
+  background-color: #f1f1f1;
+  border-radius: 10px;
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: #4CAF50;
+  width: 20%;
+  border-radius: 10px;
+
+}
+
+.icon-box {
+  position: relative;
+  display: inline-block;
+}
+
+.info-box {
+  font: 15px muli;
+  direction: rtl;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-100%);
+  opacity: 0;
+  transition: opacity 1s;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  padding: 10px;
+  border-radius: 5px;
+  display: none;
+}
+
+.icon-box:hover .info-box {
+  opacity: 0;
+  display: block;
+  transition: opacity 1s;
+  opacity: 1;
+}
+
+
+
 /*fonts*/
 .muli-m{
   font: 25px muli;
