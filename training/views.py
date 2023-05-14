@@ -798,24 +798,17 @@ def electoral_program(request):
 
 @login_required
 def electoral_prog_show(request):
-    context = admincheck(request)
-    currentUser_model(request, context)
-    context.update(durationcheck())
-    # userinsamecollege = User_Model.objects.filter(college = 1)
-    # nominee_list - Nominee_user.objects.filter(UserModelKey_in =  userinsamecollege)
-    # programs = electoral_prog.filter(Nominee_user_in = nominee_list)
-    programs = electoral_prog.objects.all()
-    return render(request,'electoral_prog_show.html',{'programs':programs})
+    current_user = request.user
+    user_model = User_Model.objects.get(Userkey_id=current_user.id)
+    current_college = user_model.college
+    current_college_year = user_model.collegeYear
+    programs = electoral_prog.objects.all().filter(nominee_key__UserModelKey__college=current_college,
+                                             nominee_key__UserModelKey__collegeYear=current_college_year)
+    return render(request, 'electoral_prog_show.html', {'programs': programs})
+
 
 @login_required
 def particular_nominee_prog(request, id):
-    electoral_prog_obj = electoral_prog.objects.get(id=id)
-    return render(request, 'particular_nominee_prog.html', {'nominee_program': electoral_prog_obj})
-
-@login_required
-def particular_nominee_prog(request, id):
-    context = admincheck(request)
-    context.update(durationcheck())
     electoral_prog_obj = electoral_prog.objects.get(id=id)
     return render(request, 'particular_nominee_prog.html', {'nominee_program': electoral_prog_obj})
 

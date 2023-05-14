@@ -11,7 +11,13 @@ class ElectoralProgForm(forms.ModelForm):
     class Meta:
         model = electoral_prog
         fields = ['personnal_pic', 'acheivement_brief', 'program_brief', 'electoral_symbol', 'electoral_symbol_name']
-
+        labels = {
+            'personnal_pic': 'الصورة الشخصية',
+            'acheivement_brief': 'نبذة عن الإنجازات',
+            'program_brief': 'نبذة عن البرنامج',
+            'electoral_symbol': 'لوجو الرمز الانتخابي',
+            'electoral_symbol_name': ' الرمز الانتخابي'
+        }
 
 class nomForm1(forms.ModelForm):
     class Meta:
