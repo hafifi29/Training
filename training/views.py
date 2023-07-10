@@ -267,10 +267,9 @@ def loaddata(request, type = 'none'):
 #Common views
 
 def home(request):
-    applyresult(request)
     context = admincheck(request)
     currentUser_model(request, context)
-    durationcheck()
+    context.update(durationcheck())
     if context['admin'] == True:
         return redirect('adminp')
     return render(request, 'index.html', context)
@@ -312,6 +311,7 @@ def nomination(request,type):
     context = admincheck(request)
     currentUser_model(request, context)
     context.update(durationcheck())
+    applyresult(request)
     current_user = request.user
     User_Mod = User_Model.objects.get(Userkey_id=current_user.id)
 
