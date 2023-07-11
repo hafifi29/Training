@@ -73,7 +73,7 @@ header a:last-of-type {
   background-color: transparent;
   color: white;
   cursor: pointer;
-  font: 1.5em muli;
+  font: 1.2em muli;
   border:  2px solid #1e1a1a00;
   transition: .1s;
 }
