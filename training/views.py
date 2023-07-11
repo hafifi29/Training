@@ -167,27 +167,6 @@ def durationcheck():
     return {'std_access': std_access}
 
 @login_required
-def applyresult(request):
-    context = admincheck(request)
-    context.update(durationcheck())
-
-    for nom in Nominee_user.objects.all():
-        if nom.final_list == True and not(Current_Nom_Result.objects.filter(Nominee_user = nom)):
-
-            if nom.communityMemberElectionsNumOfVotes !=0:
-                numofvotess = nom.communityMemberElectionsNumOfVotes
-            elif nom.collegeCommunityTrusteeOreHelperElectionsNumOfVotes !=0:
-                numofvotess = nom.collegeCommunityTrusteeOreHelperElectionsNumOfVotes
-            elif nom.collegeStudentUnionPresidentOrViceElectionsNumOfVotes !=0:
-                numofvotess = nom.collegeStudentUnionPresidentOrViceElectionsNumOfVotes
-            else:
-                numofvotess = nom.universityElectionsNumOfVotes
-
-            Current_Nom_Result.objects.create(Nominee_user = nom, community = nom.community, numOfVotes = numofvotess, role = nom.role)
-
-
-
-@login_required
 def loaddata(request, type = 'none'):
         context = admincheck(request)
         loaddataform = loadData(request, request.FILES)
@@ -311,7 +290,6 @@ def nomination(request,type):
     context = admincheck(request)
     currentUser_model(request, context)
     context.update(durationcheck())
-    applyresult(request)
     current_user = request.user
     User_Mod = User_Model.objects.get(Userkey_id=current_user.id)
 
@@ -652,11 +630,11 @@ def showresult(request, type):
             nominees = {}
             i = 1
             UsersinSamecollegeANDcollegeYear = User_Model.objects.filter(college = User_Mod.college, collegeYear = User_Mod.collegeYear)
-            NomineesinSamecollegeANDcollegeYear = Nominee_user.objects.filter(UserModelKey__in = UsersinSamecollegeANDcollegeYear)
+            NomineesinSamecollegeANDcollegeYear = Nominee_user.objects.filter(UserModelKey__in = UsersinSamecollegeANDcollegeYear, community = c[0], communityMemberElections = True, final_list = True)
 
-            for Nominee in Current_Nom_Result.objects.filter(community = c[0], Nominee_user__in = NomineesinSamecollegeANDcollegeYear):
-                nominees.update({'n'+str(i): {'الاسم': Nominee.Nominee_user.UserModelKey.Name,
-                                'عدد الأصوات': Nominee.numOfVotes,
+            for Nominee in NomineesinSamecollegeANDcollegeYear:
+                nominees.update({'n'+str(i): {'الاسم': Nominee.UserModelKey.Name,
+                                'عدد الأصوات': Nominee.communityMemberElectionsNumOfVotes,
                                 "الدور": Nominee.get_role_display()}})
                 i += 1
                 print (Nominee.get_role_display())
@@ -673,14 +651,14 @@ def showresult(request, type):
             nominees = {}
             i = 1
             UsersinSamecollege = User_Model.objects.filter(college = User_Mod.college)
-            NomineesinSamecollege = Nominee_user.objects.filter(UserModelKey__in = UsersinSamecollege)
+            NomineesinSamecollege = Nominee_user.objects.filter(UserModelKey__in = UsersinSamecollege, community = c[0], collegeCommunityTrusteeOreHelperElections = True, final_list = True)
 
-            for Nominee in Current_Nom_Result.objects.filter(community = c[0], Nominee_user__in = NomineesinSamecollege):
-                nominees.update({'n'+str(i): {'الاسم': Nominee.Nominee_user.UserModelKey.Name,
-                                'عدد الأصوات': Nominee.numOfVotes,
+            for Nominee in NomineesinSamecollege:
+                nominees.update({'n'+str(i): {'الاسم': Nominee.UserModelKey.Name,
+                                'عدد الأصوات': Nominee.collegeCommunityTrusteeOreHelperElectionsNumOfVotes,
                                 "الدور": Nominee.get_role_display()}})
                 i += 1
-                print (Nominee.get_role_display())
+                print (Nominee)
             committee.update({'c' + c[0] : {'name': c[1],'nominees': nominees}})
 
         context.update({'committee': committee})
@@ -694,11 +672,11 @@ def showresult(request, type):
             nominees = {}
             i = 1
             UsersinSamecollege = User_Model.objects.filter(college = User_Mod.college)
-            NomineesinSamecollege = Nominee_user.objects.filter(UserModelKey__in = UsersinSamecollege)
+            NomineesinSamecollege = Nominee_user.objects.filter(UserModelKey__in = UsersinSamecollege, collegeStudentUnionPresidentOrViceElections = True, final_list = True)
 
-            for Nominee in Current_Nom_Result.objects.filter(Nominee_user__in = NomineesinSamecollege):
-                nominees.update({'n'+str(i): {'الاسم': Nominee.Nominee_user.UserModelKey.Name,
-                                'عدد الأصوات': Nominee.numOfVotes,
+            for Nominee in NomineesinSamecollege:
+                nominees.update({'n'+str(i): {'الاسم': Nominee.UserModelKey.Name,
+                                'عدد الأصوات': Nominee.collegeStudentUnionPresidentOrViceElectionsNumOfVotes,
                                 "الدور": Nominee.get_role_display()}})
                 i += 1
                 print (Nominee.get_role_display())
@@ -714,9 +692,9 @@ def showresult(request, type):
         for c in Nominee_user.community.field.choices:
             nominees = {}
             i = 1
-            for Nominee in Current_Nom_Result.objects.filter(community = c[0]):
-                nominees.update({'n'+str(i): {'الاسم': Nominee.Nominee_user.UserModelKey.Name,
-                                'عدد الأصوات': Nominee.numOfVotes,
+            for Nominee in Nominee_user.objects.filter(community = c[0], universityElections = True, final_list = True):
+                nominees.update({'n'+str(i): {'الاسم': Nominee.UserModelKey.Name,
+                                'عدد الأصوات': Nominee.universityElectionsNumOfVotes,
                                 "الدور": Nominee.get_role_display()}})
                 i += 1
                 print (Nominee.get_role_display())
@@ -726,9 +704,9 @@ def showresult(request, type):
         for c in {('8','رئيس الاتحاد/النائب')}:
             nominees = {}
             i = 1
-            for Nominee in Current_Nom_Result.objects.filter(community = c[0]):
-                nominees.update({'n'+str(i): {'الاسم': Nominee.Nominee_user.UserModelKey.Name,
-                                'عدد الأصوات': Nominee.numOfVotes,
+            for Nominee in Nominee_user.objects.filter(community = c[0], universityElections = True, final_list = True):
+                nominees.update({'n'+str(i): {'الاسم': Nominee.UserModelKey.Name,
+                                'عدد الأصوات': Nominee.universityElectionsNumOfVotes,
                                 "الدور": Nominee.get_role_display()}})
                 i += 1
                 print (Nominee.get_role_display())
@@ -829,9 +807,9 @@ def admin(request):
             committee.update({'c' + c[0]: {'numofNom': NumofNominees}})
 
         i = 1
-        for Nominee in Current_Nom_Result.objects.all():
-            nominees.update({'n'+str(i): {'الاسم': Nominee.Nominee_user.UserModelKey.Name,
-                            'عدد الأصوات': Nominee.Nominee_user.communityMemberElectionsNumOfVotes, "اللجنة": Nominee.Nominee_user.get_community_display()}})
+        for Nominee in Nominee_user.objects.filter((Q(communityMemberElections = True) | Q(collegeCommunityTrusteeOreHelperElections = True) | Q(collegeStudentUnionPresidentOrViceElections = True) | Q(universityElections = True)) & Q(final_list = True)):
+            nominees.update({'n'+str(i): {'الاسم': Nominee.UserModelKey.Name,
+                            'عدد الأصوات': Nominee.communityMemberElectionsNumOfVotes, "اللجنة": Nominee.get_community_display()}})
             i += 1
 
         context.update({'committee': committee, 'nominees': nominees})
@@ -850,7 +828,6 @@ def election_control(request, type):
             if request.method == 'GET':
                 try:
                     Nominee_user.objects.all().delete()
-                    Current_Nom_Result.objects.all().delete()
                     Contention.objects.all().delete()
                     electoral_prog.all().delete()
                     User_Model.objects.all().update(Voting_status_1 = 0, Voting_status_2 = 0, Voting_status_3 = 0, Voting_status_4 = 0)
@@ -877,7 +854,6 @@ def election_control(request, type):
                         universityElectionsNumOfVotes = 0)
 
                     User_Model.objects.all().update(Voting_status_1 = 0, Voting_status_2 = 0, Voting_status_3 = 0, Voting_status_4 = 0)
-                    Current_Nom_Result.objects.all().delete()
                     Contention.objects.all().delete()
                     electoral_prog.all().delete()
                 except:

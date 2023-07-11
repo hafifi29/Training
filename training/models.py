@@ -186,31 +186,6 @@ class Contention(models.Model):
     nominee_id = models.ForeignKey(Nominee_user, on_delete=models.CASCADE)
     reason = models.TextField()
 
-class Current_Nom_Result(models.Model):
-    Nominee_user = models.ForeignKey(Nominee_user, on_delete=models.CASCADE)
-    community = models.CharField(max_length= 32, choices=[('1', 'اللجنة العلمية'),
-                                           ('2', 'اللجنة الرياضية'),
-                                           ('3', 'اللجنة الاجتماعية'),
-                                           ('4', 'أسرة الجوالة و الخدمات'),
-                                           ('5', 'اللجنة الثقافية'),
-                                           ('6', 'اللجنة الفنية'),
-                                           ('7', 'لجنة الاسر و الرحلات')
-                                           
-                                  ], default='1')
-    
-    numOfVotes = models.IntegerField(default=0)
-    role = models.CharField(max_length=33, choices=[('1', 'لم يحدد'),
-                                        ('2', 'عضو'),
-                                        ('3', 'أمين لجنة على مستوى الكلية'),
-                                        ('4', 'مساعد أمين لجنة على مستوى الكلية'),
-                                        ('5', 'نائب رئيس اتحاد طلاب الكلية'),
-                                        ('6', 'رئيس اتحاد طلاب الكلية'),
-                                        ('7', 'أمين لجنة على مستوى الجامعة'),
-                                        ('8', 'مساعد أمين لجنة على مستوى الجامعة'),
-                                        ('9', 'نائب رئيس اتحاد طلاب الجامعة'),
-                                        ('10', 'رئيس اتحاد طلاب الجامعة'),                                           
-                                ], default = "1")
-
 # control what apper to students 
 
 
